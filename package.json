@@ -1,0 +1,8 @@
+{
+  "name": "@sablier/configs",
+  "exports": {
+    "./biome": "./biome.jsonc",
+    "./prettier": "./prettier.json"
+  },
+  "type": "module"
+}

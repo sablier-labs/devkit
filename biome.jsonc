@@ -1,0 +1,51 @@
+// Biome v2: https://next.biomejs.dev
+{
+  "$schema": "https://biomejs.dev/schemas/2.0.0-beta.4/schema.json",
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedKeys": "on"
+      }
+    }
+  },
+  "files": {
+    "maxSize": 5242880 // 5MB
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "lineWidth": 120
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "correctness": {
+        "noUnusedImports": "off",
+        "noUnusedVariables": "error"
+      },
+      "recommended": true,
+      "style": {
+        "useImportType": {
+          "level": "error",
+          "options": {
+            "style": "inlineType"
+          }
+        }
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.json", "**/*.jsonc", "**/*.json5"],
+      "assist": { "actions": { "source": { "useSortedKeys": "off" } } }
+    }
+  ],
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true
+  }
+}
