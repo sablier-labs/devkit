@@ -1,5 +1,5 @@
 {
-  "name": "@sablier/configs",
+  "name": "@sablier/devkit",
   "exports": {
     "./biome": "./biome.jsonc",
     "./prettier": "./prettier.json"
