@@ -1,33 +1,35 @@
 # See https://just.systems/man/en/imports.html?highlight=override#imports
+
 set allow-duplicate-variables := true
 set allow-duplicate-recipes := true
+set shell := ["bash", "-euo", "pipefail", "-c"]
 
 # ---------------------------------------------------------------------------- #
-#                                  ENVIRONMENT                                 #
+#                                 DEPENDENCIES                                 #
+# ---------------------------------------------------------------------------- #
+# Ni: https://github.com/antfu-collective/ni
+# Prettier: https://prettier.io
+# ---------------------------------------------------------------------------- #
+#                                   CONSTANTS                                  #
 # ---------------------------------------------------------------------------- #
 
-# Bun is the default package manager. The user can override this by setting the
-# PM environment variable.
-export PM := "bun"
-
-# ---------------------------------------------------------------------------- #
-#                                   VARIABLES                                  #
-# ---------------------------------------------------------------------------- #
-
-globs_prettier := "**/*.{json,json5,jsonc,md,yaml,yml}"
+GLOBS_PRETTIER := "**/*.{json,json5,jsonc,md,yaml,yml}"
 
 # ---------------------------------------------------------------------------- #
 #                                    RECIPES                                   #
 # ---------------------------------------------------------------------------- #
 
 # Clean files
-_clean +globs:
-    rm -rf {{ globs }}
+[no-cd]
+clean +globs:
+    nlx rimraf {{ globs }}
 
 # Check Prettier formatting
-_prettier-check globs=globs_prettier:
-    {{ PM }} prettier --cache --check "{{ globs }}"
+[no-cd]
+prettier-check globs=GLOBS_PRETTIER:
+    na prettier --check --cache "{{ globs }}"
 
 # Format using Prettier
-_prettier-write globs=globs_prettier:
-    {{ PM }} prettier --cache --write "{{ globs }}"
+[no-cd]
+prettier-write globs=GLOBS_PRETTIER:
+    na prettier --write --cache "{{ globs }}"

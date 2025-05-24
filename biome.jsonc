@@ -39,7 +39,7 @@
   },
   "overrides": [
     {
-      "includes": ["**/*.json", "**/*.jsonc", "**/*.json5"],
+      "includes": ["**/*.{json,json5,jsonc}"],
       "assist": { "actions": { "source": { "useSortedKeys": "off" } } }
     }
   ],

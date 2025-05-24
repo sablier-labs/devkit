@@ -1,20 +1,36 @@
-import "./base.just"
+mod base
+
+set shell := ["bash", "-euo", "pipefail", "-c"]
 
 # ---------------------------------------------------------------------------- #
-#                                  ENVIRONMENT                                 #
+#                                 DEPENDENCIES                                 #
+# ---------------------------------------------------------------------------- #
+# Bulloak: https://github.com/foundry-rs/bulloak
+# Forge: https://getfoundry.sh
+# Ni: https://github.com/antfu-collective/ni
+# Prettier: https://prettier.io
+# Solhint: https://protofire.github.io/solhint
+# ---------------------------------------------------------------------------- #
+#                                   CONSTANTS                                  #
 # ---------------------------------------------------------------------------- #
 
-# Bun is the default package manager. The user can override this by setting the
-# PM environment variable.
-export PM := "bun"
-
-# ---------------------------------------------------------------------------- #
-#                                   VARIABLES                                  #
-# ---------------------------------------------------------------------------- #
-
-globs_clean := "artifacts artifacts-* cache cache_hardhat-zk coverage docs out out-* typechain-types lcov.info"
-globs_prettier := "**/*.{json,md,yaml,yml}"
-globs_solidity := "{precompiles,scripts,src,tests}/**/*.sol"
+GLOBS_CLEAN := ```
+    arr=(
+        "artifacts"
+        "artifacts-*"
+        "cache"
+        "cache_hardhat-zk"
+        "coverage"
+        "docs"
+        "out"
+        "out-*"
+        "typechain-types"
+        "lcov.info"
+    )
+    echo "${arr[*]}"
+```
+GLOBS_PRETTIER := "**/*.{json,md,yaml,yml}"
+GLOBS_SOLIDITY := "{precompiles,scripts,src,tests}/**/*.sol"
 
 # ---------------------------------------------------------------------------- #
 #                                    RECIPES                                   #
@@ -33,52 +49,56 @@ build-smt:
     FOUNDRY_PROFILE=smt forge build
 
 # Clean directories and files
-@clean globs=globs_clean:
-    @just _clean "{{ globs }}"
+@clean globs=GLOBS_CLEAN:
+    just base:clean "{{ globs }}"
 
-# Check files using Forge formatter
+# Check code with Forge formatter
 forge-check:
     forge fmt --check
 
-# Run Forge formatter
+# Fix code with Forge formatter
 forge-write:
     forge fmt
 
-# Run all checks
+# Run all code checks
 full-check: solhint-check forge-check prettier-check
 
-# Run all formatters
+# Run all code fixes
 full-write: solhint-write forge-write prettier-write
 
 # Install the Node.js dependencies
-install *ARGS:
-    {{ PM }} install {{ ARGS }}
+install:
+    ni
+
+# Install the Node.js dependencies without updating the lockfile
+install-frozen:
+    ni --frozen
 
 # Check Prettier formatting
-@prettier-check globs=globs_prettier:
-    just _prettier-check "{{ globs }}"
+@prettier-check globs=GLOBS_PRETTIER:
+    just base::prettier-check "{{ globs }}"
 
 # Format using Prettier
-@prettier-write globs=globs_prettier:
-    just _prettier-write "{{ globs }}"
+@prettier-write globs=GLOBS_PRETTIER:
+    just base::prettier-write "{{ globs }}"
 
-# Check Solidity linting
-solhint-check globs=globs_solidity:
-    {{ PM }} solhint "{{ globs }}"
+# Check code with Solhint
+solhint-check globs=GLOBS_SOLIDITY:
+    na solhint "{{ globs }}"
 
-# Fix Solidity linting issues
-solhint-write globs=globs_solidity:
-    {{ PM }} solhint --fix --noPrompt "{{ globs }}"
+# Fix code with Solhint
+solhint-write globs=GLOBS_SOLIDITY:
+    na solhint --fix --noPrompt "{{ globs }}"
 
 # Run all tests
 test:
     forge test
 
-# Run Bulloak tests
+# Run Bulloak checks
 test-bulloak:
     bulloak check --skip-modifiers "./tests/**/*.tree"
 
-# Run lite tests (skip fork tests)
+# Run tests with lite profile (skipping fork tests)
 test-lite:
     FOUNDRY_PROFILE=lite forge test --no-match-test "testFork"
 
