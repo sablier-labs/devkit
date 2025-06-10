@@ -76,4 +76,4 @@ alias pw := prettier-write
 # Type check with TypeScript
 [no-cd]
 tsc-check:
-    pnpm tsc --noEmit
+    na tsc --noEmit
