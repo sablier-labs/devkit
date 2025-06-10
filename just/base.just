@@ -13,7 +13,7 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 #                                   CONSTANTS                                  #
 # ---------------------------------------------------------------------------- #
 
-GLOBS_PRETTIER := "**/*.{json,json5,jsonc,md,yaml,yml}"
+GLOBS_PRETTIER := "**/*.{md,yaml,yml}"
 
 # ---------------------------------------------------------------------------- #
 #                                    RECIPES                                   #
@@ -52,6 +52,14 @@ alias fc := full-check
 [no-cd]
 full-write: biome-write prettier-write
 alias fw := full-write
+
+# Install the Node.js dependencies
+install *args:
+    ni install {{ args }}
+
+# Install the Node.js dependencies without updating the lockfile
+install-frozen:
+    ni --frozen
 
 # Check Prettier formatting
 [no-cd]

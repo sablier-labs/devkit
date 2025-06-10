@@ -33,7 +33,7 @@ GLOBS_CLEAN := ```
     )
     echo "${arr[*]}"
 ```
-GLOBS_PRETTIER := "**/*.{json,md,yaml,yml}"
+GLOBS_PRETTIER := "**/*.{md,yaml,yml}"
 GLOBS_SOLIDITY := "{precompiles,scripts,src,tests}/**/*.sol"
 
 # ---------------------------------------------------------------------------- #
@@ -74,11 +74,11 @@ alias fw := full-write
 
 # Install the Node.js dependencies
 install *args:
-    ni install {{ args }}
+    just base::install {{ args }}
 
 # Install the Node.js dependencies without updating the lockfile
 install-frozen:
-    ni --frozen
+    just base::install-frozen
 
 # Check Prettier formatting
 @prettier-check globs=GLOBS_PRETTIER:
