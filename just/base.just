@@ -41,7 +41,7 @@ clean +globs:
 [confirm("Are you sure you want to delete all node_modules?")]
 [no-cd]
 clean-modules:
-    pnpm dlx rimraf --glob "node_modules" "**/node_modules"
+    nlx rimraf --glob "node_modules" "**/node_modules"
 
 # Run all code checks
 [no-cd]
