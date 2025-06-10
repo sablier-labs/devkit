@@ -1,0 +1,28 @@
+name: "Devkit Setup"
+description: "Internal composite action for installing the dependencies required for using the devkit"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Check out the repo"
+      uses: "actions/checkout@v4"
+
+    - name: "Install Just"
+      uses: "extractions/setup-just@v3"
+      with:
+        just-version: "1"
+
+    - name: "Setup node"
+      uses: "actions/setup-node@v4"
+      with:
+        node-version: ">20"
+
+    - name: "Install Ni package manager resolver"
+      run: "npm install -g @antfu/ni"
+      shell: bash
+
+    - name: "Add summary"
+      run: | # shell
+        echo "## Devkit Setup result" >> $GITHUB_STEP_SUMMARY
+        echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
+      shell: bash
