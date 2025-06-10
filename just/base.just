@@ -1,5 +1,3 @@
-# See https://just.systems/man/en/imports.html?highlight=override#imports
-
 set allow-duplicate-variables := true
 set allow-duplicate-recipes := true
 set shell := ["bash", "-euo", "pipefail", "-c"]
@@ -7,8 +5,10 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 # ---------------------------------------------------------------------------- #
 #                                 DEPENDENCIES                                 #
 # ---------------------------------------------------------------------------- #
+
 # Ni: https://github.com/antfu-collective/ni
 # Prettier: https://prettier.io
+
 # ---------------------------------------------------------------------------- #
 #                                   CONSTANTS                                  #
 # ---------------------------------------------------------------------------- #
@@ -19,17 +19,53 @@ GLOBS_PRETTIER := "**/*.{json,json5,jsonc,md,yaml,yml}"
 #                                    RECIPES                                   #
 # ---------------------------------------------------------------------------- #
 
+# Check code with Biome
+[no-cd]
+biome-check paths=".":
+    na biome check {{ paths }}
+alias bc := biome-check
+
+# Fix code with Biome
+[no-cd]
+biome-write paths=".":
+    na biome check --write {{ paths }}
+    na biome lint --write --only correctness/noUnusedImports {{ paths }}
+alias bw := biome-write
+
 # Clean files
 [no-cd]
 clean +globs:
-    nlx rimraf {{ globs }}
+    nlx rimraf --glob "{{ globs }}"
+
+# Clear node_modules recursively
+[confirm("Are you sure you want to delete all node_modules?")]
+[no-cd]
+clean-modules:
+    pnpm dlx rimraf --glob "node_modules" "**/node_modules"
+
+# Run all code checks
+[no-cd]
+full-check: biome-check prettier-check tsc-check
+alias fc := full-check
+
+# Run all code fixes
+[no-cd]
+full-write: biome-write prettier-write
+alias fw := full-write
 
 # Check Prettier formatting
 [no-cd]
 prettier-check globs=GLOBS_PRETTIER:
     na prettier --check --cache "{{ globs }}"
+alias pc := prettier-check
 
 # Format using Prettier
 [no-cd]
 prettier-write globs=GLOBS_PRETTIER:
     na prettier --write --cache "{{ globs }}"
+alias pw := prettier-write
+
+# Type check with TypeScript
+[no-cd]
+tsc-check:
+    pnpm tsc --noEmit

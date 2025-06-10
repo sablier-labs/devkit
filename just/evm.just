@@ -1,15 +1,19 @@
 mod base
 
+set allow-duplicate-variables := true
+set allow-duplicate-recipes := true
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
 # ---------------------------------------------------------------------------- #
 #                                 DEPENDENCIES                                 #
 # ---------------------------------------------------------------------------- #
+
 # Bulloak: https://github.com/foundry-rs/bulloak
 # Forge: https://getfoundry.sh
 # Ni: https://github.com/antfu-collective/ni
 # Prettier: https://prettier.io
 # Solhint: https://protofire.github.io/solhint
+
 # ---------------------------------------------------------------------------- #
 #                                   CONSTANTS                                  #
 # ---------------------------------------------------------------------------- #
@@ -62,13 +66,15 @@ forge-write:
 
 # Run all code checks
 full-check: solhint-check forge-check prettier-check
+alias fc := full-check
 
 # Run all code fixes
 full-write: solhint-write forge-write prettier-write
+alias fw := full-write
 
 # Install the Node.js dependencies
-install:
-    ni
+install *args:
+    ni install {{ args }}
 
 # Install the Node.js dependencies without updating the lockfile
 install-frozen:
@@ -77,18 +83,22 @@ install-frozen:
 # Check Prettier formatting
 @prettier-check globs=GLOBS_PRETTIER:
     just base::prettier-check "{{ globs }}"
+alias pc := prettier-check
 
 # Format using Prettier
 @prettier-write globs=GLOBS_PRETTIER:
     just base::prettier-write "{{ globs }}"
+alias pw := prettier-write
 
 # Check code with Solhint
 solhint-check globs=GLOBS_SOLIDITY:
     na solhint "{{ globs }}"
+alias sc := solhint-check
 
 # Fix code with Solhint
 solhint-write globs=GLOBS_SOLIDITY:
     na solhint --fix --noPrompt "{{ globs }}"
+alias sw := solhint-write
 
 # Run all tests
 test:
