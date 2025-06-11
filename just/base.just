@@ -38,7 +38,7 @@ clean +globs:
     nlx rimraf --glob "{{ globs }}"
 
 # Clear node_modules recursively
-[confirm("Are you sure you want to delete all node_modules?")]
+[confirm("Are you sure you want to delete all node_modules? y/n")]
 [no-cd]
 clean-modules:
     nlx rimraf --glob "node_modules" "**/node_modules"

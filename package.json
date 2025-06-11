@@ -2,7 +2,9 @@
   "name": "@sablier/devkit",
   "exports": {
     "./biome": "./biome.jsonc",
-    "./prettier": "./prettier.json"
+    "./prettier": "./.prettierrc.json",
+    "./tsconfigs/base": "./tsconfigs/base.json",
+    "./tsconfigs/build": "./tsconfigs/build.json"
   },
   "type": "module"
 }
