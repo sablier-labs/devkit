@@ -104,6 +104,10 @@ alias sw := solhint-write
 test:
     forge test
 
+# Run tests with optional arguments
+test *args:
+    forge test {{ args }}
+
 # Run Bulloak checks
 test-bulloak:
     bulloak check --skip-modifiers "./tests/**/*.tree"
