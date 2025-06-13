@@ -34,7 +34,7 @@ GLOBS_CLEAN := ```
     )
     echo "${arr[*]}"
 ```
-GLOBS_PRETTIER := "**/*.{md,yaml,yml}"
+GLOBS_PRETTIER := "**/*.{md,mdx,yaml,yml}"
 GLOBS_SOLIDITY := "{precompiles,scripts,src,tests}/**/*.sol"
 
 # ---------------------------------------------------------------------------- #

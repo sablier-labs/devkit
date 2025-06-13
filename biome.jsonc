@@ -26,6 +26,9 @@
         "noUnusedImports": "off",
         "noUnusedVariables": "error"
       },
+      "nursery": {
+        "noFloatingPromises": "error"
+      },
       "recommended": true,
       "style": {
         "useImportType": {
@@ -46,9 +49,7 @@
           }
         }
       },
-      "includes": [
-        "**/*.{json,json5,jsonc}"
-      ]
+      "includes": ["**/*.{json,json5,jsonc}"]
     }
   ],
   "vcs": {

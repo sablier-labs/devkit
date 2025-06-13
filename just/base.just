@@ -13,7 +13,7 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 #                                   CONSTANTS                                  #
 # ---------------------------------------------------------------------------- #
 
-GLOBS_PRETTIER := "**/*.{md,yaml,yml}"
+GLOBS_PRETTIER := "**/*.{md,mdx,yaml,yml}"
 
 # ---------------------------------------------------------------------------- #
 #                                    RECIPES                                   #
@@ -35,13 +35,13 @@ alias bw := biome-write
 # Clean files
 [no-cd]
 clean +globs:
-    nlx rimraf --glob "{{ globs }}"
+    nlx del-cli "{{ globs }}"
 
 # Clear node_modules recursively
-[confirm("Are you sure you want to delete all node_modules? y/n")]
+[confirm("Are you sure you want to delete all node_modules, including in subdirectories? y/n")]
 [no-cd]
 clean-modules:
-    nlx rimraf --glob "node_modules" "**/node_modules"
+    nlx del-cli "node_modules" "**/node_modules"
 
 # Run all code checks
 [no-cd]
