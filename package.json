@@ -3,8 +3,8 @@
   "exports": {
     "./biome": "./biome.jsonc",
     "./prettier": "./.prettierrc.json",
-    "./tsconfigs/base": "./tsconfigs/base.json",
-    "./tsconfigs/build": "./tsconfigs/build.json"
+    "./tsconfig/base": "./tsconfig/base.json",
+    "./tsconfig/build": "./tsconfig/build.json"
   },
   "type": "module"
 }
