@@ -44,9 +44,13 @@ GLOBS_SOLIDITY := "{precompiles,scripts,src,tests}/**/*.sol"
 build:
     forge build
 
-# Build with optimized profile
+# Build using optimized profile
 build-optimized:
     FOUNDRY_PROFILE=optimized forge build
+
+# Build using optimized profile with optional arguments
+build-optimized *args:
+    FOUNDRY_PROFILE=optimized forge build {{ args }}
 
 # Build with SMT profile
 build-smt:
@@ -112,10 +116,14 @@ test *args:
 test-bulloak:
     bulloak check --skip-modifiers "./tests/**/*.tree"
 
-# Run tests with lite profile (skipping fork tests)
+# Run tests using lite profile (skipping fork tests)
 test-lite:
-    FOUNDRY_PROFILE=lite forge test --no-match-test "testFork"
+    FOUNDRY_PROFILE=lite forge test --nmt "testFork"
 
-# Run tests with optimized profile
+# Run tests using lite profile with optional arguments
+test-lite *args:
+  FOUNDRY_PROFILE=lite forge test {{ args }}
+
+# Run tests using optimized profile
 test-optimized: build-optimized
     FOUNDRY_PROFILE=test-optimized forge test
