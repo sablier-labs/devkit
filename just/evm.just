@@ -22,10 +22,12 @@ GLOBS_CLEAN := ```
     arr=(
         "artifacts"
         "artifacts-*"
+        "broadcast"
         "cache"
         "cache_hardhat-zk"
         "coverage"
         "docs"
+        "node_modules"
         "out"
         "out-*"
         "typechain-types"
@@ -59,6 +61,10 @@ build-smt:
 # Clean directories and files
 @clean globs=GLOBS_CLEAN:
     just base:clean "{{ globs }}"
+
+# Clean directories and files
+clean globs=GLOBS_CLEAN:
+    rm -rf {{ globs }}
 
 # Check code with Forge formatter
 forge-check:
