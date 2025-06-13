@@ -27,7 +27,6 @@ GLOBS_CLEAN := ```
         "cache_hardhat-zk"
         "coverage"
         "docs"
-        "node_modules"
         "out"
         "out-*"
         "typechain-types"
