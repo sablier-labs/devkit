@@ -1,6 +1,12 @@
 name: "Devkit Setup"
 description: "Internal composite action for installing the dependencies required for using the devkit"
 
+inputs:
+  package-manager:
+    description: "Package manager to install dependencies with"
+    default: "npm"
+    required: false
+
 runs:
   using: "composite"
   steps:
@@ -17,9 +23,25 @@ runs:
       with:
         node-version: ">20"
 
+    - name: "Install Bun"
+      if: inputs.package-manager == 'bun'
+      uses: "oven-sh/setup-bun@v2"
+      with:
+        bun-version: "latest"
+
+    - name: "Install Pnpm"
+      if: inputs.package-manager == 'pnpm'
+      uses: pnpm/action-setup@v4
+      with:
+        version: "10"
+
     - name: "Install Ni package manager resolver"
       run: "npm install -g @antfu/ni"
       shell: bash
+
+    - name: "Install the Node.js dependencies"
+      run: "ni --frozen"
+      shell: "bash"
 
     - name: "Add summary"
       run: | # shell
