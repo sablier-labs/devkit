@@ -16,7 +16,7 @@ runs:
     - name: "Install Just"
       uses: "extractions/setup-just@v3"
       with:
-        just-version: "1"
+        just-version: "1.40.0"
 
     - name: "Setup node"
       uses: "actions/setup-node@v4"
