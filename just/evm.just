@@ -1,7 +1,9 @@
+
+# See https://just.systems/man/en/modules1190.html
 mod base
 
-set allow-duplicate-variables := true
 set allow-duplicate-recipes := true
+set allow-duplicate-variables := true
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
 # ---------------------------------------------------------------------------- #
@@ -9,10 +11,12 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 # ---------------------------------------------------------------------------- #
 
 # Bulloak: https://github.com/foundry-rs/bulloak
-# Forge: https://getfoundry.sh
+na := require("bulloak")
+# Foundry: https://getfoundry.sh
+forge := require("forge")
 # Ni: https://github.com/antfu-collective/ni
-# Prettier: https://prettier.io
-# Solhint: https://protofire.github.io/solhint
+na := require("na")
+nlx := require("nlx")
 
 # ---------------------------------------------------------------------------- #
 #                                   CONSTANTS                                  #
@@ -63,7 +67,7 @@ build-smt:
 
 # Clean directories and files
 clean globs=GLOBS_CLEAN:
-    rm -rf {{ globs }}
+    nlx del-cli "{{ globs }}"
 
 # Check code with Forge formatter
 forge-check:
@@ -127,7 +131,7 @@ test-lite:
 
 # Run tests using lite profile with optional arguments
 test-lite *args:
-  FOUNDRY_PROFILE=lite forge test {{ args }}
+    FOUNDRY_PROFILE=lite forge test {{ args }}
 
 # Run tests using optimized profile
 test-optimized: build-optimized

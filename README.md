@@ -8,11 +8,11 @@ The files are meant to be extended and customized as needed.
 
 ## ⚙️ Config Files
 
-| Tool         | Config File                              |
-| ------------ | :--------------------------------------- |
-| 🔍 Biome        | [`biome.jsonc`](./biome.jsonc)           |
-| 📝 EditorConfig | [`.editorconfig`](./.editorconfig)       |
-| ✨ Prettier     | [`prettier.json`](./.prettierrc.json)    |
+| Tool            | Config File                           |
+| --------------- | :------------------------------------ |
+| 🔍 Biome        | [`biome.jsonc`](./biome.jsonc)        |
+| 📝 EditorConfig | [`.editorconfig`](./.editorconfig)    |
+| ✨ Prettier     | [`prettier.json`](./.prettierrc.json) |
 
 ## 🛠️ Just Scripts
 

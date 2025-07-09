@@ -7,7 +7,9 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 # ---------------------------------------------------------------------------- #
 
 # Ni: https://github.com/antfu-collective/ni
-# Prettier: https://prettier.io
+na := require("na")
+ni := require("ni")
+nlx := require("nlx")
 
 # ---------------------------------------------------------------------------- #
 #                                   CONSTANTS                                  #
