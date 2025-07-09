@@ -1,4 +1,3 @@
-
 # See https://just.systems/man/en/modules1190.html
 mod base
 
@@ -10,8 +9,8 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 #                                 DEPENDENCIES                                 #
 # ---------------------------------------------------------------------------- #
 
-# Bulloak: https://github.com/foundry-rs/bulloak
-na := require("bulloak")
+# Bulloak: https://github.com/alexfertel/bulloak
+bulloak := require("bulloak")
 # Foundry: https://getfoundry.sh
 forge := require("forge")
 # Ni: https://github.com/antfu-collective/ni
