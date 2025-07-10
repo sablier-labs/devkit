@@ -7,13 +7,13 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 # ---------------------------------------------------------------------------- #
 
 
-# Check that required tools are available
-check-tools:
+# Check that required dependencies are installed
+check-deps:
     # Ni: https://github.com/antfu-collective/ni
     @command -v na >/dev/null || (echo "Error: na is required. Install from https://github.com/antfu-collective/ni" && exit 1)
     @command -v ni >/dev/null || (echo "Error: ni is required. Install from https://github.com/antfu-collective/ni" && exit 1)
     @command -v nlx >/dev/null || (echo "Error: nlx is required. Install from https://github.com/antfu-collective/ni" && exit 1)
-
+    echo "All dependencies are installed"
 
 # ---------------------------------------------------------------------------- #
 #                                   CONSTANTS                                  #
