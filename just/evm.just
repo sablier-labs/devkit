@@ -9,15 +9,11 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 #                                 DEPENDENCIES                                 #
 # ---------------------------------------------------------------------------- #
 
-# Check that required tools are available
-check-tools:
-    # Bulloak: https://github.com/alexfertel/bulloak
-    @command -v bulloak >/dev/null || (echo "Error: bulloak is required. Install from https://github.com/alexfertel/bulloak" && exit 1)
-    # Forge: https://getfoundry.sh
-    @command -v forge >/dev/null || (echo "Error: forge is required. Install from https://getfoundry.sh" && exit 1)
-    # Ni: https://github.com/antfu-collective/ni
-    @command -v na >/dev/null || (echo "Error: na is required. Install from https://github.com/antfu-collective/ni" && exit 1)
-    @command -v nlx >/dev/null || (echo "Error: nlx is required. Install from https://github.com/antfu-collective/ni" && exit 1)
+# Foundry: https://getfoundry.sh
+forge := require("forge")
+# Ni: https://github.com/antfu-collective/ni
+na := require("na")
+nlx := require("nlx")
 
 # ---------------------------------------------------------------------------- #
 #                                   CONSTANTS                                  #
