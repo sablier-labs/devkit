@@ -52,7 +52,7 @@ build-optimized:
 
 # Build using optimized profile with optional arguments
 build-optimized *args:
-    FOUNDRY_PROFILE=optimized forge build {{ args }}
+    FOUNDRY_PROFILE=optimized forge build --extra-output-files metadata {{ args }}
 
 # Build with SMT profile
 build-smt:
