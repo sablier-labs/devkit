@@ -66,6 +66,11 @@ build-smt:
 clean globs=GLOBS_CLEAN:
     nlx del-cli "{{ globs }}"
 
+# Dump code coverage to an html file
+coverage:
+    forge coverage --report lcov
+    genhtml --ignore-errors inconsistent lcov.info --branch-coverage --output-dir coverage
+
 # Check code with Forge formatter
 forge-check:
     forge fmt --check
