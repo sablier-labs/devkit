@@ -3,7 +3,7 @@ description: "Internal composite action for installing the dependencies required
 
 inputs:
   package-manager:
-    description: "Package manager to install dependencies with"
+    description: "Package manager to install Node.js dependencies with"
     default: "npm"
     required: false
 

@@ -32,7 +32,7 @@ alias bc := biome-check
 [no-cd]
 biome-write paths=".":
     na biome check --write {{ paths }}
-    na biome lint --write --only correctness/noUnusedImports {{ paths }}
+    na biome lint --unsafe --write --only correctness/noUnusedImports {{ paths }}
 alias bw := biome-write
 
 # Clean files
