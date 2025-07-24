@@ -107,7 +107,7 @@ alias pw := prettier-write
 
 # Check code with Solhint
 solhint-check globs=GLOBS_SOLIDITY:
-    na solhint "{{ globs }}"
+    na solhint --cache "{{ globs }}"
 alias sc := solhint-check
 
 # Fix code with Solhint
