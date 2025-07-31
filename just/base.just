@@ -58,7 +58,7 @@ alias fw := full-write
 
 # Install the Node.js dependencies
 install *args:
-    ni install {{ args }}
+    ni {{ args }}
 
 # Install the Node.js dependencies without updating the lockfile
 install-frozen:
