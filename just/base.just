@@ -57,10 +57,12 @@ full-write: biome-write prettier-write
 alias fw := full-write
 
 # Install the Node.js dependencies
+[no-cd]
 install *args:
     ni {{ args }}
 
 # Install the Node.js dependencies without updating the lockfile
+[no-cd]
 install-frozen:
     ni --frozen
 
@@ -80,3 +82,8 @@ alias pw := prettier-write
 [no-cd]
 tsc-check:
     na tsc --noEmit
+
+# Build with TypeScript
+[no-cd]
+tsc-build:
+    na tsc -p tsconfig.build.json
