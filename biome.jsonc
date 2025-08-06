@@ -32,9 +32,9 @@
       "recommended": true,
       "style": {
         "useImportType": {
-          "level": "error",
+          "level": "warn",
           "options": {
-            "style": "inlineType"
+            "style": "separatedType"
           }
         }
       }
