@@ -36,7 +36,8 @@
           "options": {
             "style": "separatedType"
           }
-        }
+        },
+        "useTemplate": "off"
       }
     }
   },
