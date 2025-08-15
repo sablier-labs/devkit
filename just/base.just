@@ -66,6 +66,16 @@ install *args:
 install-frozen:
     ni --frozen
 
+# Run knip checks
+[no-cd]
+knip-check:
+    na knip
+
+# Run knip fix
+[no-cd]
+knip-fix:
+    na knip --fix
+
 # Check Prettier formatting
 [no-cd]
 prettier-check globs=GLOBS_PRETTIER:
