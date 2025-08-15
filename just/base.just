@@ -70,11 +70,13 @@ install-frozen:
 [no-cd]
 knip-check:
     na knip
+alias kc := knip-check
 
 # Run knip fix
 [no-cd]
 knip-fix:
     na knip --fix
+alias kf := knip-fix
 
 # Check Prettier formatting
 [no-cd]
