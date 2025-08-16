@@ -4,7 +4,8 @@
     "./biome": "./biome.jsonc",
     "./prettier": "./.prettierrc.json",
     "./tsconfig/base": "./tsconfig/base.json",
-    "./tsconfig/build": "./tsconfig/build.json"
+    "./tsconfig/build": "./tsconfig/build.json",
+    "./tsconfig/next": "./tsconfig/next.json"
   },
   "type": "module"
 }
