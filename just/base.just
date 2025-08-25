@@ -55,13 +55,12 @@ tsc-build:
 # ---------------------------------------------------------------------------- #
 
 # Publish the npm package, e.g. v1.0.0
-# Make sure you are authenticated with npm, run `npm whoami` to check.
 [group("publish")]
 publish *args:
   npm publish {{ args }}
   @just tag $(jq -r '.version' package.json)
 
-# Publish the npm package using the `beta` tag, e.g. v1.0.0-beta.1
+# Publish using the `beta` tag, e.g. v1.0.0-beta.1
 [group("publish")]
 publish-beta *args:
   @just _check-beta-version
