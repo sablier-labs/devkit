@@ -105,6 +105,10 @@ alias pc := prettier-check
     just base::prettier-write "{{ globs }}"
 alias pw := prettier-write
 
+# Execute the setup script
+setup:
+    na setup
+
 # Check code with Solhint
 solhint-check globs=GLOBS_SOLIDITY:
     na solhint --cache "{{ globs }}"
