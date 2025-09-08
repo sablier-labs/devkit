@@ -72,19 +72,19 @@ coverage:
     genhtml --ignore-errors inconsistent lcov.info --branch-coverage --output-dir coverage
 
 # Check code with Forge formatter
-forge-check:
+fmt-check:
     forge fmt --check
 
 # Fix code with Forge formatter
-forge-write:
+fmt-write:
     forge fmt
 
 # Run all code checks
-full-check: solhint-check forge-check prettier-check
+full-check: solhint-check fmt-check prettier-check
 alias fc := full-check
 
 # Run all code fixes
-full-write: solhint-write forge-write prettier-write
+full-write: solhint-write fmt-write prettier-write
 alias fw := full-write
 
 # Install the Node.js dependencies
