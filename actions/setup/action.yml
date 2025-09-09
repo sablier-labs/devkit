@@ -2,6 +2,10 @@ name: "Devkit Setup"
 description: "Internal composite action for installing the dependencies required for using the devkit"
 
 inputs:
+  frozen-lockfile:
+    description: "Whether to install the dependencies with the frozen lockfile"
+    default: "true"
+    required: false
   package-manager:
     description: "Package manager to install Node.js dependencies with"
     default: "npm"
@@ -40,7 +44,12 @@ runs:
       shell: bash
 
     - name: "Install the Node.js dependencies"
-      run: "ni --frozen"
+      run: | #shell
+        if [ "$inputs.frozen-lockfile" = "true" ]; then
+          ni --frozen
+        else
+          ni
+        fi
       shell: "bash"
 
     - name: "Add summary"
