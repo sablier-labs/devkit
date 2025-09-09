@@ -59,12 +59,13 @@ build-smt:
     FOUNDRY_PROFILE=smt forge build
 
 # Clean directories and files
-@clean globs=GLOBS_CLEAN:
-    just base:clean "{{ globs }}"
-
-# Clean directories and files
 clean globs=GLOBS_CLEAN:
     nlx del-cli "{{ globs }}"
+
+# Clear node_modules recursively
+[confirm("Are you sure you want to delete all node_modules, including in subdirectories? y/n")]
+clean-modules:
+    just base::clean-modules
 
 # Dump code coverage to an html file
 coverage:
