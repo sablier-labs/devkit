@@ -60,7 +60,7 @@ build-smt:
 
 # Clean directories and files
 clean globs=GLOBS_CLEAN:
-    nlx del-cli "{{ globs }}"
+    nlx del-cli {{ globs }}
 
 # Clear node_modules recursively
 [confirm("Are you sure you want to delete all node_modules, including in subdirectories? y/n")]
