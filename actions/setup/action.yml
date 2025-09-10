@@ -51,9 +51,3 @@ runs:
           ni
         fi
       shell: "bash"
-
-    - name: "Add summary"
-      run: | # shell
-        echo "## Devkit Setup result" >> $GITHUB_STEP_SUMMARY
-        echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
-      shell: bash
