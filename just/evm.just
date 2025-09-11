@@ -45,10 +45,12 @@ GLOBS_SOLIDITY := "{precompiles,scripts,src,tests}/**/*.sol"
 # Build contracts
 build:
     forge build
+alias b := build
 
 # Build using optimized profile
 build-optimized:
     FOUNDRY_PROFILE=optimized forge build
+alias bo := build-optimized
 
 # Build using optimized profile with optional arguments
 build-optimized *args:
@@ -61,6 +63,7 @@ build-smt:
 # Clean directories and files
 clean globs=GLOBS_CLEAN:
     nlx del-cli {{ globs }}
+alias c := clean
 
 # Clear node_modules recursively
 [confirm("Are you sure you want to delete all node_modules, including in subdirectories? y/n")]
@@ -71,6 +74,7 @@ clean-modules:
 coverage:
     forge coverage --report lcov
     genhtml --ignore-errors inconsistent lcov.info --branch-coverage --output-dir coverage
+alias cov := coverage
 
 # Check code with Forge formatter
 fmt-check:
@@ -88,13 +92,20 @@ alias fc := full-check
 full-write: solhint-write fmt-write prettier-write
 alias fw := full-write
 
+# Performs a gas report
+gas-report:
+    forge test --gas-report
+alias gr := gas-report
+
 # Install the Node.js dependencies
 install *args:
     just base::install {{ args }}
+alias i := install
 
 # Install the Node.js dependencies without updating the lockfile
 install-frozen:
     just base::install-frozen
+alias if := install-frozen
 
 # Check Prettier formatting
 @prettier-check globs=GLOBS_PRETTIER:
@@ -123,23 +134,29 @@ alias sw := solhint-write
 # Run all tests
 test:
     forge test
+alias t := test
 
 # Run tests with optional arguments
 test *args:
     forge test {{ args }}
+alias ta := test-args
 
 # Run Bulloak checks
 test-bulloak:
     bulloak check --skip-modifiers "./tests/**/*.tree"
+alias tb := test-bulloak
 
 # Run tests using lite profile (skipping fork tests)
 test-lite:
     FOUNDRY_PROFILE=lite forge test --nmt "testFork"
+alias tl := test-lite
 
 # Run tests using lite profile with optional arguments
 test-lite *args:
     FOUNDRY_PROFILE=lite forge test {{ args }}
+alias tla := test-lite-args
 
 # Run tests using optimized profile
 test-optimized: build-optimized
     FOUNDRY_PROFILE=test-optimized forge test
+alias to := test-optimized
