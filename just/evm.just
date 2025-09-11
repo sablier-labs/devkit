@@ -76,6 +76,10 @@ coverage:
     genhtml --ignore-errors inconsistent lcov.info --branch-coverage --output-dir coverage
 alias cov := coverage
 
+# Defaul list
+default:
+  @just --list
+
 # Check code with Forge formatter
 fmt-check:
     forge fmt --check
@@ -139,7 +143,6 @@ alias t := test
 # Run tests with optional arguments
 test *args:
     forge test {{ args }}
-alias ta := test-args
 
 # Run Bulloak checks
 test-bulloak:
@@ -154,7 +157,6 @@ alias tl := test-lite
 # Run tests using lite profile with optional arguments
 test-lite *args:
     FOUNDRY_PROFILE=lite forge test {{ args }}
-alias tla := test-lite-args
 
 # Run tests using optimized profile
 test-optimized: build-optimized
