@@ -76,10 +76,6 @@ coverage:
     genhtml --ignore-errors inconsistent lcov.info --branch-coverage --output-dir coverage
 alias cov := coverage
 
-# Defaul list
-default:
-  @just --list
-
 # Check code with Forge formatter
 fmt-check:
     forge fmt --check
