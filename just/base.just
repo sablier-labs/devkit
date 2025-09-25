@@ -1,6 +1,7 @@
 set allow-duplicate-variables := true
 set allow-duplicate-recipes := true
 set shell := ["bash", "-euo", "pipefail", "-c"]
+set unstable
 
 # ---------------------------------------------------------------------------- #
 #                                 DEPENDENCIES                                 #
@@ -63,7 +64,7 @@ publish *args:
 # Publish using the `beta` tag, e.g. v1.0.0-beta.1
 [group("publish")]
 publish-beta *args:
-  @just _check-beta-version
+  @just check-beta-version
   npm publish --tag beta {{ args }}
 
 # Tag the new version
@@ -141,11 +142,11 @@ tsc-check:
 #                                PRIVATE HELPERS                               #
 # ---------------------------------------------------------------------------- #
 
+
 # Check that package.json version includes -beta.x suffix
 [private]
-_check-beta-version:
-  #!/usr/bin/env sh
-
+[script]
+@check-beta-version:
   # Extract version from package.json using jq for reliable JSON parsing
   version=$(jq -r '.version' package.json)
 

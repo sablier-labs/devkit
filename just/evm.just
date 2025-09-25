@@ -49,16 +49,14 @@ alias b := build
 
 # Build using optimized profile
 build-optimized:
-    FOUNDRY_PROFILE=optimized forge build
+    FOUNDRY_PROFILE=optimized \
+        forge build
 alias bo := build-optimized
 
 # Build using optimized profile with optional arguments
 build-optimized *args:
-    FOUNDRY_PROFILE=optimized forge build --extra-output-files metadata {{ args }}
-
-# Build with SMT profile
-build-smt:
-    FOUNDRY_PROFILE=smt forge build
+    FOUNDRY_PROFILE=optimized \
+        forge build --extra-output-files metadata {{ args }}
 
 # Clean directories and files
 clean globs=GLOBS_CLEAN:
@@ -72,6 +70,11 @@ clean-modules:
 
 # Dump code coverage to an html file
 coverage:
+    if ! command -v genhtml >/dev/null 2>&1; then
+        echo "✗ genhtml CLI not found"
+        echo "Install it with Homebrew: https://formulae.brew.sh/formula/lcov"
+        exit 1
+    fi
     forge coverage --report lcov
     genhtml --ignore-errors inconsistent lcov.info --branch-coverage --output-dir coverage
 alias cov := coverage
