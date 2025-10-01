@@ -71,9 +71,9 @@ clean-modules:
 # Dump code coverage to an html file
 coverage:
     if ! command -v genhtml >/dev/null 2>&1; then
-        echo "✗ genhtml CLI not found"
-        echo "Install it with Homebrew: https://formulae.brew.sh/formula/lcov"
-        exit 1
+    echo "✗ genhtml CLI not found"
+    echo "Install it with Homebrew: https://formulae.brew.sh/formula/lcov"
+    exit 1
     fi
     forge coverage --report lcov
     genhtml --ignore-errors inconsistent lcov.info --branch-coverage --output-dir coverage
