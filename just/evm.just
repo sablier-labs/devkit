@@ -1,9 +1,10 @@
 # See https://just.systems/man/en/modules1190.html
 mod base
 
-set allow-duplicate-recipes := true
-set allow-duplicate-variables := true
+set allow-duplicate-recipes
+set allow-duplicate-variables
 set shell := ["bash", "-euo", "pipefail", "-c"]
+set unstable
 
 # ---------------------------------------------------------------------------- #
 #                                 DEPENDENCIES                                 #
@@ -11,6 +12,7 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 
 # Foundry: https://getfoundry.sh
 forge := require("forge")
+
 # Ni: https://github.com/antfu-collective/ni
 na := require("na")
 nlx := require("nlx")
@@ -42,22 +44,6 @@ GLOBS_SOLIDITY := "{precompiles,scripts,src,tests}/**/*.sol"
 #                                    RECIPES                                   #
 # ---------------------------------------------------------------------------- #
 
-# Build contracts
-build:
-    forge build
-alias b := build
-
-# Build using optimized profile
-build-optimized:
-    FOUNDRY_PROFILE=optimized \
-        forge build
-alias bo := build-optimized
-
-# Build using optimized profile with optional arguments
-build-optimized *args:
-    FOUNDRY_PROFILE=optimized \
-        forge build --extra-output-files metadata {{ args }}
-
 # Clean directories and files
 clean globs=GLOBS_CLEAN:
     nlx del-cli {{ globs }}
@@ -68,25 +54,6 @@ alias c := clean
 clean-modules:
     just base::clean-modules
 
-# Dump code coverage to an html file
-coverage:
-    if ! command -v genhtml >/dev/null 2>&1; then
-    echo "✗ genhtml CLI not found"
-    echo "Install it with Homebrew: https://formulae.brew.sh/formula/lcov"
-    exit 1
-    fi
-    forge coverage --report lcov
-    genhtml --ignore-errors inconsistent lcov.info --branch-coverage --output-dir coverage
-alias cov := coverage
-
-# Check code with Forge formatter
-fmt-check:
-    forge fmt --check
-
-# Fix code with Forge formatter
-fmt-write:
-    forge fmt
-
 # Run all code checks
 full-check: solhint-check fmt-check prettier-check
 alias fc := full-check
@@ -95,20 +62,10 @@ alias fc := full-check
 full-write: solhint-write fmt-write prettier-write
 alias fw := full-write
 
-# Performs a gas report
-gas-report:
-    forge test --gas-report
-alias gr := gas-report
-
 # Install the Node.js dependencies
 install *args:
     just base::install {{ args }}
 alias i := install
-
-# Install the Node.js dependencies without updating the lockfile
-install-frozen:
-    just base::install-frozen
-alias if := install-frozen
 
 # Check Prettier formatting
 @prettier-check globs=GLOBS_PRETTIER:
@@ -120,10 +77,6 @@ alias pc := prettier-check
     just base::prettier-write "{{ globs }}"
 alias pw := prettier-write
 
-# Execute the setup script
-setup:
-    na setup
-
 # Check code with Solhint
 solhint-check globs=GLOBS_SOLIDITY:
     na solhint --cache "{{ globs }}"
@@ -134,30 +87,83 @@ solhint-write globs=GLOBS_SOLIDITY:
     na solhint --fix --noPrompt "{{ globs }}"
 alias sw := solhint-write
 
-# Run all tests
-test:
-    forge test
-alias t := test
+# ---------------------------------------------------------------------------- #
+#                                    FOUNDRY                                   #
+# ---------------------------------------------------------------------------- #
+
+# Build contracts
+[group("foundry")]
+build:
+    forge build
+alias b := build
+
+# Build using optimized profile
+[group("foundry")]
+build-optimized:
+    FOUNDRY_PROFILE=optimized \
+        forge build
+alias bo := build-optimized
+
+# Build using optimized profile with optional arguments
+[group("foundry")]
+build-optimized *args:
+    FOUNDRY_PROFILE=optimized \
+        forge build --extra-output-files metadata {{ args }}
+
+# Dump code coverage to an html file
+[group("foundry")]
+[script]
+coverage:
+    if [ -z "{{ which('genhtml') }}" ]; then
+        echo "✗ genhtml CLI not found"
+        echo "Install it with Homebrew: https://formulae.brew.sh/formula/lcov"
+        exit 1
+    fi
+    forge coverage --report lcov
+    genhtml --branch-coverage --ignore-errors inconsistent --output-dir coverage lcov.info
+alias cov := coverage
+
+# Check code with Forge formatter
+[group("foundry")]
+fmt-check:
+    forge fmt --check
+
+# Fix code with Forge formatter
+[group("foundry")]
+fmt-write:
+    forge fmt
+
+# Performs a gas report
+[group("foundry")]
+gas-report:
+    forge test --gas-report
+alias gr := gas-report
 
 # Run tests with optional arguments
+[group("foundry")]
 test *args:
     forge test {{ args }}
+alias t := test
 
 # Run Bulloak checks
+[group("foundry")]
 test-bulloak:
     bulloak check --skip-modifiers "./tests/**/*.tree"
 alias tb := test-bulloak
 
 # Run tests using lite profile (skipping fork tests)
+[group("foundry")]
 test-lite:
     FOUNDRY_PROFILE=lite forge test --nmt "testFork"
 alias tl := test-lite
 
 # Run tests using lite profile with optional arguments
+[group("foundry")]
 test-lite *args:
     FOUNDRY_PROFILE=lite forge test {{ args }}
 
 # Run tests using optimized profile
+[group("foundry")]
 test-optimized: build-optimized
     FOUNDRY_PROFILE=test-optimized forge test
 alias to := test-optimized
