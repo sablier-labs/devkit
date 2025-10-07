@@ -1,7 +1,4 @@
-set allow-duplicate-variables
-set allow-duplicate-recipes
-set shell := ["bash", "-euo", "pipefail", "-c"]
-set unstable
+import "./settings.just"
 
 # ---------------------------------------------------------------------------- #
 #                                 DEPENDENCIES                                 #

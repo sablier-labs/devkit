@@ -1,10 +1,8 @@
+import "./settings.just"
+
 # See https://just.systems/man/en/modules1190.html
 mod base
 
-set allow-duplicate-recipes
-set allow-duplicate-variables
-set shell := ["bash", "-euo", "pipefail", "-c"]
-set unstable
 
 # ---------------------------------------------------------------------------- #
 #                                 DEPENDENCIES                                 #
