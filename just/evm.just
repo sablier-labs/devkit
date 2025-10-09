@@ -112,7 +112,7 @@ build-optimized *args:
 [group("foundry")]
 [script]
 coverage:
-    if [ -z "{{ which('genhtml') }}" ]; then
+    if ! command -v genhtml >/dev/null 2>&1; then
         echo "✗ genhtml CLI not found"
         echo "Install it with Homebrew: https://formulae.brew.sh/formula/lcov"
         exit 1
