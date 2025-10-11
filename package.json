@@ -1,11 +1,47 @@
 {
   "name": "@sablier/devkit",
+  "description": "Configuration files and reusable scripts for Sablier repositories",
+  "version": "1.0.0",
+  "author": {
+    "name": "Sablier Labs Ltd",
+    "url": "https://sablier.com"
+  },
+  "bugs": {
+    "url": "https://github.com/sablier-labs/devkit/issues"
+  },
   "exports": {
     "./biome": "./biome.jsonc",
     "./prettier": "./.prettierrc.json",
     "./tsconfig/base": "./tsconfig/base.json",
     "./tsconfig/build": "./tsconfig/build.json",
     "./tsconfig/next": "./tsconfig/next.json"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "biome.jsonc",
+    ".prettierrc.json",
+    "actions/",
+    "just/",
+    "tsconfig/"
+  ],
+  "keywords": [
+    "biome",
+    "config",
+    "devkit",
+    "prettier",
+    "sablier",
+    "tsconfig",
+    "typescript"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sablier-labs/devkit.git"
   },
   "type": "module"
 }

@@ -1,4 +1,4 @@
-// Biome v2: https://next.biomejs.dev
+// Sablier Devkit configuration for Biome v2: https://next.biomejs.dev
 {
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "assist": {
