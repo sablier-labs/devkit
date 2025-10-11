@@ -22,7 +22,6 @@
   "files": [
     "biome.jsonc",
     ".prettierrc.json",
-    "actions/",
     "just/",
     "tsconfig/"
   ],
