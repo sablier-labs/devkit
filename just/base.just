@@ -21,14 +21,17 @@ GLOBS_PRETTIER := "**/*.{md,mdx,yaml,yml}"
 
 # Clean files
 [no-cd]
-clean +globs:
+clean:
+    just _clean ".DS_Store"
+[no-cd]
+_clean +globs:
     nlx del-cli "{{ globs }}"
 
 # Clear node_modules recursively
 [confirm("Are you sure you want to delete all node_modules, including in subdirectories? y/n")]
 [no-cd]
-clean-modules:
-    nlx del-cli "node_modules" "**/node_modules"
+clean-modules globs="node_modules" "**/node_modules":
+    nlx del-cli {{ globs }}
 
 # Install the Node.js dependencies; run with --frozen to install the dependencies with the frozen lockfile
 [no-cd]
@@ -41,7 +44,7 @@ tsc-build:
     na tsc -p tsconfig.build.json
 
 # ---------------------------------------------------------------------------- #
-#                                     CHECK                                    #
+#                                    CHECKs                                    #
 # ---------------------------------------------------------------------------- #
 
 # Check code with Biome
@@ -62,13 +65,19 @@ alias bw := biome-write
 # Run all code checks
 [group("checks")]
 [no-cd]
-full-check: biome-check prettier-check tsc-check
+full-check:
+    just biome-check
+    just prettier-check
+    just tsc-check
 alias fc := full-check
 
 # Run all code fixes
 [group("checks")]
 [no-cd]
-full-write: biome-write prettier-write
+full-write:
+    just biome-write
+    just prettier-write
+    just tsc-write
 alias fw := full-write
 
 # Run knip checks
@@ -102,5 +111,5 @@ alias pw := prettier-write
 # Type check with TypeScript
 [group("checks")]
 [no-cd]
-tsc-check:
-    na tsc --noEmit
+@tsc-check globs="":
+    na tsc --noEmit {{ globs }}
