@@ -48,16 +48,22 @@ clean globs=GLOBS_CLEAN:
 alias c := clean
 
 # Clear node_modules recursively
-[confirm("Are you sure you want to delete all node_modules, including in subdirectories? y/n")]
+[confirm("Are you sure you want to delete all node_modules, including in subdirectories? Y/n")]
 clean-modules:
     just base::clean-modules
 
 # Run all code checks
-full-check: solhint-check fmt-check prettier-check
+full-check:
+    just solhint-check
+    just fmt-check
+    just prettier-check
 alias fc := full-check
 
 # Run all code fixes
-full-write: solhint-write fmt-write prettier-write
+full-write:
+    just solhint-write
+    just fmt-write
+    just prettier-write
 alias fw := full-write
 
 # Install the Node.js dependencies

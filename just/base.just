@@ -28,7 +28,7 @@ _clean +globs:
     nlx del-cli "{{ globs }}"
 
 # Clear node_modules recursively
-[confirm("Are you sure you want to delete all node_modules, including in subdirectories? y/n")]
+[confirm("Are you sure you want to delete all node_modules, including in subdirectories? Y/n")]
 [no-cd]
 clean-modules globs="node_modules" "**/node_modules":
     nlx del-cli {{ globs }}
