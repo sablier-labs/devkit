@@ -30,7 +30,7 @@ _clean +globs:
 # Clear node_modules recursively
 [confirm("Are you sure you want to delete all node_modules, including in subdirectories? Y/n")]
 [no-cd]
-clean-modules globs="node_modules" "**/node_modules":
+clean-modules +globs="node_modules **/node_modules":
     nlx del-cli {{ globs }}
 
 # Install the Node.js dependencies; run with --frozen to install the dependencies with the frozen lockfile
@@ -50,14 +50,14 @@ tsc-build:
 # Check code with Biome
 [group("checks")]
 [no-cd]
-biome-check paths=".":
+biome-check +paths=".":
     na biome check {{ paths }}
 alias bc := biome-check
 
 # Fix code with Biome
 [group("checks")]
 [no-cd]
-biome-write paths=".":
+biome-write +paths=".":
     na biome check --write {{ paths }}
     na biome lint --unsafe --write --only correctness/noUnusedImports {{ paths }}
 alias bw := biome-write
@@ -77,7 +77,6 @@ alias fc := full-check
 full-write:
     just biome-write
     just prettier-write
-    just tsc-write
 alias fw := full-write
 
 # Run knip checks
@@ -97,19 +96,19 @@ alias kw := knip-write
 # Check Prettier formatting
 [group("checks")]
 [no-cd]
-prettier-check globs=GLOBS_PRETTIER:
+prettier-check +globs=GLOBS_PRETTIER:
     na prettier --check --cache "{{ globs }}"
 alias pc := prettier-check
 
 # Format using Prettier
 [group("checks")]
 [no-cd]
-prettier-write globs=GLOBS_PRETTIER:
+prettier-write +globs=GLOBS_PRETTIER:
     na prettier --write --cache "{{ globs }}"
 alias pw := prettier-write
 
 # Type check with TypeScript
 [group("checks")]
 [no-cd]
-@tsc-check globs="":
+@tsc-check +globs="":
     na tsc --noEmit {{ globs }}
