@@ -50,16 +50,17 @@ tsc-build:
 # Check code with Biome
 [group("checks")]
 [no-cd]
-biome-check +paths=".":
-    na biome check {{ paths }}
+biome-check +globs=".":
+    na biome check {{ globs }}
 alias bc := biome-check
 
 # Fix code with Biome
+# The `noUnusedImports` rule is disabled by default to allow unused imports during development
 [group("checks")]
 [no-cd]
-biome-write +paths=".":
-    na biome check --write {{ paths }}
-    na biome lint --unsafe --write --only correctness/noUnusedImports {{ paths }}
+biome-write +globs=".":
+    na biome check --write {{ globs }}
+    na biome lint --unsafe --write --only correctness/noUnusedImports {{ globs }}
 alias bw := biome-write
 
 # Run all code checks
