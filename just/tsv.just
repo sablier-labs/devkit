@@ -14,7 +14,7 @@ qsv := require("qsv")
 # Check TSV files
 [group("checks")]
 [script]
-tsv-check globs="data/*/*.tsv" schema="":
+_tsv-check globs="data/*/*.tsv" schema="":
     echo "Validating TSV files..."
     found=0
     for file in {{ globs }}; do
