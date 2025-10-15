@@ -110,5 +110,5 @@ alias pw := prettier-write
 # Type check with TypeScript
 [group("checks")]
 [no-cd]
-@tsc-check +globs="":
-    na tsc --noEmit {{ globs }}
+@tsc-check project="tsconfig.json":
+    na tsc --noEmit --project {{ project }}
