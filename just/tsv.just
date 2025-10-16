@@ -1,20 +1,19 @@
 import "./settings.just"
 
 # ---------------------------------------------------------------------------- #
-#                                 DEPENDENCIES                                 #
-# ---------------------------------------------------------------------------- #
-
-# qsv: https://github.com/dathere/qsv
-qsv := require("qsv")
-
-# ---------------------------------------------------------------------------- #
 #                                    SCRIPTS                                   #
 # ---------------------------------------------------------------------------- #
 
-# Check TSV files
+# Check TSV files using qsv: https://github.com/dathere/qsv
 [group("checks")]
 [script]
 _tsv-check globs="data/*/*.tsv" schema="":
+    if ! command -v qsv >/dev/null 2>&1; then
+        echo "✗ qsv CLI not found"
+        echo "Install it: https://github.com/dathere/qsv"
+        exit 1
+    fi
+
     echo "Validating TSV files..."
     found=0
     for file in {{ globs }}; do
