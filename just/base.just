@@ -98,14 +98,14 @@ alias kw := knip-write
 [group("checks")]
 [no-cd]
 prettier-check +globs=GLOBS_PRETTIER:
-    na prettier --check --cache "{{ globs }}"
+    na prettier --check --cache {{ globs }}
 alias pc := prettier-check
 
 # Format using Prettier
 [group("checks")]
 [no-cd]
 prettier-write +globs=GLOBS_PRETTIER:
-    na prettier --write --cache "{{ globs }}"
+    na prettier --write --cache {{ globs }}
 alias pw := prettier-write
 
 # Type check with TypeScript
