@@ -44,7 +44,7 @@ tsc-build:
     na tsc -p tsconfig.build.json
 
 # ---------------------------------------------------------------------------- #
-#                                    CHECKs                                    #
+#                                    CHECKS                                    #
 # ---------------------------------------------------------------------------- #
 
 # Check code with Biome
@@ -98,14 +98,14 @@ alias kw := knip-write
 [group("checks")]
 [no-cd]
 prettier-check +globs=GLOBS_PRETTIER:
-    na prettier --check --cache {{ globs }}
+    na prettier --check --cache --no-error-on-unmatched-pattern {{ globs }}
 alias pc := prettier-check
 
 # Format using Prettier
 [group("checks")]
 [no-cd]
 prettier-write +globs=GLOBS_PRETTIER:
-    na prettier --write --cache {{ globs }}
+    na prettier --write --cache --no-error-on-unmatched-pattern {{ globs }}
 alias pw := prettier-write
 
 # Type check with TypeScript
