@@ -28,7 +28,8 @@ _tsv-check globs="data/*/*.tsv" schema="":
         [ -e "$file" ] || continue
 
         found=$((found + 1))
-        if ! qsv validate "$file" {{ schema }} > /dev/null 2>&1; then
+        schema_arg="{{ schema }}"
+        if ! qsv validate "$file" ${schema_arg:+"$schema_arg"} > /dev/null 2>&1; then
             echo "❌ Validation failed for: $file"
             echo "See $file.validation-errors.tsv for details"
             exit 1
