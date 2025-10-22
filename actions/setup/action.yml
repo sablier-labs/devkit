@@ -64,7 +64,7 @@ runs:
       run: "npm install -g @antfu/ni"
       shell: bash
 
-    - uses: ./actions/node-cache
+    - uses: sablier-labs/devkit/actions/node-cache@main
       id: node-cache
       with:
         package-manager: ${{ steps.detect-pm.outputs.package-manager }}
