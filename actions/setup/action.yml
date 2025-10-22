@@ -7,8 +7,7 @@ inputs:
     default: "true"
     required: false
   package-manager:
-    description: "Package manager to install Node.js dependencies with"
-    default: "npm"
+    description: "Package manager to install Node.js dependencies with (auto-detected from lockfiles if not provided)"
     required: false
 
 outputs:
@@ -22,6 +21,23 @@ runs:
     - name: "Check out the repo"
       uses: "actions/checkout@v5"
 
+    - name: "Detect package manager"
+      id: detect-pm
+      shell: bash
+      run: | #shell
+        if [ -n "${{ inputs.package-manager }}" ]; then
+          pm="${{ inputs.package-manager }}"
+        elif [ -f "bun.lockb" ] || [ -f "bun.lock" ]; then
+          pm="bun"
+        elif [ -f "pnpm-lock.yaml" ]; then
+          pm="pnpm"
+        elif [ -f "package-lock.json" ]; then
+          pm="npm"
+        else
+          pm="npm"
+        fi
+        echo "package-manager=$pm" >> $GITHUB_OUTPUT
+
     - name: "Install Just"
       uses: "extractions/setup-just@v3"
       with:
@@ -33,13 +49,13 @@ runs:
         node-version: ">20"
 
     - name: "Install Bun"
-      if: inputs.package-manager == 'bun'
+      if: steps.detect-pm.outputs.package-manager == 'bun'
       uses: "oven-sh/setup-bun@v2"
       with:
         bun-version: "latest"
 
     - name: "Install Pnpm"
-      if: inputs.package-manager == 'pnpm'
+      if: steps.detect-pm.outputs.package-manager == 'pnpm'
       uses: pnpm/action-setup@v4
       with:
         version: "10"
@@ -51,7 +67,7 @@ runs:
     - uses: ./actions/node-cache
       id: node-cache
       with:
-        package-manager: ${{ inputs.package-manager }}
+        package-manager: ${{ steps.detect-pm.outputs.package-manager }}
 
     - name: "Install the Node.js dependencies"
       run: | #shell
