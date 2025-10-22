@@ -42,5 +42,8 @@
     "type": "git",
     "url": "git+https://github.com/sablier-labs/devkit.git"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
 }

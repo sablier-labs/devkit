@@ -10,7 +10,7 @@ The files are meant to be extended and customized as needed.
 | --------------- | :------------------------------------ |
 | 🔍 Biome        | [`biome.jsonc`](./biome.jsonc)        |
 | 📝 EditorConfig | [`.editorconfig`](./.editorconfig)    |
-| 🛠 Just          | [`just/`](./just/)                    |
+| 🛠 Just         | [`just/`](./just/)                    |
 | ✨ Prettier     | [`prettier.json`](./.prettierrc.json) |
 | 📦 TSConfig     | [`tsconfig/`](./tsconfig/)            |
 
