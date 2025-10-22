@@ -1,0 +1,83 @@
+name: "Cache Node.js Dependencies"
+description: "Internal composite action for Node.js dependency caching logic"
+
+inputs:
+  fail-on-cache-miss:
+    default: "false"
+    description: "If true, fails if cache is missing"
+    required: false
+  package-manager:
+    description: "Package manager to cache for (npm, pnpm, or bun)"
+    required: true
+
+outputs:
+  cache-status:
+    description: "Descriptive cache status: 'primary', 'fallback', or 'not-found'"
+    value: ${{ steps.determine-cache-status.outputs.status }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Determine cache paths"
+      id: cache-paths
+      shell: bash
+      run: | #shell
+        case "${{ inputs.package-manager }}" in
+          npm)
+            echo "paths<<EOF" >> $GITHUB_OUTPUT
+            echo "node_modules" >> $GITHUB_OUTPUT
+            echo "~/.npm" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            ;;
+          pnpm)
+            echo "paths<<EOF" >> $GITHUB_OUTPUT
+            echo "node_modules" >> $GITHUB_OUTPUT
+            echo "~/.pnpm-store" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            ;;
+          bun)
+            echo "paths<<EOF" >> $GITHUB_OUTPUT
+            echo "node_modules" >> $GITHUB_OUTPUT
+            echo "~/.bun/install/cache" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            ;;
+          *)
+            echo "paths<<EOF" >> $GITHUB_OUTPUT
+            echo "node_modules" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            ;;
+        esac
+
+    - uses: "actions/cache@v4"
+      id: "cache-step"
+      with:
+        fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
+        path: ${{ steps.cache-paths.outputs.paths }}
+
+        # Primary cache key composed of:
+        #   1. Package manager type
+        #   2. Hash of all possible lockfiles (whichever exist)
+        #   3. Hash of package.json
+        key: |
+          node-deps-${{ inputs.package-manager }}-${{ hashFiles('**/package-lock.json', '**/bun.lock', '**/pnpm-lock.yaml', '**/yarn.lock') }}-${{ hashFiles('**/package.json') }}
+
+        # `restore-keys` is a terrible name and should be renamed to `backup-keys`:
+        # See https://stackoverflow.com/a/79575296/3873510
+        # See https://github.com/actions/cache/issues/1590
+        restore-keys: |
+          node-deps-${{ inputs.package-manager }}-${{ hashFiles('**/package-lock.json', '**/bun.lock', '**/pnpm-lock.yaml', '**/yarn.lock') }}
+          node-deps-${{ inputs.package-manager }}
+
+    # Interpret cache-hit output into three-part cache-status.
+    # See https://github.com/actions/cache/issues/1566
+    - name: "Determine cache status"
+      id: determine-cache-status
+      shell: bash
+      run: | #shell
+        if [[ "${{ steps.cache-step.outputs.cache-hit }}" == "true" ]]; then
+          echo "status=primary" >> $GITHUB_OUTPUT
+        elif [[ "${{ steps.cache-step.outputs.cache-hit }}" == "false" ]]; then
+          echo "status=fallback" >> $GITHUB_OUTPUT
+        else
+          echo "status=not-found" >> $GITHUB_OUTPUT
+        fi

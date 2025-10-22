@@ -11,6 +11,11 @@ inputs:
     default: "npm"
     required: false
 
+outputs:
+  cache-status:
+    description: "Descriptive cache status: 'primary', 'fallback', or 'not-found'"
+    value: ${{ steps.node-cache.outputs.cache-status }}
+
 runs:
   using: "composite"
   steps:
@@ -42,6 +47,11 @@ runs:
     - name: "Install Ni package manager resolver"
       run: "npm install -g @antfu/ni"
       shell: bash
+
+    - uses: ./actions/node-cache
+      id: node-cache
+      with:
+        package-manager: ${{ inputs.package-manager }}
 
     - name: "Install the Node.js dependencies"
       run: | #shell
