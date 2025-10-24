@@ -67,9 +67,22 @@ alias bw := biome-write
 [group("checks")]
 [no-cd]
 full-check:
+    @echo '{{ CYAN }}→ Running biome-check...{{ NORMAL }}'
     just biome-check
+    @echo '{{ GREEN }}✓ biome-check completed{{ NORMAL }}'
+
+    @echo ""
+    @echo '{{ CYAN }}→ Running prettier-check...{{ NORMAL }}'
     just prettier-check
+    @echo '{{ GREEN }}✓ prettier-check completed{{ NORMAL }}'
+
+    @echo ""
+    @echo '{{ CYAN }}→ Running tsc-check...{{ NORMAL }}'
     just tsc-check
+    @echo '{{ GREEN }}✓ tsc-check completed{{ NORMAL }}'
+
+    @echo ""
+    @echo '{{ GREEN }}✓ All checks passed!{{ NORMAL }}'
 alias fc := full-check
 
 # Run all code fixes
