@@ -5,12 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.2.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.2.1
 [1.2.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.2.0
 [1.1.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.3
 [1.1.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.2
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.2.1] - 2025-10-28
+
+### Changed
+
+- Refactored check recipes for cleaner output with `_run-with-status` helper recipe
+- Made check recipes quieter by prefixing with `@` to suppress command echoing
+
+### Added
+
+- Added `project` parameter to `tsc-build` recipe for better flexibility (defaults to `tsconfig.json`)
+- Added command aliases: `tb` (tsc-build), `tc` (tsc-check)
 
 ## [1.2.0] - 2025-10-28
 
