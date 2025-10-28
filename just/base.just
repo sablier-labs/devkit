@@ -123,7 +123,8 @@ alias tc := tsc-check
 # Private recipe to run a check with formatted output
 [no-cd]
 @_run-with-status recipe:
-    @echo ""
-    @echo '{{ CYAN }}→ Running {{ recipe }}...{{ NORMAL }}'
+    echo ""
+    echo '{{ CYAN }}→ Running {{ recipe }}...{{ NORMAL }}'
     just {{ recipe }}
-    @echo '{{ GREEN }}✓ {{ recipe }} completed{{ NORMAL }}'
+    echo '{{ GREEN }}✓ {{ recipe }} completed{{ NORMAL }}'
+alias rws := _run-with-status
