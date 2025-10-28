@@ -5,11 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.2.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.2.0
 [1.1.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.3
 [1.1.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.2
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.2.0] - 2025-10-28
+
+### Added
+
+- Enhanced `full-check` recipe with colored output and progress indicators for better visibility during check execution
+- Improved error reporting in `tsv-check` with detailed validation error display (first 20 errors with total count)
+
+### Changed
+
+- Removed `precompiles` from default Solidity glob patterns in `evm.just`
+
+### Fixed
+
+- Schema argument handling in `tsv-check` to properly validate TSV files with optional schemas
 
 ## [1.1.3] - 2025-10-21
 
