@@ -40,8 +40,9 @@ install *args:
 
 # Build with TypeScript
 [no-cd]
-tsc-build:
-    na tsc -p tsconfig.build.json
+tsc-build project="tsconfig.json":
+    na tsc -p {{ project }}
+alias tb := tsc-build
 
 # ---------------------------------------------------------------------------- #
 #                                    CHECKS                                    #
@@ -50,7 +51,7 @@ tsc-build:
 # Check code with Biome
 [group("checks")]
 [no-cd]
-biome-check +globs=".":
+@biome-check +globs=".":
     na biome check {{ globs }}
 alias bc := biome-check
 
@@ -58,7 +59,7 @@ alias bc := biome-check
 # The `noUnusedImports` rule is disabled by default to allow unused imports during development
 [group("checks")]
 [no-cd]
-biome-write +globs=".":
+@biome-write +globs=".":
     na biome check --write {{ globs }}
     na biome lint --unsafe --write --only correctness/noUnusedImports {{ globs }}
 alias bw := biome-write
@@ -66,58 +67,49 @@ alias bw := biome-write
 # Run all code checks
 [group("checks")]
 [no-cd]
-full-check:
-    @echo '{{ CYAN }}→ Running biome-check...{{ NORMAL }}'
-    just biome-check
-    @echo '{{ GREEN }}✓ biome-check completed{{ NORMAL }}'
-
-    @echo ""
-    @echo '{{ CYAN }}→ Running prettier-check...{{ NORMAL }}'
-    just prettier-check
-    @echo '{{ GREEN }}✓ prettier-check completed{{ NORMAL }}'
-
-    @echo ""
-    @echo '{{ CYAN }}→ Running tsc-check...{{ NORMAL }}'
-    just tsc-check
-    @echo '{{ GREEN }}✓ tsc-check completed{{ NORMAL }}'
-
-    @echo ""
-    @echo '{{ GREEN }}✓ All checks passed!{{ NORMAL }}'
+@full-check:
+    just _run-with-status biome-check
+    just _run-with-status prettier-check
+    just _run-with-status tsc-check
+    echo ""
+    echo '{{ GREEN }}✓ All code checks passed!{{ NORMAL }}'
 alias fc := full-check
 
 # Run all code fixes
 [group("checks")]
 [no-cd]
-full-write:
-    just biome-write
-    just prettier-write
+@full-write:
+    just _run-with-status biome-write
+    just _run-with-status prettier-write
+    echo ""
+    echo '{{ GREEN }}✓ All code fixes applied!{{ NORMAL }}'
 alias fw := full-write
 
 # Run knip checks
 [group("checks")]
 [no-cd]
-knip-check:
+@knip-check:
     na knip
 alias kc := knip-check
 
 # Run knip fix
 [group("checks")]
 [no-cd]
-knip-write:
+@knip-write:
     na knip --fix
 alias kw := knip-write
 
 # Check Prettier formatting
 [group("checks")]
 [no-cd]
-prettier-check +globs=GLOBS_PRETTIER:
+@prettier-check +globs=GLOBS_PRETTIER:
     na prettier --check --cache --no-error-on-unmatched-pattern {{ globs }}
 alias pc := prettier-check
 
 # Format using Prettier
 [group("checks")]
 [no-cd]
-prettier-write +globs=GLOBS_PRETTIER:
+@prettier-write +globs=GLOBS_PRETTIER:
     na prettier --write --cache --no-error-on-unmatched-pattern {{ globs }}
 alias pw := prettier-write
 
@@ -126,3 +118,12 @@ alias pw := prettier-write
 [no-cd]
 @tsc-check project="tsconfig.json":
     na tsc --noEmit --project {{ project }}
+alias tc := tsc-check
+
+# Private recipe to run a check with formatted output
+[no-cd]
+@_run-with-status recipe:
+    @echo ""
+    @echo '{{ CYAN }}→ Running {{ recipe }}...{{ NORMAL }}'
+    just {{ recipe }}
+    @echo '{{ GREEN }}✓ {{ recipe }} completed{{ NORMAL }}'
