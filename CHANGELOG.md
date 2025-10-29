@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.2.4]: https://github.com/sablier-labs/devkit/releases/tag/v1.2.4
 [1.2.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.2.3
 [1.2.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.2.2
 [1.2.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.2.1
@@ -14,6 +15,15 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.2.4] - 2025-10-29
+
+### Changed
+
+- Refactored `tsv-check` recipe to extract error display logic into separate `_tsv-show-errors` recipe for better
+  maintainability
+- Made file ignore patterns configurable via `ignore` parameter in `_tsv-check` recipe (defaults to
+  `*.tsv.invalid|*.tsv.valid|*validation-errors.tsv`)
 
 ## [1.2.3] - 2025-10-28
 
