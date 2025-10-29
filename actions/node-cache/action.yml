@@ -55,18 +55,19 @@ runs:
         path: ${{ steps.cache-paths.outputs.paths }}
 
         # Primary cache key composed of:
-        #   1. Package manager type
-        #   2. Hash of all possible lockfiles (whichever exist)
-        #   3. Hash of package.json
+        #   1. Operating system
+        #   2. Package manager type
+        #   3. Hash of all possible lockfiles (whichever exist)
+        #   4. Hash of package.json
         key: |
-          node-deps-${{ inputs.package-manager }}-${{ hashFiles('**/package-lock.json', '**/bun.lock', '**/pnpm-lock.yaml', '**/yarn.lock') }}-${{ hashFiles('**/package.json') }}
+          node-deps-${{ runner.os }}-${{ inputs.package-manager }}-${{ hashFiles('**/package-lock.json', '**/bun.lock', '**/pnpm-lock.yaml', '**/yarn.lock') }}-${{ hashFiles('**/package.json') }}
 
         # `restore-keys` is a terrible name and should be renamed to `backup-keys`:
         # See https://stackoverflow.com/a/79575296/3873510
         # See https://github.com/actions/cache/issues/1590
         restore-keys: |
-          node-deps-${{ inputs.package-manager }}-${{ hashFiles('**/package-lock.json', '**/bun.lock', '**/pnpm-lock.yaml', '**/yarn.lock') }}
-          node-deps-${{ inputs.package-manager }}
+          node-deps-${{ runner.os }}-${{ inputs.package-manager }}-${{ hashFiles('**/package-lock.json', '**/bun.lock', '**/pnpm-lock.yaml', '**/yarn.lock') }}
+          node-deps-${{ runner.os }}-${{ inputs.package-manager }}
 
     # Interpret cache-hit output into three-part cache-status.
     # See https://github.com/actions/cache/issues/1566
