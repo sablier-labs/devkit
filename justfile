@@ -1,8 +1,12 @@
 import "./just/base.just"
+import "./just/tsv.just"
 
 # ---------------------------------------------------------------------------- #
 #                                 DEPENDENCIES                                 #
 # ---------------------------------------------------------------------------- #
+
+# BATS: https://github.com/bats-core/bats-core
+bats := require("bats")
 
 # ShellCheck: https://github.com/koalaman/shellcheck
 shellcheck := require("shellcheck")
@@ -55,26 +59,10 @@ GLOBS_SHELL := ```
 
 # Run TSV validation tests using BATS
 [group("tests")]
-test-tsv:
-    #!/usr/bin/env bash
-    set -euo pipefail
-
-    if ! command -v bats >/dev/null 2>&1; then
-        echo "✗ BATS not installed"
-        echo "Install it:"
-        echo "  macOS:  brew install bats-core"
-        echo "  Linux:  apt install bats (or use package manager)"
-        echo "  GitHub: https://github.com/bats-core/bats-core"
-        exit 1
-    fi
-
+@test-tsv:
     echo "Running TSV validation tests..."
     bats tests/tsv.bats
 
-# Run all tests
-[group("tests")]
-test-all: test-tsv
-
 # Alias for running all tests
 [group("tests")]
-test: test-all
+test: test-tsv
