@@ -21,7 +21,6 @@
 # Exit on error or undefined variable
 set -eu
 
-SCRIPT_NAME="$(basename "$0")"
 LOG_FILE="sablier_devkit_setup.log"
 
 printf "Logging to %s\n" "$LOG_FILE"
@@ -62,18 +61,18 @@ NODE_VERSION="$(node -v)"
 # Extract major version
 NODE_MAJOR=$(printf "%s" "$NODE_VERSION" | sed -E 's/^v([0-9]+)\..*/\1/')
 case "$NODE_MAJOR" in
-  ''|*[!0-9]*)
-    printf "✗ Could not parse Node.js version: %s\n" "$NODE_VERSION" 1>&2
+'' | *[!0-9]*)
+  printf "✗ Could not parse Node.js version: %s\n" "$NODE_VERSION" 1>&2
+  exit 1
+  ;;
+*)
+  if [ "$NODE_MAJOR" -lt 20 ]; then
+    printf "✗ Node.js v20+ required (found %s)\n" "$NODE_VERSION" 1>&2
     exit 1
-    ;;
-  *)
-    if [ "$NODE_MAJOR" -lt 20 ]; then
-      printf "✗ Node.js v20+ required (found %s)\n" "$NODE_VERSION" 1>&2
-      exit 1
-    else
-      printf "✓ Node.js %s\n" "$NODE_VERSION"
-    fi
-    ;;
+  else
+    printf "✓ Node.js %s\n" "$NODE_VERSION"
+  fi
+  ;;
 esac
 
 # Installer functions
@@ -113,7 +112,7 @@ install_rust() {
   if ! check_command rustc; then
     printf "Installing Rust...\n"
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-    printf "To use Rust tools, ensure $HOME/.cargo/bin is in your PATH.\n"
+    printf "To use Rust tools, ensure %s/.cargo/bin is in your PATH.\n" "$HOME"
   fi
 }
 
@@ -133,4 +132,4 @@ install_ni
 install_rust
 install_bulloak
 printf "=== Installation complete! ===\n"
-printf "Ensure your shell PATH includes npm globals and $HOME/.cargo/bin if not already.\n"
+printf "Ensure your shell PATH includes npm globals and %s/.cargo/bin if not already.\n" "$HOME"
