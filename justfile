@@ -37,14 +37,14 @@ GLOBS_SHELL := ```
     just _run-with-status biome-check
     just _run-with-status shell-check
     echo ""
-    echo '{{ GREEN }}✓ All code checks passed!{{ NORMAL }}'
+    echo '{{ GREEN }}All checks passed!{{ NORMAL }}'
 
 @full-write:
     just _run-with-status prettier-write
     just _run-with-status biome-write
     just _run-with-status shell-write
     echo ""
-    echo '{{ GREEN }}✓ All code fixes applied!{{ NORMAL }}'
+    echo '{{ GREEN }}All code fixes applied!{{ NORMAL }}'
 
 # Check shell scripts with ShellCheck and shfmt
 [group("checks")]

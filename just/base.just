@@ -72,7 +72,7 @@ alias bw := biome-write
     just _run-with-status prettier-check
     just _run-with-status tsc-check
     echo ""
-    echo '{{ GREEN }}✓ All code checks passed!{{ NORMAL }}'
+    echo '{{ GREEN }}All code checks passed!{{ NORMAL }}'
 alias fc := full-check
 
 # Run all code fixes
@@ -82,7 +82,7 @@ alias fc := full-check
     just _run-with-status biome-write
     just _run-with-status prettier-write
     echo ""
-    echo '{{ GREEN }}✓ All code fixes applied!{{ NORMAL }}'
+    echo '{{ GREEN }}All code fixes applied!{{ NORMAL }}'
 alias fw := full-write
 
 # Run knip checks
