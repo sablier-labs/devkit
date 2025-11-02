@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.3.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.3.0
 [1.2.4]: https://github.com/sablier-labs/devkit/releases/tag/v1.2.4
 [1.2.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.2.3
 [1.2.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.2.2
@@ -15,6 +16,16 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.3.0] - 2025-11-02
+
+### Changed
+
+- Simplified success messages in `full-check` and `full-write` recipes by removing checkmark emoji
+
+### Added
+
+- New `biome-lint` recipe with `bl` alias for running Biome linter separately from checker
 
 ## [1.2.4] - 2025-10-29
 
