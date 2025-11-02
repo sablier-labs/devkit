@@ -48,12 +48,19 @@ alias tb := tsc-build
 #                                    CHECKS                                    #
 # ---------------------------------------------------------------------------- #
 
-# Check code with Biome
+# Check code with Biome - runs both the checker and the linter
 [group("checks")]
 [no-cd]
 @biome-check +globs=".":
     na biome check {{ globs }}
 alias bc := biome-check
+
+# Lint code with Biome
+[group("checks")]
+[no-cd]
+@biome-lint +globs=".":
+    na biome lint {{ globs }}
+alias bl := biome-lint
 
 # Fix code with Biome
 # The `noUnusedImports` rule is disabled by default to allow unused imports during development
