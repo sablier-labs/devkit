@@ -88,7 +88,7 @@ alias sc := solhint-check
 
 # Fix code with Solhint
 solhint-write globs=GLOBS_SOLIDITY:
-    na solhint --fix --noPrompt "{{ globs }}"
+    na solhint --cache --fix --noPrompt "{{ globs }}"
 alias sw := solhint-write
 
 # ---------------------------------------------------------------------------- #
