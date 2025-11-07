@@ -52,14 +52,14 @@ alias tb := tsc-build
 [group("checks")]
 [no-cd]
 @biome-check +globs=".":
-    na biome check "{{ globs }}"
+    na biome check {{ globs }}
 alias bc := biome-check
 
 # Lint code with Biome
 [group("checks")]
 [no-cd]
 @biome-lint +globs=".":
-    na biome lint "{{ globs }}"
+    na biome lint {{ globs }}
 alias bl := biome-lint
 
 # Fix code with Biome
@@ -67,8 +67,8 @@ alias bl := biome-lint
 [group("checks")]
 [no-cd]
 @biome-write +globs=".":
-    na biome check --write "{{ globs }}"
-    na biome lint --unsafe --write --only correctness/noUnusedImports "{{ globs }}"
+    na biome check --write {{ globs }}
+    na biome lint --unsafe --write --only correctness/noUnusedImports {{ globs }}
 alias bw := biome-write
 
 # Run all code checks
@@ -110,21 +110,21 @@ alias kw := knip-write
 [group("checks")]
 [no-cd]
 @prettier-check +globs=GLOBS_PRETTIER:
-    na prettier --check --cache --no-error-on-unmatched-pattern "{{ globs }}"
+    na prettier --check --cache --no-error-on-unmatched-pattern {{ globs }}
 alias pc := prettier-check
 
 # Format using Prettier
 [group("checks")]
 [no-cd]
 @prettier-write +globs=GLOBS_PRETTIER:
-    na prettier --write --cache --no-error-on-unmatched-pattern "{{ globs }}"
+    na prettier --write --cache --no-error-on-unmatched-pattern {{ globs }}
 alias pw := prettier-write
 
 # Type check with TypeScript
 [group("checks")]
 [no-cd]
 @tsc-check project="tsconfig.json":
-    na tsc --noEmit --project "{{ project }}"
+    na tsc --noEmit --project {{ project }}
 alias tc := tsc-check
 
 # Private recipe to run a check with formatted output
