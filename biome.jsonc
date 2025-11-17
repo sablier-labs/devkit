@@ -1,4 +1,20 @@
 // Sablier Devkit configuration for Biome v2: https://next.biomejs.dev
+//
+// This is a shared base configuration meant to be extended in consuming projects.
+//
+// IMPORTANT: Consumers must add their own `files.includes` patterns to specify
+// which files to lint and format. For example:
+//
+//   {
+//     "extends": ["@sablier/devkit/biome"],
+//     "files": {
+//       "includes": ["**/*.{css,js,jsx,json,ts,tsx}", "!node_modules"]
+//     }
+//   }
+//
+// You may also add override blocks with custom `includes` patterns for
+// granular rule customization. See ~/sablier/frontend/ui/biome.jsonc for a
+// complete example.
 {
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "assist": {
@@ -12,6 +28,7 @@
   },
   "css": {
     "parser": {
+      "cssModules": true,
       "tailwindDirectives": true
     }
   },
