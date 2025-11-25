@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.4.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.4.0
 [1.3.5]: https://github.com/sablier-labs/devkit/releases/tag/v1.3.5
 [1.3.4]: https://github.com/sablier-labs/devkit/releases/tag/v1.3.4
 [1.3.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.3.3
@@ -21,6 +22,18 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.4.0] - 2025-11-25
+
+### Changed
+
+- Restructured Biome configuration: moved from root `biome.jsonc` to `biome/base.jsonc`
+  - This is a backward-compatible change because we export the new `biome/base.jsonc` configuration as `./biome`
+- Change default `lineWidth` to 100 characters
+
+### Added
+
+- New Bioem config with UI-specific Biome configuration including a11y rules and Tailwind CSS support
 
 ## [1.3.5] - 2025-11-17
 
