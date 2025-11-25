@@ -65,7 +65,7 @@ refute_output() {
 # Tests for _tsv-check recipe
 # ---------------------------------------------------------------------------
 
-@test "_tsv-check: validates a valid TSV file successfully" {
+@test "validates a valid TSV file successfully" {
   check_qsv
 
   run just _tsv-check "tests/fixtures/valid.tsv" ""
@@ -75,7 +75,7 @@ refute_output() {
   assert_output --partial "✅ All TSV files are valid"
 }
 
-@test "_tsv-check: fails on invalid TSV file" {
+@test "fails on invalid TSV file" {
   check_qsv
 
   # Create a temporary invalid TSV file
@@ -93,7 +93,7 @@ EOF
   assert_output --partial "❌ Validation failed for: ${temp_invalid}"
 }
 
-@test "_tsv-check: handles multiple files with glob pattern" {
+@test "handles multiple files with glob pattern" {
   check_qsv
 
   # Create temp copies to test multiple files
@@ -108,7 +108,7 @@ EOF
   assert_output --partial "✅ All TSV files are valid"
 }
 
-@test "_tsv-check: skips default ignore patterns (.tsv.invalid)" {
+@test "skips default ignore patterns (.tsv.invalid)" {
   check_qsv
 
   # The data.tsv.invalid should be skipped automatically
@@ -119,7 +119,7 @@ EOF
   refute_output --partial "data.tsv.invalid"
 }
 
-@test "_tsv-check: skips default ignore patterns (.tsv.valid)" {
+@test "skips default ignore patterns (.tsv.valid)" {
   check_qsv
 
   # Create a .tsv.valid file
@@ -133,7 +133,7 @@ EOF
   rm -f tests/fixtures/test.tsv.valid
 }
 
-@test "_tsv-check: skips default ignore patterns (validation-errors.tsv)" {
+@test "skips default ignore patterns (validation-errors.tsv)" {
   check_qsv
 
   # Create a validation-errors.tsv file
@@ -147,7 +147,7 @@ EOF
   rm -f tests/fixtures/test.validation-errors.tsv
 }
 
-@test "_tsv-check: supports custom ignore patterns" {
+@test "supports custom ignore patterns" {
   check_qsv
 
   # Test with custom ignore pattern that includes custom-ignore.tsv
@@ -157,7 +157,7 @@ EOF
   refute_output --partial "custom-ignore.tsv"
 }
 
-@test "_tsv-check: handles no files found gracefully" {
+@test "handles no files found gracefully" {
   check_qsv
 
   run just _tsv-check "tests/fixtures/nonexistent*.tsv" ""
@@ -166,21 +166,7 @@ EOF
   assert_output --partial "ℹ️  No TSV files found to validate"
 }
 
-@test "_tsv-check: detects missing qsv command" {
-  # Skip this test - it's difficult to test PATH manipulation without affecting
-  # other justfile dependencies (na, nb, etc.)
-  skip "PATH manipulation affects justfile dependencies"
-
-  # Temporarily modify PATH to hide qsv (which is in ~/.local/bin)
-  # Keep homebrew bin for just and other tools
-  PATH="/opt/homebrew/bin:/usr/bin:/bin" run just _tsv-check "tests/fixtures/valid.tsv" ""
-
-  assert_failure
-  assert_output --partial "✗ qsv CLI not found"
-  assert_output --partial "Install it: https://github.com/dathere/qsv"
-}
-
-@test "_tsv-check: validates with schema when provided" {
+@test "validates with schema when provided" {
   check_qsv
 
   # Create a simple JSON schema for testing
@@ -205,7 +191,7 @@ EOF
   [[ "$status" -eq 0 ]] || [[ "$output" =~ "schema" ]]
 }
 
-@test "_tsv-check: passes empty schema parameter correctly" {
+@test "passes empty schema parameter correctly" {
   check_qsv
 
   run just _tsv-check "tests/fixtures/valid.tsv" ""
@@ -217,7 +203,7 @@ EOF
 # Tests for _tsv-show-errors recipe
 # ---------------------------------------------------------------------------
 
-@test "_tsv-show-errors: displays error file not found message" {
+@test "displays error file not found message" {
   check_qsv
 
   run just _tsv-show-errors "tests/fixtures/nonexistent.tsv"
@@ -226,7 +212,7 @@ EOF
   assert_output --partial "Error file not found:"
 }
 
-@test "_tsv-show-errors: shows validation errors when error file exists" {
+@test "shows validation errors when error file exists" {
   check_qsv
 
   # Create a temporary invalid TSV file with consistent structure but invalid data

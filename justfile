@@ -63,6 +63,7 @@ GLOBS_SHELL := ```
     echo "Running TSV validation tests..."
     bats tests/tsv.bats
 
-# Alias for running all tests
+# Run all BATS tests
 [group("tests")]
-test: test-tsv
+@test:
+    bats tests/*.bats

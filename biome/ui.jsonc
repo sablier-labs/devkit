@@ -1,23 +1,57 @@
 // Sablier Devkit UI configuration for Biome v2
 //
-// Extends the base configuration with UI-specific rules for accessibility,
-// Tailwind CSS class sorting, and CSS modules support.
+// Standalone configuration with base rules plus UI-specific rules for
+// accessibility, Tailwind CSS class sorting, and CSS modules support.
+//
+// IMPORTANT: Consumers must add their own `files.includes` patterns to specify
+// which files to lint and format. For example:
+//
+//   {
+//     "extends": ["@sablier/devkit/biome/ui"],
+//     "files": {
+//       "includes": ["**/*.{css,js,jsx,json,ts,tsx}", "!node_modules"]
+//     }
+//   }
 {
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
-  "extends": ["./base.jsonc"],
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedKeys": "on"
+      }
+    }
+  },
   "css": {
     "parser": {
       "cssModules": true,
       "tailwindDirectives": true
     }
   },
+  "files": {
+    "maxSize": 5242880 // 5MB
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "lineWidth": 100
+  },
   "linter": {
+    "enabled": true,
     "rules": {
       "a11y": {
         "noSvgWithoutTitle": "off",
         "useKeyWithClickEvents": "off"
       },
+      "correctness": {
+        "noUnusedImports": "off",
+        "noUnusedVariables": "error",
+        "useExhaustiveDependencies": "error"
+      },
       "nursery": {
+        "noFloatingPromises": "error",
         "useSortedClasses": {
           "fix": "safe",
           "level": "warn",
@@ -26,7 +60,34 @@
             "functions": ["clsx", "cva", "cn", "tv", "tw", "tw.*"]
           }
         }
+      },
+      "recommended": true,
+      "style": {
+        "useImportType": {
+          "level": "warn",
+          "options": {
+            "style": "separatedType"
+          }
+        },
+        "useTemplate": "off"
       }
     }
+  },
+  "overrides": [
+    {
+      "assist": {
+        "actions": {
+          "source": {
+            "useSortedKeys": "off"
+          }
+        }
+      },
+      "includes": ["**/*.{json,json5,jsonc}"]
+    }
+  ],
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true
   }
 }
