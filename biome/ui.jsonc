@@ -1,0 +1,32 @@
+// Sablier Devkit UI configuration for Biome v2
+//
+// Extends the base configuration with UI-specific rules for accessibility,
+// Tailwind CSS class sorting, and CSS modules support.
+{
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "extends": ["./base.jsonc"],
+  "css": {
+    "parser": {
+      "cssModules": true,
+      "tailwindDirectives": true
+    }
+  },
+  "linter": {
+    "rules": {
+      "a11y": {
+        "noSvgWithoutTitle": "off",
+        "useKeyWithClickEvents": "off"
+      },
+      "nursery": {
+        "useSortedClasses": {
+          "fix": "safe",
+          "level": "warn",
+          "options": {
+            "attributes": ["classList"],
+            "functions": ["clsx", "cva", "cn", "tv", "tw", "tw.*"]
+          }
+        }
+      }
+    }
+  }
+}

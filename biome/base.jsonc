@@ -26,12 +26,6 @@
       }
     }
   },
-  "css": {
-    "parser": {
-      "cssModules": true,
-      "tailwindDirectives": true
-    }
-  },
   "files": {
     "maxSize": 5242880 // 5MB
   },
@@ -39,7 +33,7 @@
     "enabled": true,
     "formatWithErrors": true,
     "indentStyle": "space",
-    "lineWidth": 120
+    "lineWidth": 100
   },
   "linter": {
     "enabled": true,

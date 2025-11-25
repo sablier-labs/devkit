@@ -12,11 +12,12 @@
     "url": "https://github.com/sablier-labs/devkit/issues"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.1",
+    "@biomejs/biome": "^2.3.7",
     "prettier": "^3.6.2"
   },
   "exports": {
-    "./biome": "./biome.jsonc",
+    "./biome": "./biome/base.jsonc",
+    "./biome/ui": "./biome/ui.jsonc",
     "./prettier": "./.prettierrc.json",
     "./tsconfig/base": "./tsconfig/base.json",
     "./tsconfig/build": "./tsconfig/build.json",
@@ -26,7 +27,7 @@
     "node": ">=20"
   },
   "files": [
-    "biome.jsonc",
+    "biome/",
     ".prettierrc.json",
     "just/",
     "tsconfig/"

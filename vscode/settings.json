@@ -34,7 +34,10 @@
     "typescriptreact": true
   },
   "yaml.schemas": {
-    "https://json.schemastore.org/github-workflow.json": ["**/.github/workflows/*.yaml", "**/.github/workflows/*.yml"]
+    "https://json.schemastore.org/github-workflow.json": [
+      "**/.github/workflows/*.yaml",
+      "**/.github/workflows/*.yml"
+    ]
   },
   "[graphql][javascript][javascriptreact][json][jsonc][typescript][typescriptreact]": {
     "editor.codeActionsOnSave": {
