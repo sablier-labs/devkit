@@ -77,7 +77,7 @@ alias bw := biome-write
 @full-check:
     just _run-with-status biome-check
     just _run-with-status prettier-check
-    just _run-with-status tsc-check
+    just _run-with-status type-check
     echo ""
     echo '{{ GREEN }}All code checks passed!{{ NORMAL }}'
 alias fc := full-check
@@ -120,12 +120,18 @@ alias pc := prettier-check
     na prettier --write --cache --no-error-on-unmatched-pattern {{ globs }}
 alias pw := prettier-write
 
-# Type check with TypeScript
+# Type check with TypeScript (tsgo default, falls back to tsc if unavailable)
 [group("checks")]
 [no-cd]
-@tsc-check project="tsconfig.json":
-    na tsc --noEmit --project {{ project }}
-alias tc := tsc-check
+[script("bash")]
+type-check compiler="tsgo" project="tsconfig.json":
+    cmd="{{ compiler }}"
+    if [[ "$cmd" == "tsgo" ]] && [[ ! -x "node_modules/.bin/tsgo" ]]; then
+        cmd="tsc"
+    fi
+    na "$cmd" --noEmit --project {{ project }}
+alias tc := type-check
+alias tsc-check := type-check
 
 # Private recipe to run a check with formatted output
 [no-cd]
