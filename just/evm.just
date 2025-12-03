@@ -115,8 +115,7 @@ build-optimized *args:
         forge build --extra-output-files metadata {{ args }}
 
 # Dump code coverage to an html file
-[group("foundry")]
-[script]
+[group("foundry"), script("bash")]
 coverage:
     if ! command -v genhtml >/dev/null 2>&1; then
         echo "✗ genhtml CLI not found"

@@ -28,9 +28,8 @@ _clean +globs:
     nlx del-cli "{{ globs }}"
 
 # Clear node_modules recursively
-[confirm("Are you sure you want to delete all node_modules, including in subdirectories? Y/n")]
-[no-cd]
-clean-modules +globs="node_modules **/node_modules":
+[confirm("Are you sure you want to delete all node_modules, including in subdirectories? Y/n"), no-cd]
+clean-modules +globs="**/node_modules":
     nlx del-cli {{ globs }}
 
 # Install the Node.js dependencies; run with --frozen to install the dependencies with the frozen lockfile
@@ -49,31 +48,27 @@ alias tb := tsc-build
 # ---------------------------------------------------------------------------- #
 
 # Check code with Biome - runs both the checker and the linter
-[group("checks")]
-[no-cd]
+[group("checks"), no-cd]
 @biome-check +globs=".":
     na biome check {{ globs }}
 alias bc := biome-check
 
 # Lint code with Biome
-[group("checks")]
-[no-cd]
+[group("checks"), no-cd]
 @biome-lint +globs=".":
     na biome lint {{ globs }}
 alias bl := biome-lint
 
 # Fix code with Biome
 # The `noUnusedImports` rule is disabled by default to allow unused imports during development
-[group("checks")]
-[no-cd]
+[group("checks"), no-cd]
 @biome-write +globs=".":
     na biome check --write {{ globs }}
     na biome lint --unsafe --write --only correctness/noUnusedImports {{ globs }}
 alias bw := biome-write
 
 # Run all code checks
-[group("checks")]
-[no-cd]
+[group("checks"), no-cd]
 @full-check:
     just _run-with-status biome-check
     just _run-with-status prettier-check
@@ -83,8 +78,7 @@ alias bw := biome-write
 alias fc := full-check
 
 # Run all code fixes
-[group("checks")]
-[no-cd]
+[group("checks"), no-cd]
 @full-write:
     just _run-with-status biome-write
     just _run-with-status prettier-write
@@ -93,37 +87,31 @@ alias fc := full-check
 alias fw := full-write
 
 # Run knip checks
-[group("checks")]
-[no-cd]
+[group("checks"), no-cd]
 @knip-check:
     na knip
 alias kc := knip-check
 
 # Run knip fix
-[group("checks")]
-[no-cd]
+[group("checks"), no-cd]
 @knip-write:
     na knip --fix
 alias kw := knip-write
 
 # Check Prettier formatting
-[group("checks")]
-[no-cd]
+[group("checks"), no-cd]
 @prettier-check +globs=GLOBS_PRETTIER:
     na prettier --check --cache --no-error-on-unmatched-pattern {{ globs }}
 alias pc := prettier-check
 
 # Format using Prettier
-[group("checks")]
-[no-cd]
+[group("checks"), no-cd]
 @prettier-write +globs=GLOBS_PRETTIER:
     na prettier --write --cache --no-error-on-unmatched-pattern {{ globs }}
 alias pw := prettier-write
 
 # Type check with TypeScript (tsgo default, falls back to tsc if unavailable)
-[group("checks")]
-[no-cd]
-[script("bash")]
+[group("checks"), no-cd, script("bash")]
 type-check compiler="tsgo" project="tsconfig.json":
     cmd="{{ compiler }}"
     if [[ "$cmd" == "tsgo" ]] && [[ ! -x "node_modules/.bin/tsgo" ]]; then
@@ -133,6 +121,10 @@ type-check compiler="tsgo" project="tsconfig.json":
 alias tc := type-check
 alias tsc-check := type-check
 
+# ---------------------------------------------------------------------------- #
+#                                   UTILITIES                                  #
+# ---------------------------------------------------------------------------- #
+
 # Private recipe to run a check with formatted output
 [no-cd]
 @_run-with-status recipe *args:
@@ -141,3 +133,4 @@ alias tsc-check := type-check
     just {{ recipe }} {{ args }}
     echo '{{ GREEN }}✓ {{ recipe }} completed{{ NORMAL }}'
 alias rws := _run-with-status
+alias _rws := _run-with-status

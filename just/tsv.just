@@ -5,8 +5,7 @@ import "./settings.just"
 # ---------------------------------------------------------------------------- #
 
 # Check TSV files using qsv: https://github.com/dathere/qsv
-[group("checks")]
-[script]
+[group("checks"), script("bash")]
 _tsv-check globs="data/*/*.tsv" schema="" ignore="*.tsv.invalid|*.tsv.valid|*validation-errors.tsv":
     if ! command -v qsv >/dev/null 2>&1; then
         echo "✗ qsv CLI not found"
@@ -43,8 +42,7 @@ _tsv-check globs="data/*/*.tsv" schema="" ignore="*.tsv.invalid|*.tsv.valid|*val
     fi
 
 # Show validation errors for a TSV file
-[group("checks")]
-[script]
+[group("checks"), script("bash")]
 _tsv-show-errors file:
     error_file="{{ file }}.validation-errors.tsv"
 

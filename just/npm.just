@@ -38,8 +38,7 @@ tag *version:
 
 
 # Check that package.json version includes -beta.x suffix
-[private]
-[script]
+[private, script("bash")]
 @check-beta-version:
   # Extract version from package.json using jq for reliable JSON parsing
   version=$(jq -r '.version' package.json)
