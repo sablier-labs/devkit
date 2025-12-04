@@ -101,13 +101,23 @@ alias kw := knip-write
 # Check Prettier formatting
 [group("checks"), no-cd]
 @prettier-check +globs=GLOBS_PRETTIER:
-    na prettier --check --cache --no-error-on-unmatched-pattern {{ globs }}
+    na prettier \
+        --check \
+        --cache \
+        --log-level warn \
+        --no-error-on-unmatched-pattern \
+        {{ globs }}
 alias pc := prettier-check
 
 # Format using Prettier
 [group("checks"), no-cd]
 @prettier-write +globs=GLOBS_PRETTIER:
-    na prettier --write --cache --no-error-on-unmatched-pattern {{ globs }}
+    na prettier \
+        --write \
+        --cache \
+        --log-level warn \
+        --no-error-on-unmatched-pattern \
+        {{ globs }}
 alias pw := prettier-write
 
 # Type check with TypeScript (tsgo default, falls back to tsc if unavailable)
