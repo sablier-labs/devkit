@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.5.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.5.1
 [1.5.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.5.0
 [1.4.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.4.1
 [1.4.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.4.0
@@ -24,6 +25,15 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.5.1] - 2025-12-05
+
+### Changed
+
+- Consolidated Just recipe attributes to single-line format for improved readability
+- Improved `prettier-check` and `prettier-write` recipes with multi-line formatting and added `--log-level warn` flag
+- Simplified `clean-modules` default glob from `node_modules **/node_modules` to `**/node_modules`
+- Added explicit `script("bash")` to shell script recipes for clarity
 
 ## [1.5.0] - 2025-11-29
 
