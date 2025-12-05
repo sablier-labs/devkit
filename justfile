@@ -19,10 +19,12 @@ shfmt := require("shfmt")
 # ---------------------------------------------------------------------------- #
 
 GLOBS_SHELL := ```
-    find . -type f \
-        \( -name '*.bats' -o -name '*.sh' \) \
-        -not -path './node_modules/*' \
-        -not -path './.git/*'
+    shopt -s globstar nullglob
+    arr=(
+        **/*.bats
+        **/*.sh
+    )
+    echo "${arr[@]}"
 ```
 
 # ---------------------------------------------------------------------------- #
