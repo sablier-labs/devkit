@@ -1,33 +1,114 @@
 # 🛠️ Sablier Devkit
 
-This repository contains configuration files and reusable scripts for various Sablier repositories.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![npm](https://img.shields.io/npm/v/@sablier/devkit)](https://www.npmjs.com/package/@sablier/devkit)
 
-The files are meant to be extended and customized as needed.
+Configuration files and reusable scripts for Sablier repositories. Designed to be extended and customized as needed.
 
-## ⚙️ Config Files
+## 📦 Installation
 
-| Tool            | Config File/Directory                 |
-| --------------- | :------------------------------------ |
-| 🔍 Biome        | [`biome.jsonc`](./biome.jsonc)        |
-| 📝 EditorConfig | [`.editorconfig`](./.editorconfig)    |
-| 🛠 Just         | [`just/`](./just/)                    |
-| ✨ Prettier     | [`prettier.json`](./.prettierrc.json) |
-| 📦 TSConfig     | [`tsconfig/`](./tsconfig/)            |
+```bash
+npm install @sablier/devkit
+```
+
+Or with other package managers:
+
+```bash
+pnpm add @sablier/devkit
+bun add @sablier/devkit
+```
+
+## 🚀 Usage
+
+### Biome
+
+Extend the base Biome configuration in your `biome.jsonc`:
+
+```jsonc
+{
+  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+  "extends": ["@sablier/devkit/biome"],
+}
+```
+
+For UI projects, use the UI variant:
+
+```jsonc
+{
+  "extends": ["@sablier/devkit/biome/ui"],
+}
+```
+
+### Prettier
+
+Reference the Prettier config in your `package.json`:
+
+```json
+{
+  "prettier": "@sablier/devkit/prettier"
+}
+```
+
+### TypeScript
+
+Extend TSConfig presets in your `tsconfig.json`:
+
+```json
+{
+  "extends": "@sablier/devkit/tsconfig/base"
+}
+```
+
+Available presets:
+
+- `@sablier/devkit/tsconfig/base` — Base TypeScript configuration
+- `@sablier/devkit/tsconfig/build` — Build-optimized configuration
+- `@sablier/devkit/tsconfig/next` — Next.js configuration
+
+### Just
+
+Import Just recipes in your `justfile`:
+
+```just
+import "@sablier/devkit/just/base.just"
+import "@sablier/devkit/just/npm.just"
+```
+
+Available modules:
+
+| Module          | Description                     |
+| --------------- | ------------------------------- |
+| `base.just`     | Common development recipes      |
+| `npm.just`      | NPM package management          |
+| `evm.just`      | EVM/Foundry tooling             |
+| `tsv.just`      | TypeScript validation           |
+| `settings.just` | Just settings and configuration |
+
+## ⚙️ Available Configs
+
+| Tool            | Config File/Directory                    |
+| --------------- | ---------------------------------------- |
+| 🔍 Biome        | [`biome/`](./biome/)                     |
+| 📝 EditorConfig | [`.editorconfig`](./.editorconfig)       |
+| 🛠 Just         | [`just/`](./just/)                       |
+| ✨ Prettier     | [`.prettierrc.json`](./.prettierrc.json) |
+| 📦 TSConfig     | [`tsconfig/`](./tsconfig/)               |
 
 ## 🐈‍⬛ GitHub Actions
 
-The [setup](./actions/setup/) GitHub Actions workflow is used to setup the requisite dependencies in a GitHub CI
-workflow.
+The [setup](./actions/setup/) action installs requisite dependencies in GitHub CI workflows.
 
-## 🚀 Setup Script
+```yaml
+- uses: sablier-labs/devkit/actions/setup@main
+```
 
-This is meant to be run by Sablier Labs employees and staff.
+## 🖥️ Setup Script
 
-See [`setup.sh`](./shell/setup.sh) for details.
+For Sablier Labs employees and staff, see [`shell/setup.sh`](./shell/setup.sh).
 
-## 📦 VSCode Settings
+## 🤝 Contributing
 
-See [`vscode/settings.json`](./vscode/settings.json).
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 

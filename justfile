@@ -11,7 +11,7 @@ bats := require("bats")
 # ShellCheck: https://github.com/koalaman/shellcheck
 shellcheck := require("shellcheck")
 
-# shfmt: https://github.com/mvdan/sh
+# shfmt: https://github.com/mvdan/shfmt
 shfmt := require("shfmt")
 
 # ---------------------------------------------------------------------------- #
