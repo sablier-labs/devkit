@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.6.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.6.0
 [1.5.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.5.1
 [1.5.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.5.0
 [1.4.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.4.1
@@ -25,6 +26,16 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.6.0] - 2025-12-11
+
+### Added
+
+- Vitest config factory with CI-aware defaults (`defineDevkitConfig`)
+  - Configurable environment: `node` (default), `jsdom`, `happy-dom`
+  - Optional setup files and coverage
+  - CI detection for retry count, timeout, and reporter selection
+- Re-export `mergeConfig` from vitest for combining configs
 
 ## [1.5.1] - 2025-12-05
 

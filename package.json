@@ -3,7 +3,7 @@
   "description": "Configuration files and reusable scripts for Sablier repositories",
   "license": "MIT",
   "type": "module",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "author": {
     "name": "Sablier Labs Ltd",
     "url": "https://sablier.com"
@@ -13,7 +13,16 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.7",
-    "prettier": "^3.6.2"
+    "prettier": "^3.6.2",
+    "vitest": "^3.2.0"
+  },
+  "peerDependencies": {
+    "vitest": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vitest": {
+      "optional": true
+    }
   },
   "exports": {
     "./biome": "./biome/base.jsonc",
@@ -21,16 +30,21 @@
     "./prettier": "./.prettierrc.json",
     "./tsconfig/base": "./tsconfig/base.json",
     "./tsconfig/build": "./tsconfig/build.json",
-    "./tsconfig/next": "./tsconfig/next.json"
+    "./tsconfig/next": "./tsconfig/next.json",
+    "./vitest": {
+      "import": "./vitest/index.js",
+      "types": "./vitest/index.d.ts"
+    }
   },
   "engines": {
     "node": ">=20"
   },
   "files": [
     "biome/",
-    ".prettierrc.json",
     "just/",
-    "tsconfig/"
+    ".prettierrc.json",
+    "tsconfig/",
+    "vitest/"
   ],
   "keywords": [
     "biome",
@@ -39,7 +53,8 @@
     "prettier",
     "sablier",
     "tsconfig",
-    "typescript"
+    "typescript",
+    "vitest"
   ],
   "publishConfig": {
     "access": "public"
