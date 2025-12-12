@@ -4,7 +4,6 @@
   "compilerOptions": {
     "allowJs": true,
     "isolatedModules": true,
-    "noEmit": true,
     "incremental": true,
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "ESNext"],

@@ -65,6 +65,43 @@ Available presets:
 - `@sablier/devkit/tsconfig/build` — Build-optimized configuration
 - `@sablier/devkit/tsconfig/next` — Next.js configuration
 
+### Vitest
+
+Use the devkit vitest config factory in your `vitest.config.ts`:
+
+```typescript
+import { defineDevkitConfig } from "@sablier/devkit/vitest";
+
+export default defineDevkitConfig({
+  environment: "jsdom", // or "node" (default), "happy-dom"
+  setupFiles: ["./tests/setup.ts"],
+  coverage: true,
+});
+```
+
+The config provides CI-aware defaults:
+
+- `globals: true`
+- `retry: 2` in CI, `0` locally
+- `testTimeout: 30s` in CI, `10s` locally
+- `reporters: ["basic"]` in CI, `["verbose"]` locally
+
+For merging with existing Vite configs:
+
+```typescript
+import { defineDevkitConfig, mergeConfig } from "@sablier/devkit/vitest";
+import { defineConfig } from "vitest/config";
+
+export default mergeConfig(
+  defineDevkitConfig({ environment: "jsdom" }),
+  defineConfig({
+    test: {
+      alias: { "@": "./src" },
+    },
+  }),
+);
+```
+
 ### Just
 
 Import Just recipes in your `justfile`:
@@ -93,6 +130,7 @@ Available modules:
 | 🛠 Just         | [`just/`](./just/)                       |
 | ✨ Prettier     | [`.prettierrc.json`](./.prettierrc.json) |
 | 📦 TSConfig     | [`tsconfig/`](./tsconfig/)               |
+| 🧪 Vitest       | [`vitest/`](./vitest/)                   |
 
 ## 🐈‍⬛ GitHub Actions
 
