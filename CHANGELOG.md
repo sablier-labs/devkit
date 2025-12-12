@@ -29,6 +29,10 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 
 ## [1.6.0] - 2025-12-11
 
+### Changed
+
+- Set `noEmit` to `true` in `tsconfig/base.json`
+
 ### Added
 
 - Vitest config factory with CI-aware defaults (`defineDevkitConfig`)

@@ -98,7 +98,7 @@ export default mergeConfig(
     test: {
       alias: { "@": "./src" },
     },
-  })
+  }),
 );
 ```
 
