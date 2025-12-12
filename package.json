@@ -3,7 +3,7 @@
   "description": "Configuration files and reusable scripts for Sablier repositories",
   "license": "MIT",
   "type": "module",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "author": {
     "name": "Sablier Labs Ltd",
     "url": "https://sablier.com"
@@ -31,10 +31,7 @@
     "./tsconfig/base": "./tsconfig/base.json",
     "./tsconfig/build": "./tsconfig/build.json",
     "./tsconfig/next": "./tsconfig/next.json",
-    "./vitest": {
-      "import": "./vitest/index.js",
-      "types": "./vitest/index.d.ts"
-    }
+    "./vitest": "./vitest/base.js"
   },
   "engines": {
     "node": ">=20"
@@ -42,9 +39,9 @@
   "files": [
     "biome/",
     "just/",
-    ".prettierrc.json",
     "tsconfig/",
-    "vitest/"
+    "vitest/",
+    ".prettierrc.json"
   ],
   "keywords": [
     "biome",

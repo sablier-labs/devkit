@@ -1,16 +1,19 @@
-import type { UserConfig } from "vitest/config";
-import { defineConfig } from "vitest/config";
+import { defineConfig, mergeConfig } from "vitest/config";
 
-export interface DevkitVitestOptions {
-  environment?: "node" | "jsdom" | "happy-dom";
-  setupFiles?: string[];
-  coverage?: boolean;
-}
+/**
+ * @typedef {Object} DevkitVitestOptions
+ * @property {"node" | "jsdom" | "happy-dom"} [environment]
+ * @property {string[]} [setupFiles]
+ * @property {boolean} [coverage]
+ */
 
-export function defineDevkitConfig(options: DevkitVitestOptions = {}) {
+/**
+ * @param {DevkitVitestOptions} [options]
+ */
+export function defineDevkitConfig(options = {}) {
   const isCI = !!process.env.CI;
 
-  const baseConfig: UserConfig = {
+  const baseConfig = {
     test: {
       coverage: options.coverage ? { provider: "v8" } : undefined,
       environment: options.environment ?? "node",
@@ -26,4 +29,4 @@ export function defineDevkitConfig(options: DevkitVitestOptions = {}) {
 }
 
 // Re-export for merging with existing vite configs
-export { mergeConfig } from "vitest/config";
+export { mergeConfig };

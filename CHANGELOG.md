@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.6.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.6.1
 [1.6.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.6.0
 [1.5.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.5.1
 [1.5.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.5.0
@@ -26,6 +27,13 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.6.1] - 2025-12-12
+
+### Fixed
+
+- Convert vitest config from TypeScript to JavaScript for npm compatibility
+- Remove deprecated `UserConfig` type annotation
 
 ## [1.6.0] - 2025-12-11
 
