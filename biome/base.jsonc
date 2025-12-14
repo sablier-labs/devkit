@@ -44,14 +44,17 @@
         "noUnusedVariables": "error"
       },
       "nursery": {
-        "noFloatingPromises": "error"
+        "noFloatingPromises": "error", // floating promises can lead to bugs
+        "noUselessUndefined": "off" // we want explicit undefined return values
       },
       "performance": {
         "noBarrelFile": "off" // barrel exports lead to cleaner imports
       },
       "recommended": true,
       "style": {
+        "noNamespace": "off", // namespaces are cool
         "useImportType": {
+          // disabled due to https://github.com/biomejs/biome/issues/8450
           "level": "warn",
           "options": {
             "style": "separatedType"
