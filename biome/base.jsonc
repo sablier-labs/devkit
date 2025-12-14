@@ -46,6 +46,9 @@
       "nursery": {
         "noFloatingPromises": "error"
       },
+      "performance": {
+        "noBarrelFile": "off" // barrel exports lead to cleaner imports
+      },
       "recommended": true,
       "style": {
         "useImportType": {
