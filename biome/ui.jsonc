@@ -14,7 +14,6 @@
 //   }
 {
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
-  "extends": ["./base.jsonc"],
   "css": {
     "formatter": {
       "lineWidth": 100
