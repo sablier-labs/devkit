@@ -39,6 +39,9 @@
   "linter": {
     "enabled": true,
     "rules": {
+      "complexity": {
+        "noVoid": "off"
+      },
       "correctness": {
         "noUnusedImports": "off", // allow unused imports during development
         "noUnusedVariables": "error"
