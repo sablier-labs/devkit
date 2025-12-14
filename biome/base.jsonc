@@ -51,13 +51,14 @@
         "noUselessUndefined": "off" // we want explicit undefined return values
       },
       "performance": {
-        "noBarrelFile": "off" // barrel exports lead to cleaner imports
+        "noBarrelFile": "off", // barrel exports lead to cleaner imports
+        "noDelete": "off" // disabled due to https://github.com/biomejs/biome/issues/4093
       },
       "recommended": true,
       "style": {
         "noNamespace": "off", // namespaces are cool
+        // disabled due to https://github.com/biomejs/biome/issues/8450
         "useImportType": {
-          // disabled due to https://github.com/biomejs/biome/issues/8450
           "level": "warn",
           "options": {
             "style": "separatedType"
