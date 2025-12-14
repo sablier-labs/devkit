@@ -26,6 +26,7 @@
   },
   "exports": {
     "./biome": "./biome/base.jsonc",
+    "./biome/base": "./biome/base.jsonc",
     "./biome/ui": "./biome/ui.jsonc",
     "./prettier": "./.prettierrc.json",
     "./tsconfig/base": "./tsconfig/base.json",

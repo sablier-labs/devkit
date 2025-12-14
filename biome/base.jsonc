@@ -6,7 +6,7 @@
 // which files to lint and format. For example:
 //
 //   {
-//     "extends": ["@sablier/devkit/biome"],
+//     "extends": ["@sablier/devkit/biome/base"],
 //     "files": {
 //       "includes": ["**/*.{css,js,jsx,json,ts,tsx}", "!node_modules"]
 //     }
@@ -40,9 +40,8 @@
     "enabled": true,
     "rules": {
       "correctness": {
-        "noUnusedImports": "off",
-        "noUnusedVariables": "error",
-        "useExhaustiveDependencies": "error"
+        "noUnusedImports": "off", // allow unused imports during development
+        "noUnusedVariables": "error"
       },
       "nursery": {
         "noFloatingPromises": "error"
@@ -55,7 +54,7 @@
             "style": "separatedType"
           }
         },
-        "useTemplate": "off"
+        "useTemplate": "off" // allow string concatenation using `+`
       }
     }
   },
