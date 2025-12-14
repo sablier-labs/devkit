@@ -81,6 +81,11 @@
       "includes": ["**/*.{json,json5,jsonc}"]
     }
   ],
+  "json": {
+    "formatter": {
+      "lineWidth": 100
+    }
+  },
   "vcs": {
     "clientKind": "git",
     "enabled": true,
