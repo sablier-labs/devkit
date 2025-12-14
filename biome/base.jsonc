@@ -57,6 +57,7 @@
       "recommended": true,
       "style": {
         "noNamespace": "off", // namespaces are cool
+        "useDefaultSwitchClause": "off", // already handled by TypeScript
         // disabled due to https://github.com/biomejs/biome/issues/8450
         "useImportType": {
           "level": "warn",
