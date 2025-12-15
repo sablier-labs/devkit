@@ -57,6 +57,12 @@ GLOBS_SHELL := ```
 @shell-write:
     shfmt -w {{ GLOBS_SHELL }}
 
+# Run CSV validation tests using BATS
+[group("tests")]
+@test-csv:
+    echo "Running CSV validation tests..."
+    bats tests/csv.bats
+
 # Run TSV validation tests using BATS
 [group("tests")]
 @test-tsv:
