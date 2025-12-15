@@ -11,7 +11,7 @@ import { defineConfig, mergeConfig } from "vitest/config";
  * @param {DevkitVitestOptions} [options]
  */
 export function defineDevkitConfig(options = {}) {
-  const isCI = !!process.env.CI;
+  const isCI = Boolean(process.env.CI);
 
   const baseConfig = {
     test: {
