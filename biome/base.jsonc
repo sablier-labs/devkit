@@ -22,7 +22,6 @@
     "actions": {
       "source": {
         "organizeImports": "on",
-        "useSortedAttributes": "on",
         "useSortedKeys": "on"
       }
     }
@@ -39,8 +38,10 @@
   "linter": {
     "enabled": true,
     "rules": {
+      "recommended": true,
       "complexity": {
-        "noVoid": "off"
+        "noImplicitCoercions": "error", // forbid `!!foo`, allow `Boolean(foo)`
+        "noVoid": "off" // void is useful in some cases e.g. `useEffect` callbacks
       },
       "correctness": {
         "noUnusedImports": "off", // allow unused imports during development
@@ -54,7 +55,6 @@
         "noBarrelFile": "off", // barrel exports lead to cleaner imports
         "noDelete": "off" // disabled due to https://github.com/biomejs/biome/issues/4093
       },
-      "recommended": true,
       "style": {
         "noNamespace": "off", // namespaces are cool
         "useDefaultSwitchClause": "off", // already handled by TypeScript

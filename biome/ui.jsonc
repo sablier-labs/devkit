@@ -14,6 +14,14 @@
 //   }
 {
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "useSortedAttributes": "on"
+      }
+    }
+  },
   "css": {
     "formatter": {
       "lineWidth": 100
