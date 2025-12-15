@@ -58,6 +58,12 @@
       "style": {
         "noNamespace": "off", // namespaces are cool
         "useDefaultSwitchClause": "off", // already handled by TypeScript
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": {
+            "filenameCases": ["kebab-case", "camelCase", "PascalCase", "export"]
+          }
+        },
         // disabled due to https://github.com/biomejs/biome/issues/8450
         "useImportType": {
           "level": "warn",
