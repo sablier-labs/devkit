@@ -37,9 +37,6 @@
         "noSvgWithoutTitle": "off",
         "useKeyWithClickEvents": "off"
       },
-      "correctness": {
-        "useExhaustiveDependencies": "error"
-      },
       "nursery": {
         // Sort Tailwind CSS classes alphabetically
         // See https://github.com/biomejs/biome/issues/1274#issuecomment-3490774696

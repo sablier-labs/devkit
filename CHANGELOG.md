@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.7.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.7.0
 [1.6.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.6.1
 [1.6.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.6.0
 [1.5.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.5.1
@@ -27,6 +28,30 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.7.0] - 2025-12-15
+
+### Changed
+
+- Refactored `biome/ui.jsonc` to be a minimal extension config instead of standalone
+  - Consumers must now extend both `@sablier/devkit/biome/base` and `@sablier/devkit/biome/ui`
+- Generalized TSV validation to support CSV files via new `_csv-check` and `_csv-show-errors` recipes
+  - TSV recipes now wrap the CSV recipes with TSV-specific defaults
+- Use `Boolean()` constructor over double negation in vitest config
+
+### Added
+
+- Biome: Add rules to resolve conflicts with [Ultracite](https://github.com/haydenbleasel/ultracite) preset
+  - Enable `recommended` rules explicitly
+  - Disable `noVoid`, `noBarrelFile`, `noDelete`, `noNamespaceImport`, and `useDefaultSwitchClause` rules
+  - Enforce filename conventions with `useFilenamingConvention` rule (kebab-case, camelCase, PascalCase, export)
+  - Configure JSON formatter line width to 100 characters
+  - Add inline documentation comments for rule configurations
+- Biome: Enable `useSortedAttributes` in UI config for consistent attribute ordering
+
+### Removed
+
+- Remove `useExhaustiveDependencies` because Ultracite covers it
 
 ## [1.6.1] - 2025-12-12
 
