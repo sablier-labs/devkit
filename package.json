@@ -3,7 +3,7 @@
   "description": "Configuration files and reusable scripts for Sablier repositories",
   "license": "MIT",
   "type": "module",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "author": {
     "name": "Sablier Labs Ltd",
     "url": "https://sablier.com"
