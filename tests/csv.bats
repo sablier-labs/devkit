@@ -68,11 +68,11 @@ refute_output() {
 @test "validates a valid CSV file successfully" {
   check_qsv
 
-  run just _csv-check "tests/fixtures/valid" "csv"
+  run just _csv-check "tests/fixtures/valid.csv"
 
   assert_success
-  assert_output --partial "Validating csv files..."
-  assert_output --partial "✅ All csv files are valid"
+  assert_output --partial "Validating CSV/TSV files..."
+  assert_output --partial "✅ All CSV/TSV files are valid"
 }
 
 @test "fails on invalid CSV file" {
@@ -87,8 +87,7 @@ id,name,age,email
 3,Charlie,35
 EOF
 
-  # Pass glob without extension - ext param will add .csv
-  run just _csv-check "${TEST_TEMP_DIR}/invalid" "csv"
+  run just _csv-check "${TEST_TEMP_DIR}/invalid.csv"
 
   assert_failure
   assert_output --partial "❌ Validation failed for: ${temp_invalid}"
@@ -103,21 +102,19 @@ EOF
   cp tests/fixtures/valid.csv "$temp_valid1"
   cp tests/fixtures/valid.csv "$temp_valid2"
 
-  # Pass glob without extension - ext param will add .csv
-  run just _csv-check "${TEST_TEMP_DIR}/*" "csv"
+  run just _csv-check "${TEST_TEMP_DIR}/*.csv"
 
   assert_success
-  assert_output --partial "✅ All csv files are valid"
+  assert_output --partial "✅ All CSV/TSV files are valid"
 }
 
 @test "skips default ignore patterns (.csv.invalid)" {
   check_qsv
 
-  # Pass glob without extension - ext param will add .csv
-  run just _csv-check "tests/fixtures/*" "csv"
+  run just _csv-check "tests/fixtures/*.csv"
 
   assert_success
-  assert_output --partial "✅ All csv files are valid"
+  assert_output --partial "✅ All CSV/TSV files are valid"
 }
 
 @test "skips default ignore patterns (.csv.valid)" {
@@ -127,7 +124,7 @@ EOF
   cp tests/fixtures/valid.csv tests/fixtures/test.csv.valid
 
   # The glob tests/fixtures/*.csv won't match .csv.valid files
-  run just _csv-check "tests/fixtures/*" "csv"
+  run just _csv-check "tests/fixtures/*.csv"
 
   assert_success
   refute_output --partial "test.csv.valid"
@@ -142,7 +139,7 @@ EOF
   cp tests/fixtures/valid.csv tests/fixtures/test.validation-errors.csv
 
   # The ignore pattern *validation-errors.csv should filter this out
-  run just _csv-check "tests/fixtures/*" "csv"
+  run just _csv-check "tests/fixtures/*.csv"
 
   assert_success
   refute_output --partial "validation-errors.csv"
@@ -154,8 +151,7 @@ EOF
   check_qsv
 
   # Test with custom ignore pattern that includes custom-ignore.csv
-  # Order: globs, ext, schema, ignore
-  run just _csv-check "tests/fixtures/*" "csv" "" "*custom-ignore.csv"
+  run just _csv-check "tests/fixtures/*.csv" "" "*custom-ignore.csv"
 
   assert_success
   refute_output --partial "custom-ignore.csv"
@@ -164,11 +160,10 @@ EOF
 @test "handles no files found gracefully" {
   check_qsv
 
-  # Pass glob without extension - ext param will add .csv
-  run just _csv-check "tests/fixtures/nonexistent*" "csv"
+  run just _csv-check "tests/fixtures/nonexistent*.csv"
 
   assert_success
-  assert_output --partial "ℹ️  No csv files found to validate"
+  assert_output --partial "ℹ️  No CSV/TSV files found to validate"
 }
 
 @test "validates with schema when provided" {
@@ -189,8 +184,7 @@ EOF
 EOF
 
   # Note: This test may skip if qsv doesn't support JSON schema validation
-  # Order: globs, ext, schema, ignore
-  run just _csv-check "tests/fixtures/valid" "csv" "$schema_file"
+  run just _csv-check "tests/fixtures/valid.csv" "$schema_file"
 
   # Accept both success (validation passed) or specific qsv schema errors
   # The schema validation in qsv might work differently
@@ -200,7 +194,7 @@ EOF
 @test "passes empty schema parameter correctly" {
   check_qsv
 
-  run just _csv-check "tests/fixtures/valid" "csv"
+  run just _csv-check "tests/fixtures/valid.csv"
 
   assert_success
 }
@@ -208,13 +202,11 @@ EOF
 @test "uses custom extension label" {
   check_qsv
 
-  # Order: globs, ext, schema, ignore
-  # Using csv extension with CUSTOM label to test the label display
-  run just _csv-check "tests/fixtures/valid" "csv"
+  run just _csv-check "tests/fixtures/valid.csv"
 
   assert_success
-  assert_output --partial "Validating csv files..."
-  assert_output --partial "✅ All csv files are valid"
+  assert_output --partial "Validating CSV/TSV files..."
+  assert_output --partial "✅ All CSV/TSV files are valid"
 }
 
 # ---------------------------------------------------------------------------
@@ -258,8 +250,7 @@ EOF
 EOF
 
   # Validate with schema (this should create the error file)
-  # Order: globs, ext, schema, ignore
-  run just _csv-check "${TEST_TEMP_DIR}/invalid_schema" "csv" "$schema_file"
+  run just _csv-check "${TEST_TEMP_DIR}/invalid_schema.csv" "$schema_file"
 
   # The error file should now exist
   [ -f "${temp_invalid}.validation-errors.tsv" ]

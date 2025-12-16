@@ -6,7 +6,7 @@ import "./settings.just"
 
 # Check CSV/TSV files using qsv: https://github.com/dathere/qsv
 [group("checks"), script("python3")]
-_csv-check globs="data/*/*" ext="csv" schema="" ignore="*.csv.invalid|*.csv.valid|*validation-errors.csv":
+_csv-check glob="data/*/*.{csv,tsv}" schema="" ignore="*.invalid *.valid *validation-errors.*":
     import fnmatch
     import glob as globmod
     import subprocess
@@ -18,19 +18,18 @@ _csv-check globs="data/*/*" ext="csv" schema="" ignore="*.csv.invalid|*.csv.vali
         print("Install it: https://github.com/dathere/qsv")
         sys.exit(1)
 
-    ext = "{{ ext }}" or "csv"
-    ignore_patterns = "{{ ignore }}".split("|") if "{{ ignore }}" else []
+    ignore_patterns = "{{ ignore }}".split() if "{{ ignore }}" else []
     schema = "{{ schema }}" or None
-    globs = "{{ globs }}.{{ ext }}"
+    globs = "{{ glob }}"
 
-    print(f"Validating {ext} files...")
+    print(f"Validating CSV/TSV files...")
     files = globmod.glob(globs)
 
     # Filter ignored files
     files = [f for f in files if not any(fnmatch.fnmatch(f, p) for p in ignore_patterns)]
 
     if not files:
-        print(f"ℹ️  No {ext} files found to validate")
+        print(f"ℹ️  No CSV/TSV files found to validate")
         sys.exit(0)
 
     for file in files:
@@ -40,14 +39,14 @@ _csv-check globs="data/*/*" ext="csv" schema="" ignore="*.csv.invalid|*.csv.vali
         result = subprocess.run(cmd, capture_output=True)
         if result.returncode != 0:
             print(f"❌ Validation failed for: {file}")
-            subprocess.run(["just", "_csv-show-errors", file, ext])
+            subprocess.run(["just", "_csv-show-errors", file])
             sys.exit(1)
 
-    print(f"✅ All {ext} files are valid")
+    print(f"✅ All CSV/TSV files are valid")
 
 # Show validation errors for a CSV/TSV file
 [group("checks"), script("python3")]
-_csv-show-errors file ext="csv":
+_csv-show-errors file:
     import os
     import subprocess
     import sys

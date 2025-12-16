@@ -48,21 +48,20 @@ assert_output() {
 }
 
 # ---------------------------------------------------------------------------
-# Tests for _tsv-check wrapper
+# Tests for TSV validation via _csv-check
 # ---------------------------------------------------------------------------
 
-@test "TSV wrapper validates valid TSV file" {
+@test "TSV validation validates valid TSV file" {
   check_qsv
 
-  # Pass glob without extension - ext param will add .tsv
-  run just _tsv-check "tests/fixtures/valid"
+  run just _csv-check "tests/fixtures/valid.tsv"
 
   assert_success
-  assert_output --partial "Validating tsv files..."
-  assert_output --partial "✅ All tsv files are valid"
+  assert_output --partial "Validating CSV/TSV files..."
+  assert_output --partial "✅ All CSV/TSV files are valid"
 }
 
-@test "TSV wrapper fails on invalid TSV file" {
+@test "TSV validation fails on invalid TSV file" {
   check_qsv
 
   local temp_invalid="${TEST_TEMP_DIR}/invalid.tsv"
@@ -72,31 +71,29 @@ id	name	age	email
 2	Bob	extra	column	here	bob@example.com
 EOF
 
-  # Pass glob without extension - ext param will add .tsv
-  run just _tsv-check "${TEST_TEMP_DIR}/invalid"
+  run just _csv-check "${TEST_TEMP_DIR}/invalid.tsv"
 
   assert_failure
   assert_output --partial "❌ Validation failed for:"
 }
 
-@test "TSV wrapper handles no files gracefully" {
+@test "TSV validation handles no files gracefully" {
   check_qsv
 
-  # Pass glob without extension - ext param will add .tsv
-  run just _tsv-check "tests/fixtures/nonexistent*"
+  run just _csv-check "tests/fixtures/nonexistent*.tsv"
 
   assert_success
-  assert_output --partial "ℹ️  No tsv files found to validate"
+  assert_output --partial "ℹ️  No CSV/TSV files found to validate"
 }
 
 # ---------------------------------------------------------------------------
-# Tests for _tsv-show-errors wrapper
+# Tests for _csv-show-errors with TSV files
 # ---------------------------------------------------------------------------
 
 @test "TSV show-errors displays error file not found" {
   check_qsv
 
-  run just _tsv-show-errors "tests/fixtures/nonexistent.tsv"
+  run just _csv-show-errors "tests/fixtures/nonexistent.tsv"
 
   assert_success
   assert_output --partial "Error file not found:"

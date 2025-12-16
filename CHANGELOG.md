@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.9.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.9.0
 [1.8.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.8.1
 [1.8.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.8.0
 [1.7.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.7.0
@@ -30,6 +31,12 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.9.0] - 2025-12-16
+
+### Changed
+
+- Refactored CSV/TSV validation recipes to use extension-agnostic glob patterns, appending the extension at runtime
 
 ## [1.8.1] - 2025-12-16
 
