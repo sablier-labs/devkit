@@ -9,6 +9,7 @@ import "./settings.just"
 _csv-check glob="data/*/*.{csv,tsv}" schema="" ignore="*.invalid *.valid *validation-errors.*":
     import fnmatch
     import glob as globmod
+    import re
     import subprocess
     import sys
 
@@ -22,14 +23,26 @@ _csv-check glob="data/*/*.{csv,tsv}" schema="" ignore="*.invalid *.valid *valida
     schema = "{{ schema }}" or None
     globs = "{{ glob }}"
 
-    print(f"Validating CSV/TSV files...")
+    # Infer extension label from glob pattern
+    ext_match = re.search(r'\.(\w+|\{[^}]+\})$', globs)
+    if ext_match:
+        ext = ext_match.group(1)
+        if ext.startswith('{') and ext.endswith('}'):
+            # Handle brace expansion like {csv,tsv}
+            ext_label = '.' + '/'.join(f'.{e}' for e in ext[1:-1].split(','))[1:]
+        else:
+            ext_label = f'.{ext}'
+    else:
+        ext_label = 'CSV/TSV'
+
+    print(f"Validating {ext_label} files...")
     files = globmod.glob(globs)
 
     # Filter ignored files
     files = [f for f in files if not any(fnmatch.fnmatch(f, p) for p in ignore_patterns)]
 
     if not files:
-        print(f"ℹ️  No CSV/TSV files found to validate")
+        print(f"ℹ️  No {ext_label} files found to validate")
         sys.exit(0)
 
     for file in files:
@@ -42,7 +55,7 @@ _csv-check glob="data/*/*.{csv,tsv}" schema="" ignore="*.invalid *.valid *valida
             subprocess.run(["just", "_csv-show-errors", file])
             sys.exit(1)
 
-    print(f"✅ All CSV/TSV files are valid")
+    print(f"✅ All {ext_label} files are valid")
 
 # Show validation errors for a CSV/TSV file
 [group("checks"), script("python3")]

@@ -57,8 +57,8 @@ assert_output() {
   run just _csv-check "tests/fixtures/valid.tsv"
 
   assert_success
-  assert_output --partial "Validating CSV/TSV files..."
-  assert_output --partial "✅ All CSV/TSV files are valid"
+  assert_output --partial "Validating .tsv files..."
+  assert_output --partial "✅ All .tsv files are valid"
 }
 
 @test "TSV validation fails on invalid TSV file" {
@@ -83,7 +83,7 @@ EOF
   run just _csv-check "tests/fixtures/nonexistent*.tsv"
 
   assert_success
-  assert_output --partial "ℹ️  No CSV/TSV files found to validate"
+  assert_output --partial "ℹ️  No .tsv files found to validate"
 }
 
 # ---------------------------------------------------------------------------

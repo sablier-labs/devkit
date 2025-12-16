@@ -71,8 +71,8 @@ refute_output() {
   run just _csv-check "tests/fixtures/valid.csv"
 
   assert_success
-  assert_output --partial "Validating CSV/TSV files..."
-  assert_output --partial "✅ All CSV/TSV files are valid"
+  assert_output --partial "Validating .csv files..."
+  assert_output --partial "✅ All .csv files are valid"
 }
 
 @test "fails on invalid CSV file" {
@@ -105,7 +105,7 @@ EOF
   run just _csv-check "${TEST_TEMP_DIR}/*.csv"
 
   assert_success
-  assert_output --partial "✅ All CSV/TSV files are valid"
+  assert_output --partial "✅ All .csv files are valid"
 }
 
 @test "skips default ignore patterns (.csv.invalid)" {
@@ -114,7 +114,7 @@ EOF
   run just _csv-check "tests/fixtures/*.csv"
 
   assert_success
-  assert_output --partial "✅ All CSV/TSV files are valid"
+  assert_output --partial "✅ All .csv files are valid"
 }
 
 @test "skips default ignore patterns (.csv.valid)" {
@@ -163,7 +163,7 @@ EOF
   run just _csv-check "tests/fixtures/nonexistent*.csv"
 
   assert_success
-  assert_output --partial "ℹ️  No CSV/TSV files found to validate"
+  assert_output --partial "ℹ️  No .csv files found to validate"
 }
 
 @test "validates with schema when provided" {
@@ -199,14 +199,26 @@ EOF
   assert_success
 }
 
-@test "uses custom extension label" {
+@test "infers .csv extension from glob pattern" {
   check_qsv
 
   run just _csv-check "tests/fixtures/valid.csv"
 
   assert_success
-  assert_output --partial "Validating CSV/TSV files..."
-  assert_output --partial "✅ All CSV/TSV files are valid"
+  assert_output --partial "Validating .csv files..."
+  assert_output --partial "✅ All .csv files are valid"
+}
+
+@test "infers .csv/.tsv extension label from brace pattern in glob" {
+  check_qsv
+
+  # Note: Python glob.glob doesn't expand braces, so no files match.
+  # This test verifies the extension label is correctly inferred from the pattern.
+  run just _csv-check "tests/fixtures/*.{csv,tsv}"
+
+  assert_success
+  assert_output --partial "Validating .csv/.tsv files..."
+  assert_output --partial "ℹ️  No .csv/.tsv files found to validate"
 }
 
 # ---------------------------------------------------------------------------
