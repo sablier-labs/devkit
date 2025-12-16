@@ -5,72 +5,98 @@ import "./settings.just"
 # ---------------------------------------------------------------------------- #
 
 # Check CSV/TSV files using qsv: https://github.com/dathere/qsv
-[group("checks"), script("bash")]
-_csv-check globs="data/*/*.csv" schema="" ignore="*.csv.invalid|*.csv.valid|*validation-errors.csv" ext="CSV":
-    if ! command -v qsv >/dev/null 2>&1; then
-        echo "✗ qsv CLI not found"
-        echo "Install it: https://github.com/dathere/qsv"
-        exit 1
-    fi
+[group("checks"), script("python3")]
+_csv-check globs="data/*/*.csv" ext="CSV" schema="" ignore="*.csv.invalid|*.csv.valid|*validation-errors.csv":
+    import fnmatch
+    import glob as globmod
+    import subprocess
+    import sys
 
-    echo "Validating {{ ext }} files..."
-    found=0
-    for file in {{ globs }}; do
-        # Skip validation artifact files (only if ignore pattern is set)
-        {{ if ignore != "" { "case \"$file\" in\n            " + ignore + ")\n                continue\n                ;;\n        esac" } else { "" } }}
+    # Check qsv is available
+    if subprocess.run(["which", "qsv"], capture_output=True).returncode != 0:
+        print("✗ qsv CLI not found")
+        print("Install it: https://github.com/dathere/qsv")
+        sys.exit(1)
 
-        # Skip if no files match the pattern
-        [ -e "$file" ] || continue
+    ext = "{{ ext }}" or "CSV"
+    ignore_patterns = "{{ ignore }}".split("|") if "{{ ignore }}" else []
+    schema = "{{ schema }}" or None
+    globs = "{{ globs }}"
 
-        found=$((found + 1))
-        schema_arg="{{ schema }}"
-        if ! qsv validate "$file" ${schema_arg:+"$schema_arg"} > /dev/null 2>&1; then
-            echo "❌ Validation failed for: $file"
-            just _csv-show-errors "$file" "{{ ext }}"
-            exit 1
-        fi
-    done
+    print(f"Validating {ext} files...")
+    files = globmod.glob(globs)
 
-    if [ "$found" -eq 0 ]; then
-        echo "ℹ️  No {{ ext }} files found to validate"
-    else
-        echo "✅ All {{ ext }} files are valid"
-    fi
+    # Filter ignored files
+    files = [f for f in files if not any(fnmatch.fnmatch(f, p) for p in ignore_patterns)]
+
+    if not files:
+        print(f"ℹ️  No {ext} files found to validate")
+        sys.exit(0)
+
+    for file in files:
+        cmd = ["qsv", "validate", file]
+        if schema:
+            cmd.append(schema)
+        result = subprocess.run(cmd, capture_output=True)
+        if result.returncode != 0:
+            print(f"❌ Validation failed for: {file}")
+            subprocess.run(["just", "_csv-show-errors", file, ext])
+            sys.exit(1)
+
+    print(f"✅ All {ext} files are valid")
 
 # Show validation errors for a CSV/TSV file
-[group("checks"), script("bash")]
+[group("checks"), script("python3")]
 _csv-show-errors file ext="CSV":
-    error_file="{{ file }}.validation-errors.tsv"
+    import os
+    import subprocess
+    import sys
 
-    if [ ! -f "$error_file" ]; then
-        echo "Error file not found: $error_file"
-        exit 0
-    fi
+    file = "{{ file }}"
+    error_file = f"{file}.validation-errors.tsv"
 
-    # Try to count total errors (subtract 1 for header row)
-    total_errors=$(qsv count "$error_file" 2>/dev/null || echo "0")
-    if [ "$total_errors" != "0" ]; then
-        total_errors=$((total_errors - 1))
-    fi
+    if not os.path.exists(error_file):
+        print(f"Error file not found: {error_file}")
+        sys.exit(0)
 
-    echo ""
-    if [ "$total_errors" != "0" ] && [ "$total_errors" -gt 0 ]; then
-        echo "First 20 validation errors (${total_errors} total):"
-    else
-        echo "Validation errors:"
-    fi
-    echo ""
+    # Count errors (qsv auto-detects .tsv delimiter)
+    result = subprocess.run(["qsv", "count", error_file], capture_output=True, text=True)
+    try:
+        total = int(result.stdout.strip()) if result.returncode == 0 and result.stdout.strip() else 0
+    except ValueError:
+        total = 0
 
-    # Try to use qsv table for nice formatting, fall back to basic display
-    if qsv slice --start 0 --len 21 "$error_file" 2>/dev/null | qsv table 2>/dev/null; then
-        :  # Success, output already shown
-    else
-        head -n 21 "$error_file"
-    fi
+    print()
+    if total > 0:
+        print(f"First 20 validation errors ({total} total):")
+    else:
+        print("Validation errors:")
+    print()
 
-    if [ "$total_errors" != "0" ] && [ "$total_errors" -gt 20 ]; then
-        echo ""
-        echo "... and $((total_errors - 20)) more errors"
-    fi
-    echo ""
-    echo "Full details: $error_file"
+    # Try qsv table for nice formatting, fall back to reading file directly
+    slice_result = subprocess.run(
+        ["qsv", "slice", "--start", "0", "--len", "21", error_file],
+        capture_output=True, text=True
+    )
+    if slice_result.returncode == 0:
+        table_result = subprocess.run(
+            ["qsv", "table"],
+            input=slice_result.stdout,
+            capture_output=True, text=True
+        )
+        if table_result.returncode == 0:
+            print(table_result.stdout)
+        else:
+            print(slice_result.stdout)
+    else:
+        with open(error_file) as f:
+            for i, line in enumerate(f):
+                if i >= 21:
+                    break
+                print(line, end="")
+
+    if total > 20:
+        print()
+        print(f"... and {total - 20} more errors")
+    print()
+    print(f"Full details: {error_file}")

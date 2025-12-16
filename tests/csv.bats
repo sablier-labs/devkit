@@ -151,7 +151,8 @@ EOF
   check_qsv
 
   # Test with custom ignore pattern that includes custom-ignore.csv
-  run just _csv-check "tests/fixtures/*.csv" "" "*custom-ignore.csv"
+  # Order: globs, ext, schema, ignore
+  run just _csv-check "tests/fixtures/*.csv" "" "" "*custom-ignore.csv"
 
   assert_success
   refute_output --partial "custom-ignore.csv"
@@ -184,7 +185,8 @@ EOF
 EOF
 
   # Note: This test may skip if qsv doesn't support JSON schema validation
-  run just _csv-check "tests/fixtures/valid.csv" "$schema_file"
+  # Order: globs, ext, schema, ignore
+  run just _csv-check "tests/fixtures/valid.csv" "" "$schema_file"
 
   # Accept both success (validation passed) or specific qsv schema errors
   # The schema validation in qsv might work differently
@@ -202,7 +204,8 @@ EOF
 @test "uses custom extension label" {
   check_qsv
 
-  run just _csv-check "tests/fixtures/valid.csv" "" "" "CUSTOM"
+  # Order: globs, ext, schema, ignore
+  run just _csv-check "tests/fixtures/valid.csv" "CUSTOM"
 
   assert_success
   assert_output --partial "Validating CUSTOM files..."
@@ -250,7 +253,8 @@ EOF
 EOF
 
   # Validate with schema (this should create the error file)
-  run just _csv-check "$temp_invalid" "$schema_file"
+  # Order: globs, ext, schema, ignore
+  run just _csv-check "$temp_invalid" "" "$schema_file"
 
   # The error file should now exist
   [ -f "${temp_invalid}.validation-errors.tsv" ]

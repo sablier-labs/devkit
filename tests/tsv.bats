@@ -54,7 +54,8 @@ assert_output() {
 @test "TSV wrapper validates valid TSV file" {
   check_qsv
 
-  run just _tsv-check "tests/fixtures/valid.tsv" ""
+  # Only pass globs, let ext default to "TSV"
+  run just _tsv-check "tests/fixtures/valid.tsv"
 
   assert_success
   assert_output --partial "Validating TSV files..."
@@ -71,7 +72,8 @@ id	name	age	email
 2	Bob	extra	column	here	bob@example.com
 EOF
 
-  run just _tsv-check "$temp_invalid" ""
+  # Only pass globs, let ext default to "TSV"
+  run just _tsv-check "$temp_invalid"
 
   assert_failure
   assert_output --partial "❌ Validation failed for:"
@@ -80,7 +82,8 @@ EOF
 @test "TSV wrapper handles no files gracefully" {
   check_qsv
 
-  run just _tsv-check "tests/fixtures/nonexistent*.tsv" ""
+  # Only pass globs, let ext default to "TSV"
+  run just _tsv-check "tests/fixtures/nonexistent*.tsv"
 
   assert_success
   assert_output --partial "ℹ️  No TSV files found to validate"
