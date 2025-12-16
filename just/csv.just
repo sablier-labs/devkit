@@ -6,7 +6,7 @@ import "./settings.just"
 
 # Check CSV/TSV files using qsv: https://github.com/dathere/qsv
 [group("checks"), script("python3")]
-_csv-check globs="data/*/*.csv" ext="CSV" schema="" ignore="*.csv.invalid|*.csv.valid|*validation-errors.csv":
+_csv-check globs="data/*/*.csv" ext="csv" schema="" ignore="*.csv.invalid|*.csv.valid|*validation-errors.csv":
     import fnmatch
     import glob as globmod
     import subprocess
@@ -18,7 +18,7 @@ _csv-check globs="data/*/*.csv" ext="CSV" schema="" ignore="*.csv.invalid|*.csv.
         print("Install it: https://github.com/dathere/qsv")
         sys.exit(1)
 
-    ext = "{{ ext }}" or "CSV"
+    ext = "{{ ext }}" or "csv"
     ignore_patterns = "{{ ignore }}".split("|") if "{{ ignore }}" else []
     schema = "{{ schema }}" or None
     globs = "{{ globs }}"
@@ -47,19 +47,20 @@ _csv-check globs="data/*/*.csv" ext="CSV" schema="" ignore="*.csv.invalid|*.csv.
 
 # Show validation errors for a CSV/TSV file
 [group("checks"), script("python3")]
-_csv-show-errors file ext="CSV":
+_csv-show-errors file ext="csv":
     import os
     import subprocess
     import sys
 
     file = "{{ file }}"
+    # qsv always produces .validation-errors.tsv regardless of input format
     error_file = f"{file}.validation-errors.tsv"
 
     if not os.path.exists(error_file):
         print(f"Error file not found: {error_file}")
         sys.exit(0)
 
-    # Count errors (qsv auto-detects .tsv delimiter)
+    # Count errors (qsv auto-detects delimiter based on file extension)
     result = subprocess.run(["qsv", "count", error_file], capture_output=True, text=True)
     try:
         total = int(result.stdout.strip()) if result.returncode == 0 and result.stdout.strip() else 0

@@ -71,8 +71,8 @@ refute_output() {
   run just _csv-check "tests/fixtures/valid.csv" ""
 
   assert_success
-  assert_output --partial "Validating CSV files..."
-  assert_output --partial "✅ All CSV files are valid"
+  assert_output --partial "Validating csv files..."
+  assert_output --partial "✅ All csv files are valid"
 }
 
 @test "fails on invalid CSV file" {
@@ -105,7 +105,7 @@ EOF
   run just _csv-check "${TEST_TEMP_DIR}/*.csv" ""
 
   assert_success
-  assert_output --partial "✅ All CSV files are valid"
+  assert_output --partial "✅ All csv files are valid"
 }
 
 @test "skips default ignore patterns (.csv.invalid)" {
@@ -115,7 +115,7 @@ EOF
   run just _csv-check "tests/fixtures/*.csv*" ""
 
   assert_success
-  assert_output --partial "✅ All CSV files are valid"
+  assert_output --partial "✅ All csv files are valid"
   refute_output --partial "data.csv.invalid"
 }
 
@@ -164,7 +164,7 @@ EOF
   run just _csv-check "tests/fixtures/nonexistent*.csv" ""
 
   assert_success
-  assert_output --partial "ℹ️  No CSV files found to validate"
+  assert_output --partial "ℹ️  No csv files found to validate"
 }
 
 @test "validates with schema when provided" {
