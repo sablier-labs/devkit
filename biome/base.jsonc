@@ -58,6 +58,12 @@
       },
       "style": {
         "noNamespace": "off", // namespaces are cool
+        "useConsistentTypeDefinitions": {
+          "level": "warn",
+          "options": {
+            "style": "type"
+          }
+        },
         "useDefaultSwitchClause": "off", // already handled by TypeScript
         "useFilenamingConvention": {
           "level": "error",
