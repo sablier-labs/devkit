@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.9.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.9.2
 [1.9.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.9.1
 [1.9.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.9.0
 [1.8.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.8.1
@@ -32,6 +33,12 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.9.2] - 2025-12-26
+
+### Added
+
+- Biome: Enable `useConsistentTypeDefinitions` rule to enforce `type` keyword over `interface` for type definitions
 
 ## [1.9.1] - 2025-12-16
 
