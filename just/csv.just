@@ -6,6 +6,9 @@ import "./settings.just"
 
 # Check CSV/TSV files using qsv: https://github.com/dathere/qsv
 [group("checks"), script("python3")]
+[arg("glob", long, short="g", help="Glob pattern for CSV/TSV files")]
+[arg("schema", long, short="s", help="JSON schema file for validation")]
+[arg("ignore", long, short="x", help="Space-separated ignore patterns")]
 _csv-check glob="data/*/*.{csv,tsv}" schema="" ignore="*.invalid *.valid *validation-errors.*":
     import fnmatch
     import glob as globmod
