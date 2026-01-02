@@ -57,6 +57,7 @@
         "noNamespaceImport": "off" // namespaces are cool
       },
       "style": {
+        "noEnum": "off", // enums are useful in some cases e.g. UI states
         "noNamespace": "off", // namespaces are cool
         "useConsistentTypeDefinitions": {
           "level": "warn",
