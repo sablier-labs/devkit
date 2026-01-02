@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.10.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.10.0
 [1.9.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.9.2
 [1.9.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.9.1
 [1.9.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.9.0
@@ -33,6 +34,19 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.10.0] - 2026-01-02
+
+### Changed
+
+- Biome: Disable `noEnum` rule to allow enums for specific use cases (e.g., UI states)
+
+### Added
+
+- Just: Add CLI-style flag arguments to recipes for improved discoverability via `just --list`
+  - `tsc-build`: `-p/--project` for tsconfig path
+  - `type-check`: `-c/--compiler` for TypeScript compiler, `-p/--project` for tsconfig path
+  - `_csv-check`: `-g/--glob`, `-s/--schema`, `-x/--ignore` for validation options
 
 ## [1.9.2] - 2025-12-26
 
