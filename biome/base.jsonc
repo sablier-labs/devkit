@@ -41,7 +41,8 @@
       "recommended": true,
       "complexity": {
         "noImplicitCoercions": "error", // forbid `!!foo`, allow `Boolean(foo)`
-        "noVoid": "off" // void is useful in some cases e.g. `useEffect` callbacks
+        "noVoid": "off", // void is useful in some cases e.g. `useEffect` callbacks
+        "useSimplifiedLogicExpression": "off" // the rule is cool but it gets agents stuck
       },
       "correctness": {
         "noUnusedImports": "off", // allow unused imports during development
