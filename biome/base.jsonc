@@ -35,6 +35,12 @@
     "indentStyle": "space",
     "lineWidth": 100
   },
+  // Needed to override ultracite
+  "json": {
+    "formatter": {
+      "lineWidth": 100
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -60,13 +66,14 @@
       "style": {
         "noEnum": "off", // enums are useful in some cases e.g. UI states
         "noNamespace": "off", // namespaces are cool
+        "useDefaultSwitchClause": "off", // already handled by TypeScript
+        "useTemplate": "off", // allow string concatenation using `+`
         "useConsistentTypeDefinitions": {
           "level": "warn",
           "options": {
             "style": "type"
           }
         },
-        "useDefaultSwitchClause": "off", // already handled by TypeScript
         "useFilenamingConvention": {
           "level": "error",
           "options": {
@@ -79,13 +86,14 @@
           "options": {
             "style": "separatedType"
           }
-        },
-        "useTemplate": "off" // allow string concatenation using `+`
+        }
       }
     }
   },
   "overrides": [
     {
+      // Disabling sorted keys because ordering is often important in JSON files
+      "includes": ["**/*.{json,json5,jsonc}"],
       "assist": {
         "actions": {
           "source": {
@@ -93,14 +101,15 @@
           }
         }
       },
-      "includes": ["**/*.{json,json5,jsonc}"]
+      // Needed to override ultracite
+      "json": {
+        "parser": {
+          "allowComments": true,
+          "allowTrailingCommas": true
+        }
+      }
     }
   ],
-  "json": {
-    "formatter": {
-      "lineWidth": 100
-    }
-  },
   "vcs": {
     "clientKind": "git",
     "enabled": true,
