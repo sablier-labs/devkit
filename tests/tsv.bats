@@ -54,7 +54,7 @@ assert_output() {
 @test "TSV validation validates valid TSV file" {
   check_qsv
 
-  run just _csv-check "tests/fixtures/valid.tsv"
+  run just _csv-check --glob "tests/fixtures/valid.tsv"
 
   assert_success
   assert_output --partial "Validating .tsv files..."
@@ -71,7 +71,7 @@ id	name	age	email
 2	Bob	extra	column	here	bob@example.com
 EOF
 
-  run just _csv-check "${TEST_TEMP_DIR}/invalid.tsv"
+  run just _csv-check --glob "${TEST_TEMP_DIR}/invalid.tsv"
 
   assert_failure
   assert_output --partial "❌ Validation failed for:"
@@ -80,7 +80,7 @@ EOF
 @test "TSV validation handles no files gracefully" {
   check_qsv
 
-  run just _csv-check "tests/fixtures/nonexistent*.tsv"
+  run just _csv-check --glob "tests/fixtures/nonexistent*.tsv"
 
   assert_success
   assert_output --partial "ℹ️  No .tsv files found to validate"

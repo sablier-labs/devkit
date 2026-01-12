@@ -73,3 +73,5 @@ GLOBS_SHELL := ```
 [group("tests")]
 @test:
     bats tests/*.bats
+alias t := test
+
