@@ -23,6 +23,7 @@ GLOBS_PRETTIER := "\"**/*.{md,mdx,yaml,yml}\""
 [no-cd]
 clean:
     just _clean ".DS_Store"
+
 [no-cd]
 _clean +globs:
     nlx del-cli "{{ globs }}"
