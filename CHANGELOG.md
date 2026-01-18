@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.10.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.10.3
 [1.10.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.10.2
 [1.10.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.10.1
 [1.10.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.10.0
@@ -36,6 +37,12 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.10.3] - 2026-01-18
+
+### Changed
+
+- TSConfig: Add `inlineSources` to build config for self-contained sourcemaps
 
 ## [1.10.2] - 2026-01-12
 
