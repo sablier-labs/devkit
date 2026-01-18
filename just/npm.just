@@ -16,9 +16,10 @@ npm := require("npm")
 
 # Publish the npm package, e.g. v1.0.0
 [group("publish")]
-publish *args:
+[arg("tag", long, value="true")]
+publish tag="false" *args:
   npm publish {{ args }}
-  @just tag $(jq -r '.version' package.json)
+  @{{ if tag == "true" { "just tag $(jq -r '.version' package.json)" } else { "true" } }}
 
 # Publish using the `beta` tag, e.g. v1.0.0-beta.1
 [group("publish")]
