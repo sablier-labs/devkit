@@ -29,19 +29,20 @@ _clean +globs:
     nlx del-cli "{{ globs }}"
 
 # Clear node_modules recursively
-[confirm("Are you sure you want to delete all node_modules, including in subdirectories? Y/n"), no-cd]
-clean-modules +globs="**/node_modules":
-    nlx del-cli {{ globs }}
+[confirm("Are you sure you want to delete all node_modules, including in subdirectories? [y/N]"), no-cd]
+@clean-modules +globs="**/node_modules":
+    echo "🧹 Deleting node_modules recursively..."
+    nlx del-cli --verbose {{ globs }}
 
 # Install the Node.js dependencies; run with --frozen to install the dependencies with the frozen lockfile
 [no-cd]
-install *args:
+@install *args:
     ni {{ args }}
 
 # Build with TypeScript
 [no-cd]
 [arg("project", long, short="p", help="Path to tsconfig.json")]
-tsc-build project="tsconfig.json":
+@tsc-build project="tsconfig.json":
     na tsc -p {{ project }}
 alias tb := tsc-build
 
