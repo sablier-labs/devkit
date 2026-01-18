@@ -28,7 +28,7 @@
     "./biome": "./biome/base.jsonc",
     "./biome/base": "./biome/base.jsonc",
     "./biome/ui": "./biome/ui.jsonc",
-    "./prettier": "./.prettierrc.json",
+    "./prettier": "./.prettierrc.js",
     "./tsconfig/base": "./tsconfig/base.json",
     "./tsconfig/build": "./tsconfig/build.json",
     "./tsconfig/next": "./tsconfig/next.json",
@@ -42,6 +42,7 @@
     "just/",
     "tsconfig/",
     "vitest/",
+    ".prettierrc.js",
     ".prettierrc.json"
   ],
   "keywords": [
