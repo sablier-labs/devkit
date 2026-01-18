@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.11.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.11.0
 [1.10.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.10.3
 [1.10.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.10.2
 [1.10.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.10.1
@@ -37,6 +38,17 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.11.0] - 2026-01-18
+
+### Changed
+
+- Just: Quiet `clean-modules` and `install` recipes by prefixing with `@`
+- Just: Make `publish` recipe's tag creation opt-in via `--tag` flag instead of automatic
+
+### Added
+
+- Prettier: Export JavaScript config as `./prettier` entry point
 
 ## [1.10.3] - 2026-01-18
 
