@@ -39,6 +39,14 @@ _clean +globs:
 @install *args:
     ni {{ args }}
 
+# Install mdformat with plugins
+[no-cd]
+install-mdformat:
+    uv tool install mdformat \
+        --with mdformat-frontmatter \
+        --with mdformat-gfm
+alias im := install-mdformat
+
 # Build with TypeScript
 [no-cd]
 [arg("project", long, short="p", help="Path to tsconfig.json")]
@@ -100,6 +108,18 @@ alias kc := knip-check
 @knip-write:
     na knip --fix
 alias kw := knip-write
+
+# Check Markdown formatting with mdformat
+[group("checks"), no-cd]
+@mdformat-check +paths=".":
+    mdformat --check {{ paths }}
+alias mc := mdformat-check
+
+# Format Markdown files with mdformat
+[group("checks"), no-cd]
+@mdformat-write +paths=".":
+    mdformat {{ paths }}
+alias mw := mdformat-write
 
 # Check Prettier formatting
 [group("checks"), no-cd]

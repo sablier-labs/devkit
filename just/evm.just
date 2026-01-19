@@ -54,6 +54,7 @@ clean-modules:
 
 # Run all code checks
 full-check:
+    just base::mdformat-check
     just solhint-check
     just fmt-check
     just prettier-check
@@ -61,6 +62,7 @@ alias fc := full-check
 
 # Run all code fixes
 full-write:
+    just base::mdformat-write
     just solhint-write
     just fmt-write
     just prettier-write
