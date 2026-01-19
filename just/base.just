@@ -41,7 +41,7 @@ _clean +globs:
 
 # Install mdformat with plugins
 [no-cd]
-install-mdformat:
+@install-mdformat:
     uv tool install mdformat \
         --with mdformat-frontmatter \
         --with mdformat-gfm
