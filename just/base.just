@@ -42,7 +42,7 @@ _clean +globs:
 # Install mdformat with plugins
 [no-cd]
 @install-mdformat:
-    uv tool install mdformat \
+    uv tool install mdformat --python 3.14 \
         --with mdformat-frontmatter \
         --with mdformat-gfm
 alias im := install-mdformat
