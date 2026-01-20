@@ -16,6 +16,14 @@ _csv-check glob="data/*/*.{csv,tsv}" schema="" ignore="*.invalid *.valid *valida
     import subprocess
     import sys
 
+    def expand_braces(pattern):
+        """Expand brace patterns like {a,b} into multiple patterns."""
+        match = re.search(r'\{([^}]+)\}', pattern)
+        if not match:
+            return [pattern]
+        prefix, suffix = pattern[:match.start()], pattern[match.end():]
+        return [p for opt in match.group(1).split(',') for p in expand_braces(prefix + opt + suffix)]
+
     # Check qsv is available
     if subprocess.run(["which", "qsv"], capture_output=True).returncode != 0:
         print("✗ qsv CLI not found")
@@ -39,7 +47,7 @@ _csv-check glob="data/*/*.{csv,tsv}" schema="" ignore="*.invalid *.valid *valida
         ext_label = 'CSV/TSV'
 
     print(f"Validating {ext_label} files...")
-    files = globmod.glob(globs)
+    files = [f for pattern in expand_braces(globs) for f in globmod.glob(pattern)]
 
     # Filter ignored files
     files = [f for f in files if not any(fnmatch.fnmatch(f, p) for p in ignore_patterns)]

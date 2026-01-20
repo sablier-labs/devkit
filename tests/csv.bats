@@ -212,13 +212,36 @@ EOF
 @test "infers .csv/.tsv extension label from brace pattern in glob" {
   check_qsv
 
-  # Note: Python glob.glob doesn't expand braces, so no files match.
-  # This test verifies the extension label is correctly inferred from the pattern.
-  run just _csv-check --glob "tests/fixtures/*.{csv,tsv}"
+  # Use a non-existent path to test label inference without matching files
+  run just _csv-check --glob "tests/fixtures/nonexistent/*.{csv,tsv}"
 
   assert_success
   assert_output --partial "Validating .csv/.tsv files..."
   assert_output --partial "ℹ️  No .csv/.tsv files found to validate"
+}
+
+@test "expands brace patterns in glob to match multiple extensions" {
+  check_qsv
+
+  run just _csv-check --glob "tests/fixtures/valid.{csv,tsv}"
+
+  assert_success
+  assert_output --partial "Validating .csv/.tsv files..."
+  assert_output --partial "✅ All .csv/.tsv files are valid"
+}
+
+@test "expands brace patterns in glob to match multiple directories" {
+  check_qsv
+
+  # Create two directories with files
+  mkdir -p "${TEST_TEMP_DIR}/alpha" "${TEST_TEMP_DIR}/beta"
+  cp tests/fixtures/valid.csv "${TEST_TEMP_DIR}/alpha/"
+  cp tests/fixtures/valid.csv "${TEST_TEMP_DIR}/beta/"
+
+  run just _csv-check --glob "${TEST_TEMP_DIR}/{alpha,beta}/*.csv"
+
+  assert_success
+  assert_output --partial "✅ All .csv files are valid"
 }
 
 # ---------------------------------------------------------------------------
