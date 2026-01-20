@@ -54,6 +54,7 @@ clean-modules:
 
 # Run all code checks
 full-check:
+    just mdformat-check
     just solhint-check
     just fmt-check
     just prettier-check
@@ -61,6 +62,7 @@ alias fc := full-check
 
 # Run all code fixes
 full-write:
+    just mdformat-write
     just solhint-write
     just fmt-write
     just prettier-write
@@ -70,6 +72,16 @@ alias fw := full-write
 install *args:
     just base::install {{ args }}
 alias i := install
+
+# Check Markdown formatting with mdformat
+@mdformat-check +paths=".":
+    just base::mdformat-check {{ paths }}
+alias mc := mdformat-check
+
+# Format Markdown files with mdformat
+@mdformat-write +paths=".":
+    just base::mdformat-write {{ paths }}
+alias mw := mdformat-write
 
 # Check Prettier formatting
 @prettier-check globs=GLOBS_PRETTIER:

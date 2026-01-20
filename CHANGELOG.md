@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.12.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.12.0
 [1.11.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.11.0
 [1.10.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.10.3
 [1.10.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.10.2
@@ -38,6 +39,12 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.12.0] - 2026-01-19
+
+### Added
+
+- Just: Add mdformat recipes
 
 ## [1.11.0] - 2026-01-18
 
