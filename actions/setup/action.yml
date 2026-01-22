@@ -25,6 +25,10 @@ runs:
     - name: "Check out the repo"
       uses: "actions/checkout@v5"
 
+    # ---------------------------------------------------------------------------- #
+    #                                    Node.js                                   #
+    # ---------------------------------------------------------------------------- #
+
     - name: "Detect package manager"
       id: detect-pm
       shell: bash
@@ -41,6 +45,7 @@ runs:
           pm="npm"
         fi
         echo "package-manager=$pm" >> $GITHUB_OUTPUT
+
 
     - name: "Install Just"
       uses: "extractions/setup-just@v3"
@@ -82,3 +87,19 @@ runs:
           ni
         fi
       shell: "bash"
+
+    # ---------------------------------------------------------------------------- #
+    #                                    PYTHON                                    #
+    # ---------------------------------------------------------------------------- #
+
+    - name: "Install uv and mdformat"
+      if: hashFiles('.mdformat.toml') != ''
+      uses: "astral-sh/setup-uv@v7"
+      with:
+        python-version: "3.14"
+        enable-cache: false
+
+    - name: "Install mdformat with plugins"
+      if: hashFiles('.mdformat.toml') != ''
+      run: "just install-mdformat"
+      shell: bash
