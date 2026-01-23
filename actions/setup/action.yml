@@ -13,6 +13,10 @@ inputs:
     description: "Whether to enable Node.js dependency caching"
     default: "true"
     required: false
+  install-python:
+    description: "Whether to install Python dependencies (uv and mdformat)"
+    default: "true"
+    required: false
   token:
     description: "Token used by checkout action (needed when workflows must preserve app auth for protected branch pushes)"
     required: false
@@ -97,13 +101,13 @@ runs:
     # ---------------------------------------------------------------------------- #
 
     - name: "Install uv and mdformat"
-      if: hashFiles('.mdformat.toml') != ''
+      if: inputs.install-python == 'true' && hashFiles('.mdformat.toml') != ''
       uses: "astral-sh/setup-uv@v7"
       with:
         python-version: "3.14"
         enable-cache: false
 
     - name: "Install mdformat with plugins"
-      if: hashFiles('.mdformat.toml') != ''
+      if: inputs.install-python == 'true' && hashFiles('.mdformat.toml') != ''
       run: "just install-mdformat"
       shell: bash
