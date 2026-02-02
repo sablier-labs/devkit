@@ -13,6 +13,9 @@ inputs:
     description: "Whether to enable Node.js dependency caching"
     default: "true"
     required: false
+  token:
+    description: "Token used by checkout action (needed when workflows must preserve app auth for protected branch pushes)"
+    required: false
 
 outputs:
   cache-status:
@@ -24,6 +27,8 @@ runs:
   steps:
     - name: "Check out the repo"
       uses: "actions/checkout@v5"
+      with:
+        token: ${{ inputs.token || github.token }}
 
     # ---------------------------------------------------------------------------- #
     #                                    Node.js                                   #
@@ -45,7 +50,6 @@ runs:
           pm="npm"
         fi
         echo "package-manager=$pm" >> $GITHUB_OUTPUT
-
 
     - name: "Install Just"
       uses: "extractions/setup-just@v3"
