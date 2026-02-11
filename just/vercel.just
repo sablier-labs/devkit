@@ -25,7 +25,7 @@ VERCEL_PROJECT_IDS := '{}'
 [group("vercel")]
 build app env="staging":
     @just _vercel-build "{{ app }}" "{{ env }}"
-alias b := build
+alias vb := build
 
 # Deploy website to Vercel
 [arg("app", long)]
@@ -35,7 +35,7 @@ alias b := build
 [group("vercel")]
 deploy app env="staging" skip_build="false":
     @just _vercel-deploy "{{ app }}" "{{ env }}" "{{ skip_build }}"
-alias d := deploy
+alias vd := deploy
 
 # ---------------------------------------------------------------------------- #
 #                                PRIVATE HELPERS                               #
