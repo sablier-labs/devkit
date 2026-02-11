@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.13.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.13.1
 [1.13.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.13.0
 [1.12.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.12.3
 [1.12.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.12.2
@@ -43,6 +44,12 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.13.1] - 2026-02-11
+
+### Changed
+
+- Just: Rename Vercel aliases `b` and `d` to `vb` and `vd`
 
 ## [1.13.0] - 2026-02-11
 
