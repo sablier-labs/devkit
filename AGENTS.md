@@ -1,7 +1,7 @@
 # CLAUDE.md
 
-Shared configuration library (`@sablier/devkit`) for Sablier repositories. Provides reusable Biome, Prettier, TypeScript,
-Vitest, and Just configs, plus GitHub Actions and shell scripts.
+Shared configuration library (`@sablier/devkit`) for Sablier repositories. Provides reusable Biome, Prettier,
+TypeScript, Vitest, and Just configs, plus GitHub Actions and shell scripts.
 
 ## Project Structure
 
@@ -55,3 +55,5 @@ just test-tsv        # Run TSV validation tests
 - Biome linting: recommended rules with customizations (see `biome/base.jsonc`)
 - Just settings: `bash -euo pipefail`, `unstable` mode enabled
 - Vitest factory (`defineDevkitConfig`) provides CI-aware defaults (retry, timeout, reporters)
+- After modifying Markdown files, run `just prettier-write` to format them
+- After modifying `just/csv.just`, run `just test` to verify the BATS tests pass

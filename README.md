@@ -124,23 +124,23 @@ Available modules:
 
 ## ⚙️ Available Configs
 
-| Tool            | Config File/Directory                    |
-| --------------- | ---------------------------------------- |
-| 🔍 Biome        | [`biome/`](./biome/)                     |
-| 🛠 Just         | [`just/`](./just/)                       |
-| ✨ Prettier     | [`.prettierrc.json`](./.prettierrc.json) |
-| 📦 TSConfig     | [`tsconfig/`](./tsconfig/)               |
-| 🧪 Vitest       | [`vitest/`](./vitest/)                   |
-| 💻 VSCode       | [`vscode/`](./vscode/)                   |
+| Tool        | Config File/Directory                    |
+| ----------- | ---------------------------------------- |
+| 🔍 Biome    | [`biome/`](./biome/)                     |
+| 🛠 Just     | [`just/`](./just/)                       |
+| ✨ Prettier | [`.prettierrc.json`](./.prettierrc.json) |
+| 📦 TSConfig | [`tsconfig/`](./tsconfig/)               |
+| 🧪 Vitest   | [`vitest/`](./vitest/)                   |
+| 💻 VSCode   | [`vscode/`](./vscode/)                   |
 
 ## 🐈‍⬛ GitHub Actions
 
 Reusable composite actions for GitHub CI workflows.
 
-| Action                                    | Description                              |
-| ----------------------------------------- | ---------------------------------------- |
-| [`actions/setup`](./actions/setup/)       | Install dependencies (Node.js, Just, etc.) |
-| [`actions/node-cache`](./actions/node-cache/) | Cache Node.js dependencies               |
+| Action                                        | Description                                |
+| --------------------------------------------- | ------------------------------------------ |
+| [`actions/setup`](./actions/setup/)           | Install dependencies (Node.js, Just, etc.) |
+| [`actions/node-cache`](./actions/node-cache/) | Cache Node.js dependencies                 |
 
 ```yaml
 - uses: sablier-labs/devkit/actions/setup@main
