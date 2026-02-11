@@ -1,24 +1,24 @@
-name: "Devkit Setup"
-description: "Internal composite action for installing the dependencies required for using the devkit"
+name: Devkit Setup
+description: Internal composite action for installing the dependencies required for using the devkit
 
 inputs:
   frozen-lockfile:
-    description: "Whether to install the dependencies with the frozen lockfile"
+    description: Whether to install the dependencies with the frozen lockfile
     default: "true"
     required: false
   package-manager:
-    description: "Package manager to install Node.js dependencies with (auto-detected from lockfiles if not provided)"
+    description: Package manager to install Node.js dependencies with (auto-detected from lockfiles if not provided)
     required: false
   enable-cache:
-    description: "Whether to enable Node.js dependency caching"
+    description: Whether to enable Node.js dependency caching
     default: "true"
     required: false
   install-python:
-    description: "Whether to install Python dependencies (uv and mdformat)"
+    description: Whether to install Python dependencies (uv and mdformat)
     default: "true"
     required: false
   token:
-    description: "Token used by checkout action (needed when workflows must preserve app auth for protected branch pushes)"
+    description: Token used by checkout action (needed when workflows must preserve app auth for protected branch pushes)
     required: false
 
 outputs:
@@ -27,10 +27,10 @@ outputs:
     value: ${{ steps.node-cache.outputs.cache-status }}
 
 runs:
-  using: "composite"
+  using: composite
   steps:
-    - name: "Check out the repo"
-      uses: "actions/checkout@v5"
+    - name: Check out the repo
+      uses: actions/checkout@v6
       with:
         token: ${{ inputs.token || github.token }}
 
@@ -38,7 +38,7 @@ runs:
     #                                    Node.js                                   #
     # ---------------------------------------------------------------------------- #
 
-    - name: "Detect package manager"
+    - name: Detect package manager
       id: detect-pm
       shell: bash
       run: | #shell
@@ -55,30 +55,30 @@ runs:
         fi
         echo "package-manager=$pm" >> $GITHUB_OUTPUT
 
-    - name: "Install Just"
-      uses: "extractions/setup-just@v3"
+    - name: Install Just
+      uses: extractions/setup-just@v3
       with:
         just-version: "1"
 
-    - name: "Setup node"
-      uses: "actions/setup-node@v4"
+    - name: Setup node
+      uses: actions/setup-node@v4
       with:
         node-version: ">20"
 
-    - name: "Install Bun"
+    - name: Install Bun
       if: steps.detect-pm.outputs.package-manager == 'bun'
-      uses: "oven-sh/setup-bun@v2"
+      uses: oven-sh/setup-bun@v2
       with:
-        bun-version: "latest"
+        bun-version: latest
 
-    - name: "Install Pnpm"
+    - name: Install Pnpm
       if: steps.detect-pm.outputs.package-manager == 'pnpm'
       uses: pnpm/action-setup@v4
       with:
         version: "10"
 
-    - name: "Install Ni package manager resolver"
-      run: "npm install -g @antfu/ni"
+    - name: Install Ni package manager resolver
+      run: npm install -g @antfu/ni
       shell: bash
 
     - uses: sablier-labs/devkit/actions/node-cache@main
@@ -87,27 +87,27 @@ runs:
       with:
         package-manager: ${{ steps.detect-pm.outputs.package-manager }}
 
-    - name: "Install the Node.js dependencies"
+    - name: Install the Node.js dependencies
       run: | #shell
         if [ "$inputs.frozen-lockfile" = "true" ]; then
           ni --frozen
         else
           ni
         fi
-      shell: "bash"
+      shell: bash
 
     # ---------------------------------------------------------------------------- #
     #                                    PYTHON                                    #
     # ---------------------------------------------------------------------------- #
 
-    - name: "Install uv and mdformat"
+    - name: Install uv and mdformat
       if: inputs.install-python == 'true' && hashFiles('.mdformat.toml') != ''
-      uses: "astral-sh/setup-uv@v7"
+      uses: astral-sh/setup-uv@v7
       with:
         python-version: "3.14"
         enable-cache: false
 
-    - name: "Install mdformat with plugins"
+    - name: Install mdformat with plugins
       if: inputs.install-python == 'true' && hashFiles('.mdformat.toml') != ''
-      run: "just install-mdformat"
+      run: just install-mdformat
       shell: bash

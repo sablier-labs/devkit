@@ -1,13 +1,13 @@
-name: "Cache Node.js Dependencies"
-description: "Internal composite action for Node.js dependency caching logic"
+name: Cache Node.js Dependencies
+description: Internal composite action for Node.js dependency caching logic
 
 inputs:
   fail-on-cache-miss:
     default: "false"
-    description: "If true, fails if cache is missing"
+    description: If true, fails if cache is missing
     required: false
   package-manager:
-    description: "Package manager to cache for (npm, pnpm, or bun)"
+    description: Package manager to cache for (npm, pnpm, or bun)
     required: true
 
 outputs:
@@ -16,9 +16,9 @@ outputs:
     value: ${{ steps.determine-cache-status.outputs.status }}
 
 runs:
-  using: "composite"
+  using: composite
   steps:
-    - name: "Determine cache paths"
+    - name: Determine cache paths
       id: cache-paths
       shell: bash
       run: | #shell
@@ -48,8 +48,8 @@ runs:
             ;;
         esac
 
-    - uses: "actions/cache@v4"
-      id: "cache-step"
+    - uses: actions/cache@v4
+      id: cache-step
       with:
         fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
         path: ${{ steps.cache-paths.outputs.paths }}
@@ -71,7 +71,7 @@ runs:
 
     # Interpret cache-hit output into three-part cache-status.
     # See https://github.com/actions/cache/issues/1566
-    - name: "Determine cache status"
+    - name: Determine cache status
       id: determine-cache-status
       shell: bash
       run: | #shell
