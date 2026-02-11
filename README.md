@@ -26,7 +26,7 @@ Extend the base Biome configuration in your `biome.jsonc`:
 
 ```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "extends": ["@sablier/devkit/biome"],
 }
 ```
@@ -116,25 +116,31 @@ Available modules:
 | Module          | Description                     |
 | --------------- | ------------------------------- |
 | `base.just`     | Common development recipes      |
-| `npm.just`      | NPM package management          |
+| `csv.just`      | CSV/TSV validation with qsv     |
 | `evm.just`      | EVM/Foundry tooling             |
-| `tsv.just`      | TypeScript validation           |
+| `npm.just`      | NPM package management          |
 | `settings.just` | Just settings and configuration |
+| `vercel.just`   | Vercel build and deploy         |
 
 ## ⚙️ Available Configs
 
 | Tool            | Config File/Directory                    |
 | --------------- | ---------------------------------------- |
 | 🔍 Biome        | [`biome/`](./biome/)                     |
-| 📝 EditorConfig | [`.editorconfig`](./.editorconfig)       |
 | 🛠 Just         | [`just/`](./just/)                       |
 | ✨ Prettier     | [`.prettierrc.json`](./.prettierrc.json) |
 | 📦 TSConfig     | [`tsconfig/`](./tsconfig/)               |
 | 🧪 Vitest       | [`vitest/`](./vitest/)                   |
+| 💻 VSCode       | [`vscode/`](./vscode/)                   |
 
 ## 🐈‍⬛ GitHub Actions
 
-The [setup](./actions/setup/) action installs requisite dependencies in GitHub CI workflows.
+Reusable composite actions for GitHub CI workflows.
+
+| Action                                    | Description                              |
+| ----------------------------------------- | ---------------------------------------- |
+| [`actions/setup`](./actions/setup/)       | Install dependencies (Node.js, Just, etc.) |
+| [`actions/node-cache`](./actions/node-cache/) | Cache Node.js dependencies               |
 
 ```yaml
 - uses: sablier-labs/devkit/actions/setup@main
@@ -150,4 +156,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-This project is licensed under MIT.
+This project is licensed under MIT — see the [LICENSE](LICENSE.md) file for details.

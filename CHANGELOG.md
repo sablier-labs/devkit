@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.13.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.13.0
 [1.12.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.12.3
 [1.12.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.12.2
 [1.12.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.12.1
@@ -42,6 +43,12 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.13.0] - 2026-02-11
+
+### Added
+
+- Just: Add Vercel module with `build` and `deploy` recipes for Vercel deployment workflows
 
 ## [1.12.3] - 2026-02-08
 
