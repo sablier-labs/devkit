@@ -19,22 +19,7 @@ nlx := require("nlx")
 #                                   CONSTANTS                                  #
 # ---------------------------------------------------------------------------- #
 
-GLOBS_CLEAN := ```
-    arr=(
-        "artifacts"
-        "artifacts-*"
-        "broadcast"
-        "cache"
-        "cache_hardhat-zk"
-        "coverage"
-        "docs"
-        "out"
-        "out-*"
-        "typechain-types"
-        "lcov.info"
-    )
-    echo "${arr[*]}"
-```
+GLOBS_CLEAN := "artifacts artifacts-* broadcast cache cache_hardhat-zk coverage docs out out-* typechain-types lcov.info"
 GLOBS_PRETTIER := "**/*.{md,mdx,yaml,yml}"
 GLOBS_SOLIDITY := "{scripts,src,tests}/**/*.sol"
 
@@ -44,11 +29,10 @@ GLOBS_SOLIDITY := "{scripts,src,tests}/**/*.sol"
 
 # Clean directories and files
 clean globs=GLOBS_CLEAN:
-    nlx del-cli {{ globs }}
+    {{ nlx }} del-cli {{ globs }}
 alias c := clean
 
 # Clear node_modules recursively
-[confirm("Are you sure you want to delete all node_modules, including in subdirectories? Y/n")]
 clean-modules:
     just base::clean-modules
 
@@ -95,12 +79,12 @@ alias pw := prettier-write
 
 # Check code with Solhint
 solhint-check globs=GLOBS_SOLIDITY:
-    na solhint --cache "{{ globs }}"
+    {{ na }} solhint --cache "{{ globs }}"
 alias sc := solhint-check
 
 # Fix code with Solhint
 solhint-write globs=GLOBS_SOLIDITY:
-    na solhint --cache --fix --noPrompt "{{ globs }}"
+    {{ na }} solhint --cache --fix --noPrompt "{{ globs }}"
 alias sw := solhint-write
 
 # ---------------------------------------------------------------------------- #
@@ -110,21 +94,15 @@ alias sw := solhint-write
 # Build contracts
 [group("foundry")]
 build:
-    forge build
+    {{ forge }} build
 alias b := build
-
-# Build using optimized profile
-[group("foundry")]
-build-optimized:
-    FOUNDRY_PROFILE=optimized \
-        forge build
-alias bo := build-optimized
 
 # Build using optimized profile with optional arguments
 [group("foundry")]
 build-optimized *args:
     FOUNDRY_PROFILE=optimized \
-        forge build --extra-output-files metadata {{ args }}
+        {{ forge }} build --extra-output-files metadata {{ args }}
+alias bo := build-optimized
 
 # Dump code coverage to an html file
 [group("foundry"), script("bash")]
@@ -134,30 +112,30 @@ coverage:
         echo "Install it with Homebrew: https://formulae.brew.sh/formula/lcov"
         exit 1
     fi
-    forge coverage --report lcov
+    {{ forge }} coverage --report lcov
     genhtml --branch-coverage --ignore-errors inconsistent --output-dir coverage lcov.info
 alias cov := coverage
 
 # Check code with Forge formatter
 [group("foundry")]
 fmt-check:
-    forge fmt --check
+    {{ forge }} fmt --check
 
 # Fix code with Forge formatter
 [group("foundry")]
 fmt-write:
-    forge fmt
+    {{ forge }} fmt
 
 # Performs a gas report
 [group("foundry")]
 gas-report:
-    forge test --gas-report
+    {{ forge }} test --gas-report
 alias gr := gas-report
 
 # Run tests with optional arguments
 [group("foundry")]
 test *args:
-    forge test {{ args }}
+    {{ forge }} test {{ args }}
 alias t := test
 
 # Run Bulloak checks
@@ -166,19 +144,14 @@ test-bulloak:
     bulloak check --skip-modifiers "./tests/**/*.tree"
 alias tb := test-bulloak
 
-# Run tests using lite profile (skipping fork tests)
+# Run tests using lite profile (skips fork tests by default)
 [group("foundry")]
-test-lite:
-    FOUNDRY_PROFILE=lite forge test --nmt "testFork"
+test-lite *args="--nmt testFork":
+    FOUNDRY_PROFILE=lite {{ forge }} test {{ args }}
 alias tl := test-lite
-
-# Run tests using lite profile with optional arguments
-[group("foundry")]
-test-lite *args:
-    FOUNDRY_PROFILE=lite forge test {{ args }}
 
 # Run tests using optimized profile
 [group("foundry")]
 test-optimized: build-optimized
-    FOUNDRY_PROFILE=test-optimized forge test
+    FOUNDRY_PROFILE=test-optimized {{ forge }} test
 alias to := test-optimized
