@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.15.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.15.2
 [1.15.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.15.1
 [1.15.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.15.0
 [1.14.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.14.0
@@ -47,6 +48,12 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.15.2] - 2026-02-16
+
+### Added
+
+- Biome: Enable `noDuplicateClasses` nursery rule in UI config to disallow duplicate CSS class names
 
 ## [1.15.1] - 2026-02-16
 
