@@ -22,7 +22,12 @@
     "actions": {
       "source": {
         "organizeImports": "on",
-        "useSortedKeys": "on"
+        "useSortedKeys": {
+          "level": "on",
+          "options": {
+            "groupByNesting": true
+          }
+        }
       }
     }
   },
