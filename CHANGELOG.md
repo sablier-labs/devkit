@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.15.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.15.0
 [1.14.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.14.0
 [1.13.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.13.1
 [1.13.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.13.0
@@ -45,6 +46,13 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.15.0] - 2026-02-16
+
+### Changed
+
+- Biome: Pin `$schema` to version 2.4.0 instead of `latest` for deterministic config resolution
+- Biome: Move `noUselessUndefined` rule from `nursery` to `complexity` category (graduated in Biome v2.4)
 
 ## [1.14.0] - 2026-02-16
 

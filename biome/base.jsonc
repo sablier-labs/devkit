@@ -16,7 +16,7 @@
 // granular rule customization. See ~/sablier/frontend/ui/biome.jsonc for a
 // complete example.
 {
-  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.0/schema.json",
   "assist": {
     "enabled": true,
     "actions": {
@@ -48,15 +48,15 @@
       "complexity": {
         "noImplicitCoercions": "error", // forbid `!!foo`, allow `Boolean(foo)`
         "noVoid": "off", // void is useful in some cases e.g. `useEffect` callbacks
-        "useSimplifiedLogicExpression": "off" // the rule is cool but it gets agents stuck
+        "useSimplifiedLogicExpression": "off", // the rule is cool but it gets agents stuck
+        "noUselessUndefined": "off" // we want explicit undefined return values
       },
       "correctness": {
         "noUnusedImports": "off", // allow unused imports during development
         "noUnusedVariables": "error"
       },
       "nursery": {
-        "noFloatingPromises": "error", // floating promises can lead to bugs
-        "noUselessUndefined": "off" // we want explicit undefined return values
+        "noFloatingPromises": "error" // floating promises can lead to bugs
       },
       "performance": {
         "noBarrelFile": "off", // barrel exports lead to cleaner imports
