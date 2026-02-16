@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.14.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.14.0
 [1.13.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.13.1
 [1.13.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.13.0
 [1.12.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.12.3
@@ -44,6 +45,22 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.14.0] - 2026-02-16
+
+### Changed
+
+- Just: Extract Vercel env resolution into shared `_vercel_helpers.py` module
+- Just: Use variable interpolation for CLI tools (`forge`, `na`, `nlx`) instead of bare commands in EVM recipes
+  ([#35](https://github.com/sablier-labs/devkit/pull/35))
+- Just: Simplify `GLOBS_CLEAN` from bash array to plain string ([#35](https://github.com/sablier-labs/devkit/pull/35))
+- Just: Merge duplicate `build-optimized` and `test-lite` recipes into single versions with optional arguments
+  ([#35](https://github.com/sablier-labs/devkit/pull/35))
+
+### Removed
+
+- Just: Remove confirmation prompt from `clean-modules` recipe in EVM module
+  ([#35](https://github.com/sablier-labs/devkit/pull/35))
 
 ## [1.13.1] - 2026-02-11
 
