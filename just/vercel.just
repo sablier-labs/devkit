@@ -13,6 +13,7 @@ na := require("na")
 
 # Consumer MUST override with a JSON map of app name → Vercel project ID.
 # Example: '{"portal": "prj_xxx", "landing": "prj_yyy"}'
+# Note: if VERCEL_PROJECT_ID is already set in the environment, this map is ignored.
 VERCEL_PROJECT_IDS := '{}'
 
 # ---------------------------------------------------------------------------- #
@@ -44,29 +45,15 @@ alias vd := deploy
 # Core build: vercel pull + vercel build
 [private, script("python3")]
 _vercel-build app env:
-    import json, os, subprocess, sys
-
-    def run(*cmd):
-        result = subprocess.run(cmd)
-        if result.returncode != 0:
-            sys.exit(result.returncode)
+    import sys; sys.path.insert(0, "{{ source_directory() }}")
+    import os
+    from _vercel_helpers import resolve_vercel_env, run
 
     # Workaround for https://github.com/vercel/vercel/issues/14666
     os.environ["VERCEL_TARGET_ENV"] = "{{ env }}"
     os.environ["NEXT_PUBLIC_VERCEL_TARGET_ENV"] = "{{ env }}"
 
-    # Resolve project ID from app name
-    project_ids = json.loads('{{ VERCEL_PROJECT_IDS }}')
-    app = "{{ app }}"
-    if app not in project_ids:
-        print(f"Error: unknown app '{app}'. Known apps: {', '.join(project_ids) or '(none)'}", file=sys.stderr)
-        sys.exit(1)
-    os.environ["VERCEL_PROJECT_ID"] = project_ids[app]
-
-    token = os.environ.get("VERCEL_TOKEN", "")
-    if not token:
-        print("Error: VERCEL_TOKEN is not set.", file=sys.stderr)
-        sys.exit(1)
+    project_id, token = resolve_vercel_env("{{ app }}", '{{ VERCEL_PROJECT_IDS }}')
 
     # Pull the environment from the Vercel project
     run("na", "vercel", "pull", "--environment={{ env }}", f"--token={token}", "--yes")
@@ -77,12 +64,9 @@ _vercel-build app env:
 # Core deploy: optionally build, then deploy prebuilt artifacts
 [private, script("python3")]
 _vercel-deploy app env skip_build="false":
-    import json, os, subprocess, sys
-
-    def run(*cmd):
-        result = subprocess.run(cmd)
-        if result.returncode != 0:
-            sys.exit(result.returncode)
+    import sys; sys.path.insert(0, "{{ source_directory() }}")
+    import os
+    from _vercel_helpers import resolve_vercel_env, run
 
     # Build the project if not skipped (calls the PUBLIC recipe so consumer overrides apply)
     if "{{ skip_build }}" != "true":
@@ -92,18 +76,7 @@ _vercel-deploy app env skip_build="false":
     os.environ["VERCEL_TARGET_ENV"] = "{{ env }}"
     os.environ["NEXT_PUBLIC_VERCEL_TARGET_ENV"] = "{{ env }}"
 
-    # Resolve project ID from app name
-    project_ids = json.loads('{{ VERCEL_PROJECT_IDS }}')
-    app = "{{ app }}"
-    if app not in project_ids:
-        print(f"Error: unknown app '{app}'. Known apps: {', '.join(project_ids) or '(none)'}", file=sys.stderr)
-        sys.exit(1)
-    os.environ["VERCEL_PROJECT_ID"] = project_ids[app]
-
-    token = os.environ.get("VERCEL_TOKEN", "")
-    if not token:
-        print("Error: VERCEL_TOKEN is not set.", file=sys.stderr)
-        sys.exit(1)
+    project_id, token = resolve_vercel_env("{{ app }}", '{{ VERCEL_PROJECT_IDS }}')
 
     # Deploy the project to Vercel
     run("na", "vercel", "deploy", "--prebuilt", "--target={{ env }}", f"--token={token}")
