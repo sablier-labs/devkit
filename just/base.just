@@ -80,19 +80,27 @@ alias bw := biome-write
 
 # Run all code checks
 [group("checks"), no-cd]
-@full-check:
+@_full-check:
     just _run-with-status biome-check
     just _run-with-status prettier-check
     just _run-with-status type-check
+
+# Run all code checks
+[group("checks"), no-cd]
+@full-check: _full-check
     echo ""
     echo '{{ GREEN }}All code checks passed!{{ NORMAL }}'
 alias fc := full-check
 
 # Run all code fixes
 [group("checks"), no-cd]
-@full-write:
+@_full-write:
     just _run-with-status biome-write
     just _run-with-status prettier-write
+
+# Run all code fixes
+[group("checks"), no-cd]
+@full-write: _full-write
     echo ""
     echo '{{ GREEN }}All code fixes applied!{{ NORMAL }}'
 alias fw := full-write
