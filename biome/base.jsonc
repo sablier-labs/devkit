@@ -16,7 +16,7 @@
 // granular rule customization. See ~/sablier/frontend/ui/biome.jsonc for a
 // complete example.
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
   "assist": {
     "enabled": true,
     "actions": {
