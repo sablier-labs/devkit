@@ -143,7 +143,7 @@ Reusable composite actions for GitHub CI workflows.
 | [`actions/node-cache`](./actions/node-cache/) | Cache Node.js dependencies                 |
 
 ```yaml
-- uses: sablier-labs/devkit/actions/setup@main
+- uses: sablier-labs/devkit/actions/setup@v1
 ```
 
 ## 🖥️ Setup Script
