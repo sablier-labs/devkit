@@ -13,44 +13,33 @@ inputs:
 outputs:
   cache-key:
     description: Primary cache key used for restore and save
-    value: ${{ steps.cache-metadata.outputs.key }}
+    value: ${{ steps.cache-restore.outputs.cache-primary-key }}
   cache-paths:
     description: Cache paths used for restore and save
-    value: ${{ steps.cache-metadata.outputs.paths }}
+    # Keep the exported cache paths in sync with the restore/save action inputs below.
+    value: >-
+      ${{
+        inputs.package-manager == 'bun' && '~/.bun/install/cache' ||
+        inputs.package-manager == 'pnpm' && '~/.pnpm-store' ||
+        '~/.npm'
+      }}
   cache-status:
     description: "Descriptive cache status: 'primary', 'fallback', or 'not-found'"
-    value: ${{ steps.determine-cache-status.outputs.status }}
+    value: >-
+      ${{
+        steps.cache-restore.outputs.cache-hit == 'true' && 'primary' ||
+        steps.cache-restore.outputs.cache-hit == 'false' && 'fallback' ||
+        'not-found'
+      }}
 
 runs:
   using: composite
   steps:
-    - name: Determine cache metadata
-      id: cache-metadata
+    - name: Validate package manager
       shell: bash
-      env:
-        CONFIG_HASH: ${{ hashFiles('**/bunfig.toml', '**/.npmrc', '**/patches/**', '**/pnpm-workspace.yaml', '**/pnpmfile.cjs') }}
-        LOCKFILE_HASH: ${{ hashFiles('**/bun.lock', '**/package-lock.json', '**/pnpm-lock.yaml') }}
       run: | #shell
-        config_hash="${CONFIG_HASH:-}"
-        lockfile_hash="${LOCKFILE_HASH:-}"
-
-        if [[ -z "$lockfile_hash" ]]; then
-          lockfile_hash="no-lockfile"
-        fi
-
-        if [[ -z "$config_hash" ]]; then
-          config_hash="no-config"
-        fi
-
         case "${{ inputs.package-manager }}" in
-          bun)
-            store_path="$HOME/.bun/install/cache"
-            ;;
-          npm)
-            store_path="$HOME/.npm"
-            ;;
-          pnpm)
-            store_path="$HOME/.pnpm-store"
+          bun | npm | pnpm)
             ;;
           *)
             echo "Unsupported package manager: ${{ inputs.package-manager }}" >&2
@@ -58,39 +47,37 @@ runs:
             ;;
         esac
 
-        cache_paths="$store_path"
-
-        primary_key="node-deps-${{ runner.os }}-${{ runner.arch }}-${{ inputs.package-manager }}-$lockfile_hash-$config_hash"
-
-        {
-          echo "key=$primary_key"
-          echo "paths<<EOF"
-          printf '%s\n' "$cache_paths"
-          echo "EOF"
-          echo "restore-keys<<EOF"
-          echo "node-deps-${{ runner.os }}-${{ runner.arch }}-${{ inputs.package-manager }}-$lockfile_hash-"
-          echo "node-deps-${{ runner.os }}-${{ runner.arch }}-${{ inputs.package-manager }}-"
-          echo "EOF"
-        } >> "$GITHUB_OUTPUT"
-
     - uses: actions/cache/restore@v5
       id: cache-restore
       with:
         fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
-        key: ${{ steps.cache-metadata.outputs.key }}
-        path: ${{ steps.cache-metadata.outputs.paths }}
-        restore-keys: ${{ steps.cache-metadata.outputs.restore-keys }}
-
-    # Interpret cache-hit output into three-part cache-status.
-    # See https://github.com/actions/cache/issues/1566
-    - name: Determine cache status
-      id: determine-cache-status
-      shell: bash
-      run: | #shell
-        if [[ "${{ steps.cache-restore.outputs.cache-hit }}" == "true" ]]; then
-          echo "status=primary" >> $GITHUB_OUTPUT
-        elif [[ "${{ steps.cache-restore.outputs.cache-hit }}" == "false" ]]; then
-          echo "status=fallback" >> $GITHUB_OUTPUT
-        else
-          echo "status=not-found" >> $GITHUB_OUTPUT
-        fi
+        # Cache invalidation stays sensitive to both lockfiles and package-manager config.
+        key: >-
+          ${{
+            format(
+              'node-deps-{0}-{1}-{2}-{3}-{4}',
+              runner.os,
+              runner.arch,
+              inputs.package-manager,
+              hashFiles('**/bun.lock', '**/package-lock.json', '**/pnpm-lock.yaml') || 'no-lockfile',
+              hashFiles('**/bunfig.toml', '**/.npmrc', '**/patches/**', '**/pnpm-workspace.yaml', '**/pnpmfile.cjs') || 'no-config'
+            )
+          }}
+        path: >-
+          ${{
+            inputs.package-manager == 'bun' && '~/.bun/install/cache' ||
+            inputs.package-manager == 'pnpm' && '~/.pnpm-store' ||
+            '~/.npm'
+          }}
+        # Allow fallback reuse across config-only changes before falling back to any cache for the package manager.
+        restore-keys: |
+          ${{
+            format(
+              'node-deps-{0}-{1}-{2}-{3}-',
+              runner.os,
+              runner.arch,
+              inputs.package-manager,
+              hashFiles('**/bun.lock', '**/package-lock.json', '**/pnpm-lock.yaml') || 'no-lockfile'
+            )
+          }}
+          ${{ format('node-deps-{0}-{1}-{2}-', runner.os, runner.arch, inputs.package-manager) }}

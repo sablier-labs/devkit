@@ -93,8 +93,11 @@ runs:
         package-manager: ${{ steps.detect-pm.outputs.package-manager }}
 
     - name: Install the Node.js dependencies
+      env:
+        # Composite-action inputs are exposed via expressions, not shell variables.
+        FROZEN_LOCKFILE: ${{ inputs.frozen-lockfile }}
       run: | #shell
-        if [ "$inputs.frozen-lockfile" = "true" ]; then
+        if [ "$FROZEN_LOCKFILE" = "true" ]; then
           ni --frozen
         else
           ni
@@ -102,6 +105,7 @@ runs:
       shell: bash
 
     - name: Save the Node.js dependency cache
+      # Only one parallel job should publish a refreshed cache, and only when restore was not an exact hit.
       if: inputs.enable-cache == 'true' && inputs.save-cache == 'true' && steps.node-cache.outputs.cache-status != 'primary'
       uses: actions/cache/save@v5
       with:
