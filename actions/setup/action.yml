@@ -17,8 +17,12 @@ inputs:
     description: Whether to install Python dependencies (uv and mdformat)
     default: "true"
     required: false
+  save-cache:
+    description: Whether this job may publish a refreshed Node.js dependency cache after install. Enable in at most one parallel job.
+    default: "false"
+    required: false
   token:
-    description: Token used by checkout action (needed when workflows must preserve app auth for protected branch pushes)
+    description: GitHub token used by checkout action (needed when workflows must preserve app auth for protected branch pushes)
     required: false
 
 outputs:
@@ -44,7 +48,7 @@ runs:
       run: | #shell
         if [ -n "${{ inputs.package-manager }}" ]; then
           pm="${{ inputs.package-manager }}"
-        elif [ -f "bun.lockb" ] || [ -f "bun.lock" ]; then
+        elif [ -f "bun.lock" ] || [ -f "bun.lockb" ]; then
           pm="bun"
         elif [ -f "pnpm-lock.yaml" ]; then
           pm="pnpm"
@@ -61,9 +65,10 @@ runs:
         just-version: "1"
 
     - name: Setup node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: ">20"
+        node-version: ">24"
+        package-manager-cache: false
 
     - name: Install Bun
       if: steps.detect-pm.outputs.package-manager == 'bun'
@@ -95,6 +100,13 @@ runs:
           ni
         fi
       shell: bash
+
+    - name: Save the Node.js dependency cache
+      if: inputs.enable-cache == 'true' && inputs.save-cache == 'true' && steps.node-cache.outputs.cache-status != 'primary'
+      uses: actions/cache/save@v5
+      with:
+        key: ${{ steps.node-cache.outputs.cache-key }}
+        path: ${{ steps.node-cache.outputs.cache-paths }}
 
     # ---------------------------------------------------------------------------- #
     #                                    PYTHON                                    #

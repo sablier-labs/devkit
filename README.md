@@ -146,6 +146,9 @@ Reusable composite actions for GitHub CI workflows.
 - uses: sablier-labs/devkit/actions/setup@v1
 ```
 
+Dependency caching stores only the package-manager cache, not `node_modules`. Set `save-cache: true` in at most one
+parallel job to publish a refreshed cache.
+
 ## 🖥️ Setup Script
 
 For Sablier Labs employees and staff, see [`shell/setup.sh`](./shell/setup.sh).
