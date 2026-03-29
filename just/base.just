@@ -120,13 +120,13 @@ alias kw := knip-write
 # Check Markdown formatting with mdformat
 [group("checks"), no-cd]
 @mdformat-check +paths=".":
-    mdformat --check {{ paths }}
+    mdformat --check --exclude "node_modules/**" {{ paths }}
 alias mc := mdformat-check
 
 # Format Markdown files with mdformat
 [group("checks"), no-cd]
 @mdformat-write +paths=".":
-    mdformat {{ paths }}
+    mdformat --exclude "node_modules/**" {{ paths }}
 alias mw := mdformat-write
 
 # Check Prettier formatting
