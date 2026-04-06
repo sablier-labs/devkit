@@ -60,9 +60,9 @@ runs:
         echo "package-manager=$pm" >> $GITHUB_OUTPUT
 
     - name: Install Just
-      uses: extractions/setup-just@v3
+      uses: taiki-e/install-action@v2
       with:
-        just-version: "1"
+        tool: just
 
     - name: Setup node
       uses: actions/setup-node@v6
