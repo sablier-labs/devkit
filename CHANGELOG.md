@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.16.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.16.0
 [1.15.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.15.3
 [1.15.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.15.2
 [1.15.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.15.1
@@ -49,6 +50,23 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.16.0] - 2026-04-15
+
+### Changed
+
+- Biome: Bump base config `$schema` from 2.4.0 to 2.4.4
+- Biome: Bump UI config `$schema` from 2.4.0 to 2.4.12
+- Biome: Disable `useBlockStatements` in base config (gets AIs stuck)
+- Biome: Disable `useSortedClasses` in UI config; delegate Tailwind class ordering to ESLint `better-tailwindcss`
+- Just: Extract `_full-check` and `_full-write` private recipes so downstream consumers can extend them
+  ([#36](https://github.com/sablier-labs/devkit/pull/36))
+
+### Added
+
+- Biome: Enable `useErrorCause` nursery rule in UI config
+- Biome: Enable `noConsole` rule in UI config, allowing `console.error`
+- Biome: Disable `useSortedKeys` for `**/*.styles.ts` via override in UI config
 
 ## [1.15.3] - 2026-02-16
 
