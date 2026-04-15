@@ -12,8 +12,8 @@
     "url": "https://github.com/sablier-labs/devkit/issues"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.4",
-    "prettier": "^3.7.4",
+    "@biomejs/biome": "^2.4.12",
+    "prettier": "^3.8.3",
     "vitest": "^3.2.4"
   },
   "peerDependencies": {

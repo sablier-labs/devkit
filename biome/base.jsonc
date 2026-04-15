@@ -71,6 +71,7 @@
       "style": {
         "noEnum": "off", // enums are useful in some cases e.g. UI states
         "noNamespace": "off", // namespaces are cool
+        "useBlockStatements": "off", // turned off because it gets AIs stuck
         "useDefaultSwitchClause": "off", // already handled by TypeScript
         "useTemplate": "off", // allow string concatenation using `+`
         "useConsistentTypeDefinitions": {
