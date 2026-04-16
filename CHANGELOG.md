@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[1.17.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.17.0
 [1.16.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.16.0
 [1.15.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.15.3
 [1.15.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.15.2
@@ -50,6 +51,18 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.17.0] - 2026-04-16
+
+### Changed
+
+- Biome: Bump base config `$schema` from 2.4.4 to 2.4.12
+- Vercel: Forward trailing args in `deploy` recipe to `vercel deploy`
+
+### Added
+
+- Vercel: Capture deployment URL from `vercel deploy` stdout and emit it to `$GITHUB_OUTPUT`,
+  `$VERCEL_DEPLOYMENT_URL_FILE`, and stdout
 
 ## [1.16.0] - 2026-04-15
 
