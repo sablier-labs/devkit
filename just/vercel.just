@@ -28,14 +28,14 @@ build app env="staging":
     @just _vercel-build "{{ app }}" "{{ env }}"
 alias vb := build
 
-# Deploy website to Vercel
+# Deploy website to Vercel. Trailing args are forwarded to `vercel deploy`.
 [arg("app", long)]
 [arg("env", long)]
 [arg("skip_build", long="skip-build", value="true")]
 [confirm("Are you sure you want to deploy? [y/N]")]
 [group("vercel")]
-deploy app env="staging" skip_build="false":
-    @just _vercel-deploy "{{ app }}" "{{ env }}" "{{ skip_build }}"
+deploy app env="staging" skip_build="false" *args="":
+    @just _vercel-deploy "{{ app }}" "{{ env }}" "{{ skip_build }}" {{ args }}
 alias vd := deploy
 
 # ---------------------------------------------------------------------------- #
@@ -63,10 +63,10 @@ _vercel-build app env:
 
 # Core deploy: optionally build, then deploy prebuilt artifacts
 [private, script("python3")]
-_vercel-deploy app env skip_build="false":
-    import sys; sys.path.insert(0, "{{ source_directory() }}")
+_vercel-deploy app env skip_build="false" *args="":
+    import shlex, sys; sys.path.insert(0, "{{ source_directory() }}")
     import os
-    from _vercel_helpers import resolve_vercel_env, run
+    from _vercel_helpers import emit_deployment_url, resolve_vercel_env, run, run_capture_url
 
     # Build the project if not skipped (calls the PUBLIC recipe so consumer overrides apply)
     if "{{ skip_build }}" != "true":
@@ -78,5 +78,9 @@ _vercel-deploy app env skip_build="false":
 
     project_id, token = resolve_vercel_env("{{ app }}", '{{ VERCEL_PROJECT_IDS }}')
 
-    # Deploy the project to Vercel
-    run("na", "vercel", "deploy", "--prebuilt", "--target={{ env }}", f"--token={token}")
+    # Deploy the project to Vercel, capturing the deployment URL from stdout
+    extra = shlex.split("""{{ args }}""")
+    url = run_capture_url(
+        "na", "vercel", "deploy", "--prebuilt", "--target={{ env }}", f"--token={token}", *extra
+    )
+    emit_deployment_url(url)
