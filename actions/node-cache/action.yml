@@ -16,13 +16,7 @@ outputs:
     value: ${{ steps.cache-restore.outputs.cache-primary-key }}
   cache-paths:
     description: Cache paths used for restore and save
-    # Keep the exported cache paths in sync with the restore/save action inputs below.
-    value: >-
-      ${{
-        inputs.package-manager == 'bun' && '~/.bun/install/cache' ||
-        inputs.package-manager == 'pnpm' && '~/.pnpm-store' ||
-        '~/.npm'
-      }}
+    value: ${{ steps.resolve-cache-path.outputs.cache-path }}
   cache-status:
     description: "Descriptive cache status: 'primary', 'fallback', or 'not-found'"
     value: >-
@@ -47,6 +41,24 @@ runs:
             ;;
         esac
 
+    - name: Resolve cache path
+      id: resolve-cache-path
+      shell: bash
+      run: | #shell
+        case "${{ inputs.package-manager }}" in
+          bun)
+            cache_path="$HOME/.bun/install/cache"
+            ;;
+          pnpm)
+            cache_path="$(pnpm store path)"
+            ;;
+          npm)
+            cache_path="$HOME/.npm"
+            ;;
+        esac
+
+        echo "cache-path=$cache_path" >> "$GITHUB_OUTPUT"
+
     - uses: actions/cache/restore@v5
       id: cache-restore
       with:
@@ -63,12 +75,7 @@ runs:
               hashFiles('**/bunfig.toml', '**/.npmrc', '**/patches/**', '**/pnpm-workspace.yaml', '**/pnpmfile.cjs') || 'no-config'
             )
           }}
-        path: >-
-          ${{
-            inputs.package-manager == 'bun' && '~/.bun/install/cache' ||
-            inputs.package-manager == 'pnpm' && '~/.pnpm-store' ||
-            '~/.npm'
-          }}
+        path: ${{ steps.resolve-cache-path.outputs.cache-path }}
         # Allow fallback reuse across config-only changes before falling back to any cache for the package manager.
         restore-keys: |
           ${{
