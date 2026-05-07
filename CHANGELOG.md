@@ -2,9 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Common Changelog](https://common-changelog.org/), and this project adheres to
-[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Common Changelog](https://common-changelog.org/).
 
+This package does not follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions are bumped
+pragmatically: any release may include breaking changes regardless of the version number, and the major version is not
+reserved for breaking changes. Review the changelog before upgrading.
+
+[1.18.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.0
 [1.17.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.17.0
 [1.16.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.16.0
 [1.15.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.15.3
@@ -52,7 +56,7 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
 
-## [Unreleased]
+## [1.18.0] - 2026-05-07
 
 ### Removed
 
