@@ -13,10 +13,6 @@ inputs:
     description: Whether to enable Node.js dependency caching
     default: "true"
     required: false
-  install-python:
-    description: Whether to install Python dependencies (uv and mdformat)
-    default: "true"
-    required: false
   save-cache:
     description: Whether this job may publish a refreshed Node.js dependency cache after install. Enable in at most one parallel job.
     default: "false"
@@ -111,19 +107,3 @@ runs:
       with:
         key: ${{ steps.node-cache.outputs.cache-key }}
         path: ${{ steps.node-cache.outputs.cache-paths }}
-
-    # ---------------------------------------------------------------------------- #
-    #                                    PYTHON                                    #
-    # ---------------------------------------------------------------------------- #
-
-    - name: Install uv and mdformat
-      if: inputs.install-python == 'true' && hashFiles('.mdformat.toml') != ''
-      uses: astral-sh/setup-uv@v7
-      with:
-        python-version: "3.14"
-        enable-cache: false
-
-    - name: Install mdformat with plugins
-      if: inputs.install-python == 'true' && hashFiles('.mdformat.toml') != ''
-      run: just install-mdformat
-      shell: bash

@@ -52,6 +52,14 @@ The format is based on [Common Changelog](https://common-changelog.org/), and th
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
 
+## [Unreleased]
+
+### Removed
+
+- Action: `install-python` input from `actions/setup` (breaking)
+- Just: `install-mdformat`, `mdformat-check`, `mdformat-write` recipes (and `im` / `mc` / `mw` aliases) from `base` and
+  `evm` modules
+
 ## [1.17.0] - 2026-04-16
 
 ### Changed
