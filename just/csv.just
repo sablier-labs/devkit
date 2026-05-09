@@ -47,7 +47,7 @@ _csv-check glob="data/*/*.{csv,tsv}" schema="" ignore="*.invalid *.valid *valida
         ext_label = 'CSV/TSV'
 
     print(f"Validating {ext_label} files...")
-    files = [f for pattern in expand_braces(globs) for f in globmod.glob(pattern)]
+    files = [f for pattern in expand_braces(globs) for f in globmod.glob(pattern, recursive=True)]
 
     # Filter ignored files
     files = [f for f in files if not any(fnmatch.fnmatch(f, p) for p in ignore_patterns)]

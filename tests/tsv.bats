@@ -86,6 +86,19 @@ EOF
   assert_output --partial "ℹ️  No .tsv files found to validate"
 }
 
+@test "TSV validation matches files recursively via **" {
+  check_qsv
+
+  mkdir -p "${TEST_TEMP_DIR}/a/b/c"
+  cp tests/fixtures/valid.tsv "${TEST_TEMP_DIR}/a/b/c/deep.tsv"
+
+  run just _csv-check --glob "${TEST_TEMP_DIR}/**/*.tsv"
+
+  assert_success
+  assert_output --partial "Validating .tsv files..."
+  assert_output --partial "✅ All .tsv files are valid"
+}
+
 # ---------------------------------------------------------------------------
 # Tests for _csv-show-errors with TSV files
 # ---------------------------------------------------------------------------
