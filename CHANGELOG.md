@@ -8,6 +8,7 @@ This package does not follow [Semantic Versioning](https://semver.org/spec/v2.0.
 pragmatically: any release may include breaking changes regardless of the version number, and the major version is not
 reserved for breaking changes. Review the changelog before upgrading.
 
+[1.18.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.1
 [1.18.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.0
 [1.17.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.17.0
 [1.16.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.16.0
@@ -55,6 +56,12 @@ reserved for breaking changes. Review the changelog before upgrading.
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.18.1] - 2026-05-09
+
+### Fixed
+
+- Just: Pass `recursive=True` to `glob.glob` in `_csv-check` so `**` patterns match files at arbitrary depth
 
 ## [1.18.0] - 2026-05-07
 
