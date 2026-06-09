@@ -38,23 +38,6 @@ runs:
     #                                    Node.js                                   #
     # ---------------------------------------------------------------------------- #
 
-    - name: Detect package manager
-      id: detect-pm
-      shell: bash
-      run: | #shell
-        if [ -n "${{ inputs.package-manager }}" ]; then
-          pm="${{ inputs.package-manager }}"
-        elif [ -f "bun.lock" ] || [ -f "bun.lockb" ]; then
-          pm="bun"
-        elif [ -f "pnpm-lock.yaml" ]; then
-          pm="pnpm"
-        elif [ -f "package-lock.json" ]; then
-          pm="npm"
-        else
-          pm="npm"
-        fi
-        echo "package-manager=$pm" >> $GITHUB_OUTPUT
-
     - name: Install Just
       uses: taiki-e/install-action@v2
       with:
@@ -66,17 +49,81 @@ runs:
         node-version: "24"
         package-manager-cache: false
 
+    - name: Detect package manager
+      id: detect-pm
+      shell: bash
+      env:
+        INPUT_PACKAGE_MANAGER: ${{ inputs.package-manager }}
+      run: | #shell
+        package_manager=""
+        if [ -f "package.json" ]; then
+          package_manager="$(
+            node --input-type=module <<'EOF'
+        import { readFileSync } from "node:fs";
+
+        try {
+          const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
+          process.stdout.write(typeof packageJson.packageManager === "string" ? packageJson.packageManager : "");
+        } catch {
+          process.exitCode = 0;
+        }
+        EOF
+          )"
+        fi
+
+        package_manager_name=""
+        has_pnpm_package_manager="false"
+        case "$package_manager" in
+          bun@*)
+            package_manager_name="bun"
+            ;;
+          npm@*)
+            package_manager_name="npm"
+            ;;
+          pnpm@*)
+            package_manager_name="pnpm"
+            has_pnpm_package_manager="true"
+            ;;
+          "")
+            ;;
+          *)
+            echo "Unsupported packageManager: $package_manager" >&2
+            exit 1
+            ;;
+        esac
+
+        if [ -n "$INPUT_PACKAGE_MANAGER" ]; then
+          pm="$INPUT_PACKAGE_MANAGER"
+        elif [ -n "$package_manager_name" ]; then
+          pm="$package_manager_name"
+        elif [ -f "bun.lock" ] || [ -f "bun.lockb" ]; then
+          pm="bun"
+        elif [ -f "pnpm-lock.yaml" ]; then
+          pm="pnpm"
+        elif [ -f "package-lock.json" ]; then
+          pm="npm"
+        else
+          pm="npm"
+        fi
+
+        echo "package-manager=$pm" >> "$GITHUB_OUTPUT"
+        echo "has-pnpm-package-manager=$has_pnpm_package_manager" >> "$GITHUB_OUTPUT"
+
     - name: Install Bun
       if: steps.detect-pm.outputs.package-manager == 'bun'
       uses: oven-sh/setup-bun@v2
       with:
         bun-version: latest
 
-    - name: Install Pnpm
-      if: steps.detect-pm.outputs.package-manager == 'pnpm'
+    - name: Install Pnpm from packageManager
+      if: steps.detect-pm.outputs.package-manager == 'pnpm' && steps.detect-pm.outputs.has-pnpm-package-manager == 'true'
+      uses: pnpm/action-setup@v6
+
+    - name: Install Pnpm fallback
+      if: steps.detect-pm.outputs.package-manager == 'pnpm' && steps.detect-pm.outputs.has-pnpm-package-manager != 'true'
       uses: pnpm/action-setup@v6
       with:
-        version: "10"
+        version: "11"
 
     - name: Install Ni package manager resolver
       run: npm install -g @antfu/ni
