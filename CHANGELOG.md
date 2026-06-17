@@ -8,6 +8,7 @@ This package does not follow [Semantic Versioning](https://semver.org/spec/v2.0.
 pragmatically: any release may include breaking changes regardless of the version number, and the major version is not
 reserved for breaking changes. Review the changelog before upgrading.
 
+[1.18.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.2
 [1.18.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.1
 [1.18.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.0
 [1.17.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.17.0
@@ -56,6 +57,13 @@ reserved for breaking changes. Review the changelog before upgrading.
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.18.2] - 2026-06-17
+
+### Fixed
+
+- Just: Add `set lists` to `settings.just` so `which()` works on just >=1.53.0, which moved the function behind the
+  `lists` setting
 
 ## [1.18.1] - 2026-05-09
 
