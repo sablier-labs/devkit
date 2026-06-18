@@ -41,7 +41,9 @@ runs:
     - name: Install Just
       uses: taiki-e/install-action@v2
       with:
-        tool: just
+        # Pin >= 1.53.0: the just/settings.just uses `set lists`, which is only available from 1.53.0 onwards.
+        # taiki-e's `just@latest` lags behind upstream, so pin explicitly until the manifest catches up.
+        tool: just@1.53.0
 
     - name: Setup node
       uses: actions/setup-node@v6
