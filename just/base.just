@@ -1,4 +1,5 @@
 import "./settings.just"
+import "./utils.just"
 
 # ---------------------------------------------------------------------------- #
 #                                 DEPENDENCIES                                 #
@@ -143,17 +144,3 @@ type-check compiler="tsgo" project="tsconfig.json":
     na "$cmd" --noEmit --project {{ project }}
 alias tc := type-check
 alias tsc-check := type-check
-
-# ---------------------------------------------------------------------------- #
-#                                   UTILITIES                                  #
-# ---------------------------------------------------------------------------- #
-
-# Private recipe to run a check with formatted output
-[no-cd]
-@_run-with-status recipe *args:
-    echo ""
-    echo '{{ CYAN }}→ Running {{ recipe }}...{{ NORMAL }}'
-    just {{ recipe }} {{ args }}
-    echo '{{ GREEN }}✓ {{ recipe }} completed{{ NORMAL }}'
-alias rws := _run-with-status
-alias _rws := _run-with-status
