@@ -8,6 +8,7 @@ This package does not follow [Semantic Versioning](https://semver.org/spec/v2.0.
 pragmatically: any release may include breaking changes regardless of the version number, and the major version is not
 reserved for breaking changes. Review the changelog before upgrading.
 
+[1.18.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.3
 [1.18.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.2
 [1.18.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.1
 [1.18.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.0
@@ -57,6 +58,13 @@ reserved for breaking changes. Review the changelog before upgrading.
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.18.3] - 2026-06-18
+
+### Changed
+
+- Just: Extract the `_run-with-status` utility recipe into a new `utils.just` module imported by `base.just`
+  ([#38](https://github.com/sablier-labs/devkit/pull/38))
 
 ## [1.18.2] - 2026-06-17
 
