@@ -8,6 +8,7 @@ This package does not follow [Semantic Versioning](https://semver.org/spec/v2.0.
 pragmatically: any release may include breaking changes regardless of the version number, and the major version is not
 reserved for breaking changes. Review the changelog before upgrading.
 
+[1.18.4]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.4
 [1.18.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.3
 [1.18.2]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.2
 [1.18.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.1
@@ -58,6 +59,13 @@ reserved for breaking changes. Review the changelog before upgrading.
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.18.4] - 2026-06-18
+
+### Fixed
+
+- Biome: Unpin the `$schema` version to `latest` so a pinned version no longer breaks consumers on a different Biome
+  release
 
 ## [1.18.3] - 2026-06-18
 
