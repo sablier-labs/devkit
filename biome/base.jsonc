@@ -49,7 +49,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "complexity": {
         "noImplicitCoercions": "error", // forbid `!!foo`, allow `Boolean(foo)`
         "noVoid": "off", // void is useful in some cases e.g. `useEffect` callbacks
