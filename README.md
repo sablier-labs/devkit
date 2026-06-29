@@ -1,5 +1,13 @@
 # 🛠️ Sablier Devkit
 
+> [!IMPORTANT]
+>
+> **This repository has moved to [`PaulRBerg/devkit`](https://github.com/PaulRBerg/devkit).** It was transferred out of
+> `sablier-labs` and rebranded as a personal config library; the npm package is now
+> [`@prb/devkit`](https://www.npmjs.com/package/@prb/devkit) (formerly `@sablier/devkit`). This repo is **not archived
+> yet, but it will be archived in the near future** — please switch to
+> [`PaulRBerg/devkit`](https://github.com/PaulRBerg/devkit) for the latest updates.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![npm](https://img.shields.io/npm/v/@sablier/devkit)](https://www.npmjs.com/package/@sablier/devkit)
 
