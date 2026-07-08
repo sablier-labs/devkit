@@ -132,15 +132,10 @@ alias pc := prettier-check
         {{ globs }}
 alias pw := prettier-write
 
-# Type check with TypeScript (tsgo default, falls back to tsc if unavailable)
-[group("checks"), no-cd, script("bash")]
-[arg("compiler", long, short="c", help="TypeScript compiler (tsgo or tsc)")]
+# Type check with TypeScript (tsc — TypeScript 7's native compiler)
+[group("checks"), no-cd]
 [arg("project", long, short="p", help="Path to tsconfig.json")]
-type-check compiler="tsgo" project="tsconfig.json":
-    cmd="{{ compiler }}"
-    if [[ "$cmd" == "tsgo" ]] && [[ ! -x "node_modules/.bin/tsgo" ]]; then
-        cmd="tsc"
-    fi
-    na "$cmd" --noEmit --project {{ project }}
+type-check project="tsconfig.json":
+    na tsc --noEmit --project {{ project }}
 alias tc := type-check
 alias tsc-check := type-check
