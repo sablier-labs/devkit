@@ -8,6 +8,7 @@ This package does not follow [Semantic Versioning](https://semver.org/spec/v2.0.
 pragmatically: any release may include breaking changes regardless of the version number, and the major version is not
 reserved for breaking changes. Review the changelog before upgrading.
 
+[1.18.6]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.6
 [1.18.5]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.5
 [1.18.4]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.4
 [1.18.3]: https://github.com/sablier-labs/devkit/releases/tag/v1.18.3
@@ -60,6 +61,13 @@ reserved for breaking changes. Review the changelog before upgrading.
 [1.1.1]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sablier-labs/devkit/releases/tag/v1.0.0
+
+## [1.18.6] - 2026-07-08
+
+### Changed
+
+- Just: Use `tsc` instead of `tsgo` in the `type-check` recipe and drop the `compiler` argument (`-c`/`--compiler`)
+  (breaking)
 
 ## [1.18.5] - 2026-06-19
 
