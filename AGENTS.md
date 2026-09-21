@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 Shared configuration library (`@sablier/devkit`) for Sablier repositories. Provides reusable Biome, Prettier,
 TypeScript, Vitest, and Just configs, plus GitHub Actions and shell scripts.
