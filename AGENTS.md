@@ -13,7 +13,7 @@ vitest/         Vitest config factory (base.js)
 actions/        GitHub Actions (setup, node-cache)
 shell/          Setup scripts for Sablier Labs staff
 vscode/         Shared VSCode settings
-tests/          BATS tests for CSV/TSV validation
+tests/          BATS CSV/TSV tests and Python Vercel helper tests
 ```
 
 ## Package Exports
@@ -36,6 +36,7 @@ just shell-check     # ShellCheck + shfmt
 just test            # Run all BATS tests
 just test-csv        # Run CSV validation tests
 just test-tsv        # Run TSV validation tests
+PYTHONDONTWRITEBYTECODE=1 python3 -W error::ResourceWarning -m unittest discover -s tests -p '*_test.py' -v
 ```
 
 ## Tech Stack

@@ -4,6 +4,7 @@ import json
 import os
 import subprocess
 import sys
+from urllib.parse import urlsplit
 
 
 def run(*cmd):
@@ -14,24 +15,32 @@ def run(*cmd):
 
 
 def run_capture_url(*cmd) -> str:
-    """Run a command, tee its stdout to the user, and return the last non-empty stdout line.
+    """Stream deployment output and return its plain-text or structured URL.
 
     Used to capture the deployment URL printed by `vercel deploy` while still streaming
     its output to the caller. Exits on non-zero return codes, mirroring `run`.
     """
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize=1)
-    assert proc.stdout is not None
-    last = ""
-    for line in proc.stdout:
-        sys.stdout.write(line)
-        sys.stdout.flush()
-        stripped = line.strip()
-        if stripped:
-            last = stripped
-    proc.wait()
+    with subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True, bufsize=1) as proc:
+        assert proc.stdout is not None
+        lines = []
+        for line in proc.stdout:
+            sys.stdout.write(line)
+            sys.stdout.flush()
+            lines.append(line)
     if proc.returncode != 0:
         sys.exit(proc.returncode)
-    return last
+    output = "".join(lines).strip()
+    try:
+        url = json.loads(output)["deployment"]["url"] if output.startswith("{") else output
+        if not isinstance(url, str) or any(char.isspace() for char in url):
+            raise ValueError("invalid URL")
+        parsed = urlsplit(url)
+        if parsed.scheme != "https" or not parsed.hostname:
+            raise ValueError("invalid URL")
+    except (ValueError, KeyError, TypeError):
+        print("Error: Vercel returned no valid deployment URL.", file=sys.stderr)
+        sys.exit(1)
+    return url
 
 
 def emit_deployment_url(url: str) -> None:
